@@ -17,14 +17,14 @@ add_vdem(panel, vars = NULL)
 - panel:
 
   A data frame produced by
-  [`build_states_panel()`](https://rguseinov.github.io/peacebuilder/reference/build_states_panel.md).
+  [`build_states_panel()`](https://rguseinov.github.io/contentiousR/reference/build_states_panel.md).
 
 - vars:
 
   Character vector of V-Dem variable names. If `NULL`, a default set of
   democracy, civil liberties, civil society, and rule-of-law indicators
   is used. See
-  [`load_vdem_data()`](https://rguseinov.github.io/peacebuilder/reference/load_vdem_data.md)
+  [`load_vdem_data()`](https://rguseinov.github.io/contentiousR/reference/load_vdem_data.md)
   for the full default list.
 
 ## Value

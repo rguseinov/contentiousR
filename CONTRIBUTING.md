@@ -1,7 +1,7 @@
-# Contributing to peacebuilder
+# Contributing to contentiousR
 
 Bug reports and focused pull requests are welcome through the [GitHub
-repository](https://github.com/rguseinov/peacebuilder).
+repository](https://github.com/rguseinov/contentiousR).
 
 For code changes:
 

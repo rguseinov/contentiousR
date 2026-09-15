@@ -1,7 +1,7 @@
 # Build a COW-coded state panel
 
 `build_states_cow_panel()` is retained for compatibility with
-peacebuilder 0.0.1. New code should use
+contentiousR 0.0.1. New code should use
 `build_states_panel(coding_system = "cow")`.
 
 ## Usage

@@ -123,7 +123,7 @@ rows. The other datasets contain one row per country-year.
 All outputs use the requested `cow` or `gw` key and `year`.
 Dataset-specific columns have a stable source prefix. A missing
 country-year row is not created by this loader; after
-[`add_conflict()`](https://rguseinov.github.io/peacebuilder/reference/add_conflict.md),
+[`add_conflict()`](https://rguseinov.github.io/contentiousR/reference/add_conflict.md),
 an unmatched year is `NA`, not an assumed zero.
 
 SCAD is deduplicated to one row per event before country-year

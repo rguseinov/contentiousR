@@ -3,6 +3,6 @@
 ### Guides
 
 - [Get started with
-  peacebuilder](https://rguseinov.github.io/peacebuilder/articles/peacebuilder.md):
+  contentiousR](https://rguseinov.github.io/contentiousR/articles/contentiousR.md):
 - [Data sources and
-  interpretation](https://rguseinov.github.io/peacebuilder/articles/data-sources.md):
+  interpretation](https://rguseinov.github.io/contentiousR/articles/data-sources.md):

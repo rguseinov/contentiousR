@@ -1,6 +1,6 @@
-# peacebuilder
+# contentiousR
 
-`peacebuilder` is an R package for building country-year panel datasets
+`contentiousR` is an R package for building country-year panel datasets
 in cross-national peace science research. It provides a flexible
 workflow for creating state panels and enriching them with
 socioeconomic, political, and conflict indicators — using either
@@ -11,13 +11,13 @@ Correlates of War (COW) or Gleditsch-Ward (GW) country coding schemes.
 ``` r
 
 # install.packages("remotes")
-remotes::install_github("rguseinov/peacebuilder")
+remotes::install_github("rguseinov/contentiousR")
 ```
 
 > **Note:**
-> [`load_vdem_data()`](https://rguseinov.github.io/peacebuilder/reference/load_vdem_data.md)
+> [`load_vdem_data()`](https://rguseinov.github.io/contentiousR/reference/load_vdem_data.md)
 > and
-> [`add_vdem()`](https://rguseinov.github.io/peacebuilder/reference/add_vdem.md)
+> [`add_vdem()`](https://rguseinov.github.io/contentiousR/reference/add_vdem.md)
 > require the `vdemdata` package, which is not on CRAN:
 >
 > ``` r
@@ -27,7 +27,7 @@ remotes::install_github("rguseinov/peacebuilder")
 
 ## Two workflows, your choice
 
-`peacebuilder` supports two ways of working — use them separately or
+`contentiousR` supports two ways of working — use them separately or
 together.
 
 ### Pipeline workflow
@@ -37,7 +37,7 @@ coding system and year range from the panel:
 
 ``` r
 
-library(peacebuilder)
+library(contentiousR)
 library(dplyr)
 
 panel <- build_states_panel(
@@ -155,10 +155,10 @@ recorded 1989 start.
 
 The country-year sources (`scad`, `ucdp_prio`, `ucdp_vpp`, `mm`, `mmad`)
 are pre-aggregated to country-year inside
-[`conflict_data()`](https://rguseinov.github.io/peacebuilder/reference/conflict_data.md).
+[`conflict_data()`](https://rguseinov.github.io/contentiousR/reference/conflict_data.md).
 Legacy campaign and episode datasets, including MEC, return one row per
 campaign or episode;
-[`add_conflict()`](https://rguseinov.github.io/peacebuilder/reference/add_conflict.md)
+[`add_conflict()`](https://rguseinov.github.io/contentiousR/reference/add_conflict.md)
 collapses these with a missing-safe maximum by default. Unmatched panel
 rows remain `NA`, because absence from a source is not always evidence
 of zero events.
@@ -194,13 +194,13 @@ panel |> add_conflict(dataset = "mec", aggregate = FALSE)
 > `install.packages("readxl")` MEC requires the `haven` package:
 > `install.packages("haven")`
 
-## Using peacebuilder with peacesciencer
+## Using contentiousR with peacesciencer
 
 `peacesciencer` uses `ccode`/`gwcode` keys and dispatch attributes that
-differ from peacebuilder’s `cow`/`gw` interface. For a single addition,
+differ from contentiousR’s `cow`/`gw` interface. For a single addition,
 use
-[`add_from_peacesciencer()`](https://rguseinov.github.io/peacebuilder/reference/add_from_peacesciencer.md)
-to create that interface temporarily and return a clean peacebuilder
+[`add_from_peacesciencer()`](https://rguseinov.github.io/contentiousR/reference/add_from_peacesciencer.md)
+to create that interface temporarily and return a clean contentiousR
 panel without the technical alias:
 
 ``` r
@@ -216,7 +216,7 @@ panel <- build_states_panel(1990, 2010, coding_system = "cow") |>
 ```
 
 For several uninterrupted `peacesciencer` additions, use
-[`as_peacesciencer_panel()`](https://rguseinov.github.io/peacebuilder/reference/as_peacesciencer_panel.md)
+[`as_peacesciencer_panel()`](https://rguseinov.github.io/contentiousR/reference/as_peacesciencer_panel.md)
 once before the first one. It retains the original `cow`/`gw` column
 alongside the required alias.
 
@@ -244,12 +244,12 @@ panel |> add_leader_data(dataset = "reign")
 
 ## Citation
 
-If you use `peacebuilder` in your research, please cite:
+If you use `contentiousR` in your research, please cite:
 
-> Guseinov, R. (2026). *peacebuilder: Build Peace Science Data Panels*.
-> R package version 0.1.0. <https://github.com/rguseinov/peacebuilder>
+> Guseinov, R. (2026). *contentiousR: Build Peace Science Data Panels*.
+> R package version 0.1.0. <https://github.com/rguseinov/contentiousR>
 
 Please also cite every original data source used in an analysis. See the
 [data-source
-guide](https://rguseinov.github.io/peacebuilder/articles/data-sources.html)
+guide](https://rguseinov.github.io/contentiousR/articles/data-sources.html)
 for versions, transformations, source links, and licensing notes.

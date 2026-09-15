@@ -13,7 +13,7 @@ detect_coding_system(panel)
 - panel:
 
   A data frame produced by
-  [`build_states_panel()`](https://rguseinov.github.io/peacebuilder/reference/build_states_panel.md).
+  [`build_states_panel()`](https://rguseinov.github.io/contentiousR/reference/build_states_panel.md).
 
 ## Value
 

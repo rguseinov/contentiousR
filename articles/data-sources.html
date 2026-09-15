@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Data sources and interpretation • peacebuilder</title>
+<title>Data sources and interpretation • contentiousR</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
@@ -18,7 +18,7 @@
 
     <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
 
-    <a class="navbar-brand me-2" href="../index.html">peacebuilder</a>
+    <a class="navbar-brand me-2" href="../index.html">contentiousR</a>
 
     <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.0</small>
 
@@ -29,7 +29,7 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="nav-item"><a class="nav-link" href="../articles/peacebuilder.html">Get started</a></li>
+<li class="nav-item"><a class="nav-link" href="../articles/contentiousR.html">Get started</a></li>
 <li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
@@ -45,7 +45,7 @@
 <li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
 </form></li>
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/rguseinov/peacebuilder/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/rguseinov/contentiousR/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul>
 </div>
 
@@ -62,13 +62,13 @@
       <h1>Data sources and interpretation</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/rguseinov/peacebuilder/blob/main/vignettes/data-sources.Rmd" class="external-link"><code>vignettes/data-sources.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/rguseinov/contentiousR/blob/main/vignettes/data-sources.Rmd" class="external-link"><code>vignettes/data-sources.Rmd</code></a></small>
       <div class="d-none name"><code>data-sources.Rmd</code></div>
     </div>
 
     
     
-<p><code>peacebuilder</code> standardizes country and year keys; it does
+<p><code>contentiousR</code> standardizes country and year keys; it does
 not make the underlying research designs interchangeable. Cite each
 source used in an analysis and consult its codebook for definitions,
 scope, and limitations.</p>
@@ -187,7 +187,7 @@ repository</a></td>
 <h2 id="transformations-that-affect-interpretation">Transformations that affect interpretation<a class="anchor" aria-label="anchor" href="#transformations-that-affect-interpretation"></a>
 </h2>
 <p>SCAD repeats events when they span multiple locations. For
-country-level use, <code>peacebuilder</code> retains one row per
+country-level use, <code>contentiousR</code> retains one row per
 positive event ID before aggregating. Its documented <code>-99</code>,
 <code>-88</code>, and <code>-77</code> death-count values are
 represented as missing rather than as negative deaths.</p>
@@ -209,7 +209,7 @@ count and takes a missing-safe maximum of numeric fields. Use
 <code>aggregate = FALSE</code> or call <code><a href="../reference/conflict_data.html">conflict_data()</a></code>
 directly when campaign-level observations are required.</p>
 <p>MEC contains 2,734 reformist and maximalist contentious episodes
-worldwide. <code>peacebuilder</code> preserves its episode-level rows
+worldwide. <code>contentiousR</code> preserves its episode-level rows
 and all published variables, using the source’s <code>byear</code> as
 <code>year</code>. Fourteen left-censored episodes have a
 <code>mec_bdate</code> before 1955 but a source <code>byear</code> of

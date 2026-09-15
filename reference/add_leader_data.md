@@ -18,12 +18,12 @@ add_leader_data(panel, dataset = c("archigos", "reign"))
 - panel:
 
   A data frame produced by
-  [`build_states_panel()`](https://rguseinov.github.io/peacebuilder/reference/build_states_panel.md).
+  [`build_states_panel()`](https://rguseinov.github.io/contentiousR/reference/build_states_panel.md).
 
 - dataset:
 
   Dataset to use: `"archigos"` (default) or `"reign"`. See
-  [`load_leader_data()`](https://rguseinov.github.io/peacebuilder/reference/load_leader_data.md)
+  [`load_leader_data()`](https://rguseinov.github.io/contentiousR/reference/load_leader_data.md)
   for details.
 
 ## Value

@@ -2,7 +2,7 @@
 
 Adds the key alias and metadata expected by state-year functions from
 the `peacesciencer` package. The original `cow` or `gw` column is
-retained, so the result remains compatible with all `peacebuilder`
+retained, so the result remains compatible with all `contentiousR`
 functions.
 
 ## Usage
@@ -32,10 +32,10 @@ created by
 [`peacesciencer::create_stateyears()`](https://rdrr.io/pkg/peacesciencer/man/create_stateyears.html).
 It also expects its own key names: `ccode` for COW panels and `gwcode`
 for Gleditsch-Ward panels. This adapter supplies that interface without
-replacing peacebuilder's `cow` or `gw` key.
+replacing contentiousR's `cow` or `gw` key.
 
 Place the adapter immediately before the first `peacesciencer` function,
-or earlier in the pipeline. Dplyr joins used by peacebuilder preserve
+or earlier in the pipeline. Dplyr joins used by contentiousR preserve
 these attributes.
 
 ## Examples

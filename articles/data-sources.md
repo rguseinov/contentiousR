@@ -1,6 +1,6 @@
 # Data sources and interpretation
 
-`peacebuilder` standardizes country and year keys; it does not make the
+`contentiousR` standardizes country and year keys; it does not make the
 underlying research designs interchangeable. Cite each source used in an
 analysis and consult its codebook for definitions, scope, and
 limitations.
@@ -25,7 +25,7 @@ limitations.
 ## Transformations that affect interpretation
 
 SCAD repeats events when they span multiple locations. For country-level
-use, `peacebuilder` retains one row per positive event ID before
+use, `contentiousR` retains one row per positive event ID before
 aggregating. Its documented `-99`, `-88`, and `-77` death-count values
 are represented as missing rather than as negative deaths.
 
@@ -46,11 +46,11 @@ Legacy campaign and episode sources can contain several rows for one
 country-year. `add_conflict(aggregate = TRUE)` reports their count and
 takes a missing-safe maximum of numeric fields. Use `aggregate = FALSE`
 or call
-[`conflict_data()`](https://rguseinov.github.io/peacebuilder/reference/conflict_data.md)
+[`conflict_data()`](https://rguseinov.github.io/contentiousR/reference/conflict_data.md)
 directly when campaign-level observations are required.
 
 MEC contains 2,734 reformist and maximalist contentious episodes
-worldwide. `peacebuilder` preserves its episode-level rows and all
+worldwide. `contentiousR` preserves its episode-level rows and all
 published variables, using the source’s `byear` as `year`. Fourteen
 left-censored episodes have a `mec_bdate` before 1955 but a source
 `byear` of 1955. With `add_conflict(aggregate = TRUE)`, MEC follows the
