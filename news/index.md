@@ -29,6 +29,10 @@
   [`as_peacesciencer_panel()`](https://rguseinov.github.io/peacebuilder/reference/as_peacesciencer_panel.md)
   to supply the state-year key aliases and metadata required by
   `peacesciencer` while preserving peacebuilder’s API.
+- Added
+  [`add_from_peacesciencer()`](https://rguseinov.github.io/peacebuilder/reference/add_from_peacesciencer.md)
+  to apply a state-year `peacesciencer` function while keeping temporary
+  `ccode`/`gwcode` keys out of the result.
 - Restored the previously exported
   [`build_states_cow_panel()`](https://rguseinov.github.io/peacebuilder/reference/build_states_cow_panel.md)
   entry point for compatibility with peacebuilder 0.0.1.

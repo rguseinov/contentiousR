@@ -284,7 +284,7 @@
 <div class="section level2">
 <h2 id="using-peacebuilder-with-peacesciencer">Using peacebuilder with peacesciencer<a class="anchor" aria-label="anchor" href="#using-peacebuilder-with-peacesciencer"></a>
 </h2>
-<p><code>peacesciencer</code> uses <code>ccode</code>/<code>gwcode</code> keys and dispatch attributes that differ from peacebuilder’s <code>cow</code>/<code>gw</code> interface. Add the compatibility adapter before the first <code>peacesciencer</code> function; it retains the original columns and does not alter any observations or analytical variables.</p>
+<p><code>peacesciencer</code> uses <code>ccode</code>/<code>gwcode</code> keys and dispatch attributes that differ from peacebuilder’s <code>cow</code>/<code>gw</code> interface. For a single addition, use <code><a href="reference/add_from_peacesciencer.html">add_from_peacesciencer()</a></code> to create that interface temporarily and return a clean peacebuilder panel without the technical alias:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/svmiller/peacesciencer/" class="external-link">peacesciencer</a></span><span class="op">)</span></span>
 <span></span>
@@ -293,8 +293,8 @@
 <span>  <span class="fu"><a href="reference/add_vdem.html">add_vdem</a></span><span class="op">(</span>vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"v2x_polyarchy"</span>, <span class="st">"v2x_libdem"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="reference/add_conflict.html">add_conflict</a></span><span class="op">(</span>dataset <span class="op">=</span> <span class="st">"scad"</span>, aggregate <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="reference/add_leader_data.html">add_leader_data</a></span><span class="op">(</span>dataset <span class="op">=</span> <span class="st">"reign"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="reference/as_peacesciencer_panel.html">as_peacesciencer_panel</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">peacesciencer</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/peacesciencer/man/add_archigos.html" class="external-link">add_archigos</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="reference/add_from_peacesciencer.html">add_from_peacesciencer</a></span><span class="op">(</span><span class="fu">peacesciencer</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/peacesciencer/man/add_archigos.html" class="external-link">add_archigos</a></span><span class="op">)</span></span></code></pre></div>
+<p>For several uninterrupted <code>peacesciencer</code> additions, use <code><a href="reference/as_peacesciencer_panel.html">as_peacesciencer_panel()</a></code> once before the first one. It retains the original <code>cow</code>/<code>gw</code> column alongside the required alias.</p>
 <div class="section level3">
 <h3 id="load_leader_data--add_leader_data">
 <code>load_leader_data()</code> / <code>add_leader_data()</code>

@@ -93,19 +93,20 @@ panel |>
 Functions such as
 [`peacesciencer::add_archigos()`](https://rdrr.io/pkg/peacesciencer/man/add_archigos.html)
 expect `ccode`/`gwcode` keys plus attributes that describe the state
-system and unit of analysis. Add
-[`as_peacesciencer_panel()`](https://rguseinov.github.io/peacebuilder/reference/as_peacesciencer_panel.md)
-immediately before using those functions:
+system and unit of analysis. Use
+[`add_from_peacesciencer()`](https://rguseinov.github.io/peacebuilder/reference/add_from_peacesciencer.md)
+to supply these temporarily and return a panel with only peacebuilder’s
+original country-code key:
 
 ``` r
 
 library(peacesciencer)
 
 analysis_data |>
-  as_peacesciencer_panel() |>
-  peacesciencer::add_archigos()
+  add_from_peacesciencer(peacesciencer::add_archigos)
 ```
 
-The adapter keeps `cow` or `gw`, adds only the corresponding alias, and
-marks the data as state-year. It does not change rows or substantive
-variables.
+For multiple consecutive additions, call
+[`as_peacesciencer_panel()`](https://rguseinov.github.io/peacebuilder/reference/as_peacesciencer_panel.md)
+once and then apply the `peacesciencer` functions directly. Neither
+helper changes country codes, rows, or substantive variables.

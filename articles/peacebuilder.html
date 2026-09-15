@@ -154,18 +154,18 @@ need:</p>
 </h2>
 <p>Functions such as <code><a href="https://rdrr.io/pkg/peacesciencer/man/add_archigos.html" class="external-link">peacesciencer::add_archigos()</a></code> expect
 <code>ccode</code>/<code>gwcode</code> keys plus attributes that
-describe the state system and unit of analysis. Add
-<code><a href="../reference/as_peacesciencer_panel.html">as_peacesciencer_panel()</a></code> immediately before using those
-functions:</p>
+describe the state system and unit of analysis. Use
+<code><a href="../reference/add_from_peacesciencer.html">add_from_peacesciencer()</a></code> to supply these temporarily and
+return a panel with only peacebuilder’s original country-code key:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/svmiller/peacesciencer/" class="external-link">peacesciencer</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">analysis_data</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/as_peacesciencer_panel.html">as_peacesciencer_panel</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">peacesciencer</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/peacesciencer/man/add_archigos.html" class="external-link">add_archigos</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>The adapter keeps <code>cow</code> or <code>gw</code>, adds only the
-corresponding alias, and marks the data as state-year. It does not
-change rows or substantive variables.</p>
+<span>  <span class="fu"><a href="../reference/add_from_peacesciencer.html">add_from_peacesciencer</a></span><span class="op">(</span><span class="fu">peacesciencer</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/peacesciencer/man/add_archigos.html" class="external-link">add_archigos</a></span><span class="op">)</span></span></code></pre></div>
+<p>For multiple consecutive additions, call
+<code><a href="../reference/as_peacesciencer_panel.html">as_peacesciencer_panel()</a></code> once and then apply the
+<code>peacesciencer</code> functions directly. Neither helper changes
+country codes, rows, or substantive variables.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

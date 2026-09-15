@@ -9,19 +9,21 @@
 
 ## Add data to panels
 
-- [`add_conflict()`](https://rguseinov.github.io/peacebuilder/reference/add_conflict.md)
-  : Add conflict or protest data to a state panel
 - [`add_gdp()`](https://rguseinov.github.io/peacebuilder/reference/add_gdp.md)
   : Add GDP per capita data to a state panel
-- [`add_leader_data()`](https://rguseinov.github.io/peacebuilder/reference/add_leader_data.md)
-  : Add leader data to a state panel
 - [`add_vdem()`](https://rguseinov.github.io/peacebuilder/reference/add_vdem.md)
   : Add V-Dem indicators to a state panel
+- [`add_conflict()`](https://rguseinov.github.io/peacebuilder/reference/add_conflict.md)
+  : Add conflict or protest data to a state panel
+- [`add_leader_data()`](https://rguseinov.github.io/peacebuilder/reference/add_leader_data.md)
+  : Add leader data to a state panel
 
 ## Interoperate with other packages
 
 - [`as_peacesciencer_panel()`](https://rguseinov.github.io/peacebuilder/reference/as_peacesciencer_panel.md)
   : Make a state panel compatible with peacesciencer
+- [`add_from_peacesciencer()`](https://rguseinov.github.io/peacebuilder/reference/add_from_peacesciencer.md)
+  : Add data from peacesciencer and restore the peacebuilder schema
 
 ## Load source data
 

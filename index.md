@@ -191,10 +191,11 @@ panel |> add_conflict(dataset = "navco1.3", aggregate = FALSE)
 ## Using peacebuilder with peacesciencer
 
 `peacesciencer` uses `ccode`/`gwcode` keys and dispatch attributes that
-differ from peacebuilder’s `cow`/`gw` interface. Add the compatibility
-adapter before the first `peacesciencer` function; it retains the
-original columns and does not alter any observations or analytical
-variables.
+differ from peacebuilder’s `cow`/`gw` interface. For a single addition,
+use
+[`add_from_peacesciencer()`](https://rguseinov.github.io/peacebuilder/reference/add_from_peacesciencer.md)
+to create that interface temporarily and return a clean peacebuilder
+panel without the technical alias:
 
 ``` r
 
@@ -205,9 +206,13 @@ panel <- build_states_panel(1990, 2010, coding_system = "cow") |>
   add_vdem(vars = c("v2x_polyarchy", "v2x_libdem")) |>
   add_conflict(dataset = "scad", aggregate = FALSE) |>
   add_leader_data(dataset = "reign") |>
-  as_peacesciencer_panel() |>
-  peacesciencer::add_archigos()
+  add_from_peacesciencer(peacesciencer::add_archigos)
 ```
+
+For several uninterrupted `peacesciencer` additions, use
+[`as_peacesciencer_panel()`](https://rguseinov.github.io/peacebuilder/reference/as_peacesciencer_panel.md)
+once before the first one. It retains the original `cow`/`gw` column
+alongside the required alias.
 
 ### `load_leader_data()` / `add_leader_data()`
 
