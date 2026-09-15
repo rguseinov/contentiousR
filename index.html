@@ -11,8 +11,8 @@
 <script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Build Peace Science Data Panels">
-<meta name="description" content="Constructs country-year panels for cross-national political and peace science research. Functions create state panels using Correlates of War or Gleditsch-Ward identifiers and join curated socioeconomic, leadership, democracy, conflict, protest, and revolutionary-episode data. Included sources comprise Gapminder, NAVCO 2.1 &lt;doi:10.7910/DVN/MHOXDV&gt;, the Social Conflict Analysis Database &lt;doi:10.1177/0022002711435330&gt;, and the UCDP/PRIO Armed Conflict Dataset &lt;doi:10.1177/0022343302039005007&gt;.">
-<meta property="og:description" content="Constructs country-year panels for cross-national political and peace science research. Functions create state panels using Correlates of War or Gleditsch-Ward identifiers and join curated socioeconomic, leadership, democracy, conflict, protest, and revolutionary-episode data. Included sources comprise Gapminder, NAVCO 2.1 &lt;doi:10.7910/DVN/MHOXDV&gt;, the Social Conflict Analysis Database &lt;doi:10.1177/0022002711435330&gt;, and the UCDP/PRIO Armed Conflict Dataset &lt;doi:10.1177/0022343302039005007&gt;.">
+<meta name="description" content="Constructs country-year panels for cross-national political and peace science research. Functions create state panels using Correlates of War or Gleditsch-Ward identifiers and join curated socioeconomic, leadership, democracy, conflict, protest, and revolutionary-episode data. Included sources comprise Gapminder, NAVCO 2.1 &lt;doi:10.7910/DVN/MHOXDV&gt;, the Social Conflict Analysis Database &lt;doi:10.1177/0022002711435330&gt;, and the UCDP/PRIO Armed Conflict Dataset &lt;doi:10.1177/0022343302039005007&gt;, and Major Episodes of Contention &lt;doi:10.1093/jopres/xjaf008&gt;.">
+<meta property="og:description" content="Constructs country-year panels for cross-national political and peace science research. Functions create state panels using Correlates of War or Gleditsch-Ward identifiers and join curated socioeconomic, leadership, democracy, conflict, protest, and revolutionary-episode data. Included sources comprise Gapminder, NAVCO 2.1 &lt;doi:10.7910/DVN/MHOXDV&gt;, the Social Conflict Analysis Database &lt;doi:10.1177/0022002711435330&gt;, and the UCDP/PRIO Armed Conflict Dataset &lt;doi:10.1177/0022343302039005007&gt;, and Major Episodes of Contention &lt;doi:10.1093/jopres/xjaf008&gt;.">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -176,7 +176,7 @@
 <code>conflict_data()</code> / <code>add_conflict()</code>
 <a class="anchor" aria-label="anchor" href="#conflict_data--add_conflict"></a>
 </h3>
-<p>Loads one of nine conflict, protest, and revolutionary-episode datasets. Every loader honors <code>start_year</code> and <code>end_year</code> and supports both COW and GW coding.</p>
+<p>Loads one of ten conflict, protest, and revolutionary-episode datasets. Every loader honors <code>start_year</code> and <code>end_year</code> and supports both COW and GW coding.</p>
 <table class="table">
 <colgroup>
 <col width="20%">
@@ -256,10 +256,17 @@
 <td>Country-year events</td>
 <td><code>mmad_</code></td>
 </tr>
+<tr>
+<td><code>"mec"</code></td>
+<td><a href="https://doi.org/10.1093/jopres/xjaf008" class="external-link">Major Episodes of Contention</a></td>
+<td>1955–2018</td>
+<td>Episode (global)</td>
+<td><code>mec_</code></td>
+</tr>
 </tbody>
 </table>
 <p>† The bundled source has a small number of records beginning in 1899. SCAD’s official coverage is 1990–2017, but one continuing event has a recorded 1989 start.</p>
-<p>The newer sources (<code>scad</code>, <code>ucdp_prio</code>, <code>ucdp_vpp</code>, <code>mm</code>, <code>mmad</code>) are pre-aggregated to country-year inside <code><a href="reference/conflict_data.html">conflict_data()</a></code>. Legacy campaign datasets return one row per campaign or episode; <code><a href="reference/add_conflict.html">add_conflict()</a></code> collapses these with a missing-safe maximum by default. Unmatched panel rows remain <code>NA</code>, because absence from a source is not always evidence of zero events.</p>
+<p>The country-year sources (<code>scad</code>, <code>ucdp_prio</code>, <code>ucdp_vpp</code>, <code>mm</code>, <code>mmad</code>) are pre-aggregated to country-year inside <code><a href="reference/conflict_data.html">conflict_data()</a></code>. Legacy campaign and episode datasets, including MEC, return one row per campaign or episode; <code><a href="reference/add_conflict.html">add_conflict()</a></code> collapses these with a missing-safe maximum by default. Unmatched panel rows remain <code>NA</code>, because absence from a source is not always evidence of zero events.</p>
 <p>For UCDP/PRIO, <code>ucdp_prio_incidence</code> marks active conflict-years and <code>ucdp_prio_onset</code> marks the first year of a conflict episode as defined by the source’s <code>start_date2</code>. For VPP, prefer <code>ucdp_vpp_incidence</code>; <code>ucdp_vpp_onset</code> remains as a backwards-compatible incidence alias because the source has no episode-start field.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Standalone</span></span>
@@ -268,16 +275,19 @@
 <span><span class="va">ucdp</span>    <span class="op">&lt;-</span> <span class="fu"><a href="reference/conflict_data.html">conflict_data</a></span><span class="op">(</span><span class="fl">1990</span>, <span class="fl">2020</span>, dataset <span class="op">=</span> <span class="st">"ucdp_prio"</span>, coding_system <span class="op">=</span> <span class="st">"gw"</span><span class="op">)</span></span>
 <span><span class="va">mm_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/conflict_data.html">conflict_data</a></span><span class="op">(</span><span class="fl">1995</span>, <span class="fl">2015</span>, dataset <span class="op">=</span> <span class="st">"mm"</span>,        coding_system <span class="op">=</span> <span class="st">"cow"</span><span class="op">)</span></span>
 <span><span class="va">mmad</span>    <span class="op">&lt;-</span> <span class="fu"><a href="reference/conflict_data.html">conflict_data</a></span><span class="op">(</span><span class="fl">2005</span>, <span class="fl">2020</span>, dataset <span class="op">=</span> <span class="st">"mmad"</span>,      coding_system <span class="op">=</span> <span class="st">"cow"</span><span class="op">)</span></span>
+<span><span class="va">mec</span>     <span class="op">&lt;-</span> <span class="fu"><a href="reference/conflict_data.html">conflict_data</a></span><span class="op">(</span><span class="fl">1955</span>, <span class="fl">2018</span>, dataset <span class="op">=</span> <span class="st">"mec"</span>,       coding_system <span class="op">=</span> <span class="st">"cow"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Pipeline — all datasets work with add_conflict()</span></span>
 <span><span class="va">panel</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/add_conflict.html">add_conflict</a></span><span class="op">(</span>dataset <span class="op">=</span> <span class="st">"navco2.1"</span><span class="op">)</span></span>
 <span><span class="va">panel</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/add_conflict.html">add_conflict</a></span><span class="op">(</span>dataset <span class="op">=</span> <span class="st">"ucdp_prio"</span><span class="op">)</span></span>
 <span><span class="va">panel</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/add_conflict.html">add_conflict</a></span><span class="op">(</span>dataset <span class="op">=</span> <span class="st">"mmad"</span><span class="op">)</span></span>
+<span><span class="va">panel</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/add_conflict.html">add_conflict</a></span><span class="op">(</span>dataset <span class="op">=</span> <span class="st">"mec"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Raw join without aggregation (for legacy campaign datasets)</span></span>
-<span><span class="va">panel</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/add_conflict.html">add_conflict</a></span><span class="op">(</span>dataset <span class="op">=</span> <span class="st">"navco1.3"</span>, aggregate <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="co"># Raw join without aggregation (for campaign and episode datasets)</span></span>
+<span><span class="va">panel</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/add_conflict.html">add_conflict</a></span><span class="op">(</span>dataset <span class="op">=</span> <span class="st">"navco1.3"</span>, aggregate <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">panel</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/add_conflict.html">add_conflict</a></span><span class="op">(</span>dataset <span class="op">=</span> <span class="st">"mec"</span>, aggregate <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <blockquote>
-<p><strong>Note:</strong> <code>ucdp_vpp</code> requires the <code>readxl</code> package: <code>install.packages("readxl")</code></p>
+<p><strong>Note:</strong> <code>ucdp_vpp</code> requires the <code>readxl</code> package: <code>install.packages("readxl")</code> MEC requires the <code>haven</code> package: <code>install.packages("haven")</code></p>
 </blockquote>
 </div>
 </div>

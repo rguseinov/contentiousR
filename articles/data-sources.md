@@ -17,6 +17,7 @@ limitations.
 | `"ucdp_vpp"` | UCDP VPP 26.1, 1989–2025 | Country-year | [UCDP](https://ucdp.uu.se/downloads/) |
 | `"mm"` | Mass Mobilization v4, 1990–2020 | Country-year | [Project repository](https://github.com/MassMobilization) |
 | `"mmad"` | MMAD 5.0, 2003–2022 | Country-year | [MMAD](https://mmadatabase.org/) |
+| `"mec"` | Major Episodes of Contention, 1955–2018 | Episode (global) | [Article](https://doi.org/10.1093/jopres/xjaf008) / [data](https://doi.org/10.7910/DVN/JQWQNW) |
 | `"archigos"` | Archigos 4.1, 1875–2015 | Country-year | [Archigos](https://ksgleditsch.com/archigos.html) |
 | `"reign"` | REIGN, 1921–2021 | Country-year | [REIGN](https://oefdatascience.github.io/REIGN.github.io/) |
 | V-Dem | Installed `vdemdata` release | Country-year | [V-Dem](https://v-dem.net/data/the-v-dem-dataset/) |
@@ -48,13 +49,21 @@ or call
 [`conflict_data()`](https://rguseinov.github.io/peacebuilder/reference/conflict_data.md)
 directly when campaign-level observations are required.
 
+MEC contains 2,734 reformist and maximalist contentious episodes
+worldwide. `peacebuilder` preserves its episode-level rows and all
+published variables, using the source’s `byear` as `year`. Fourteen
+left-censored episodes have a `mec_bdate` before 1955 but a source
+`byear` of 1955. With `add_conflict(aggregate = TRUE)`, MEC follows the
+same explicit aggregation policy as the other campaign and episode
+sources; use `aggregate = FALSE` to retain individual episodes.
+
 ## Licensing
 
 The package’s MIT license applies to the software, not to third-party
 data. Gapminder and UCDP identify their bundled data as CC BY 4.0; NAVCO
-2.1 is CC0. Other source files retain their creators’ terms. See
-`inst/COPYRIGHTS` and verify the applicable terms before redistributing
-a package build containing those files.
+2.1 and MEC are CC0. Other source files retain their creators’ terms.
+See `inst/COPYRIGHTS` and verify the applicable terms before
+redistributing a package build containing those files.
 
 [^1]: The bundled file contains two records beginning in 1899.
 

@@ -156,18 +156,26 @@ repository</a></td>
 <td><a href="https://mmadatabase.org/" class="external-link">MMAD</a></td>
 </tr>
 <tr class="odd">
+<td><code>"mec"</code></td>
+<td>Major Episodes of Contention, 1955–2018</td>
+<td>Episode (global)</td>
+<td>
+<a href="https://doi.org/10.1093/jopres/xjaf008" class="external-link">Article</a> / <a href="https://doi.org/10.7910/DVN/JQWQNW" class="external-link">data</a>
+</td>
+</tr>
+<tr class="even">
 <td><code>"archigos"</code></td>
 <td>Archigos 4.1, 1875–2015</td>
 <td>Country-year</td>
 <td><a href="https://ksgleditsch.com/archigos.html" class="external-link">Archigos</a></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>"reign"</code></td>
 <td>REIGN, 1921–2021</td>
 <td>Country-year</td>
 <td><a href="https://oefdatascience.github.io/REIGN.github.io/" class="external-link">REIGN</a></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>V-Dem</td>
 <td>Installed <code>vdemdata</code> release</td>
 <td>Country-year</td>
@@ -200,14 +208,23 @@ country-year. <code>add_conflict(aggregate = TRUE)</code> reports their
 count and takes a missing-safe maximum of numeric fields. Use
 <code>aggregate = FALSE</code> or call <code><a href="../reference/conflict_data.html">conflict_data()</a></code>
 directly when campaign-level observations are required.</p>
+<p>MEC contains 2,734 reformist and maximalist contentious episodes
+worldwide. <code>peacebuilder</code> preserves its episode-level rows
+and all published variables, using the source’s <code>byear</code> as
+<code>year</code>. Fourteen left-censored episodes have a
+<code>mec_bdate</code> before 1955 but a source <code>byear</code> of
+1955. With <code>add_conflict(aggregate = TRUE)</code>, MEC follows the
+same explicit aggregation policy as the other campaign and episode
+sources; use <code>aggregate = FALSE</code> to retain individual
+episodes.</p>
 </div>
 <div class="section level2">
 <h2 id="licensing">Licensing<a class="anchor" aria-label="anchor" href="#licensing"></a>
 </h2>
 <p>The package’s MIT license applies to the software, not to third-party
 data. Gapminder and UCDP identify their bundled data as CC BY 4.0; NAVCO
-2.1 is CC0. Other source files retain their creators’ terms. See
-<code>inst/COPYRIGHTS</code> and verify the applicable terms before
+2.1 and MEC are CC0. Other source files retain their creators’ terms.
+See <code>inst/COPYRIGHTS</code> and verify the applicable terms before
 redistributing a package build containing those files.</p>
 </div>
 

@@ -1,14 +1,15 @@
 # Load conflict and mobilisation data
 
-Loads one of nine conflict, protest, or revolutionary episode datasets
+Loads one of ten conflict, protest, or revolutionary episode datasets
 bundled with the package. `scad`, `ucdp_prio`, `ucdp_vpp`, `mm`, and
 `mmad` are returned at the country-year level; their event- or
 conflict-level source rows are aggregated inside this function.
 
-`navco1.3`, `beissinger`, and `csra` return campaign or episode onsets;
-`navco2.1` returns campaign-year rows. These sources can contain
-multiple rows for one country-year. Use `add_conflict(aggregate = TRUE)`
-(the default) to collapse them to country-year.
+`navco1.3`, `beissinger`, `csra`, and `mec` return campaign or episode
+records; `navco2.1` returns campaign-year rows. These sources can
+contain multiple rows for one country-year. Use
+`add_conflict(aggregate = TRUE)` (the default) to collapse them to
+country-year.
 
 ## Usage
 
@@ -17,7 +18,7 @@ conflict_data(
   start_year = 1945,
   end_year = 2013,
   dataset = c("navco1.3", "navco2.1", "beissinger", "csra", "scad", "ucdp_prio",
-    "ucdp_vpp", "mm", "mmad"),
+    "ucdp_vpp", "mm", "mmad", "mec"),
   coding_system = c("cow", "gw")
 )
 ```
@@ -38,6 +39,11 @@ SCAD:
 UCDP: <https://ucdp.uu.se/downloads/replication_data.html>.
 
 MMAD: <https://mmadatabase.org/>.
+
+MEC: Chenoweth and Kang (2026),
+[doi:10.1093/jopres/xjaf008](https://doi.org/10.1093/jopres/xjaf008) ;
+data release
+[doi:10.7910/DVN/JQWQNW](https://doi.org/10.7910/DVN/JQWQNW) .
 
 ## Arguments
 
@@ -95,6 +101,11 @@ MMAD: <https://mmadatabase.org/>.
   :   Mass Mobilization in Autocracies Database. Coverage: 2003-2022.
       Prefix: `mmad_`.
 
+  `"mec"`
+
+  :   Major Episodes of Contention. Global coverage: 1955-2018. Episode
+      records; prefix: `mec_`. Requires the `haven` package.
+
 - coding_system:
 
   Country coding system: `"cow"` or `"gw"`. `ucdp_prio` and `ucdp_vpp`
@@ -103,9 +114,9 @@ MMAD: <https://mmadatabase.org/>.
 
 ## Value
 
-A data frame. `navco1.3`, `beissinger`, and `csra` contain one row per
-campaign or episode onset; `navco2.1` contains campaign-year rows. The
-other datasets contain one row per country-year.
+A data frame. `navco1.3`, `beissinger`, `csra`, and `mec` contain one
+row per campaign or episode record; `navco2.1` contains campaign-year
+rows. The other datasets contain one row per country-year.
 
 ## Details
 
@@ -131,6 +142,14 @@ such as ranges and inequalities. `mm_participants` is the maximum among
 genuinely numeric values; `mm_participants_reported` preserves the
 source strings.
 
+MEC is kept at its published episode level. Its source `byear` becomes
+`year`, `ccode` becomes `cow`, and all other source columns receive the
+`mec_` prefix. `mec_episode` equals one for every returned episode
+record. Fourteen left-censored records have an actual `mec_bdate` before
+1955 while their source `byear` is 1955. With GW coding, COW 679 (Yemen)
+maps to GW 678 and COW 817 (South Vietnam) maps to GW 817; Tonga has no
+GW state equivalent and is omitted.
+
 ## Examples
 
 ``` r
@@ -139,4 +158,8 @@ navco <- conflict_data(1990, 2010, dataset = "navco2.1", coding_system = "cow")
 scad  <- conflict_data(1995, 2015, dataset = "scad",      coding_system = "cow")
 
 ucdp  <- conflict_data(1990, 2020, dataset = "ucdp_prio", coding_system = "gw")
+
+if (requireNamespace("haven", quietly = TRUE)) {
+  mec <- conflict_data(1990, 2010, dataset = "mec", coding_system = "cow")
+}
 ```

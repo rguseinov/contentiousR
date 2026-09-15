@@ -2,6 +2,14 @@
 
 ## peacebuilder 0.1.0
 
+### Data
+
+- Added the Major Episodes of Contention (MEC) dataset: 2,734 globally
+  covered reformist and maximalist episodes from 1955 through 2018. MEC
+  is available through `conflict_data(dataset = "mec")` and
+  `add_conflict(dataset = "mec")`. Episode-level rows are preserved
+  unless the existing `aggregate = TRUE` policy is requested.
+
 ### Correctness
 
 - [`conflict_data()`](https://rguseinov.github.io/peacebuilder/reference/conflict_data.md)

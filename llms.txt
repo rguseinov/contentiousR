@@ -132,7 +132,7 @@ panel |> add_vdem(vars = c("v2x_polyarchy", "v2x_libdem"))
 
 ### `conflict_data()` / `add_conflict()`
 
-Loads one of nine conflict, protest, and revolutionary-episode datasets.
+Loads one of ten conflict, protest, and revolutionary-episode datasets.
 Every loader honors `start_year` and `end_year` and supports both COW
 and GW coding.
 
@@ -147,15 +147,17 @@ and GW coding.
 | `"ucdp_vpp"` | UCDP Violent Political Protest v26.1 | 1989–2025 | Country-year incidence | `ucdp_vpp_` |
 | `"mm"` | Mass Mobilization Project v4 | 1990–2020 | Country-year protests | `mm_` |
 | `"mmad"` | Mass Mobilization in Autocracies v5 | 2003–2022 | Country-year events | `mmad_` |
+| `"mec"` | [Major Episodes of Contention](https://doi.org/10.1093/jopres/xjaf008) | 1955–2018 | Episode (global) | `mec_` |
 
 † The bundled source has a small number of records beginning in 1899.
 SCAD’s official coverage is 1990–2017, but one continuing event has a
 recorded 1989 start.
 
-The newer sources (`scad`, `ucdp_prio`, `ucdp_vpp`, `mm`, `mmad`) are
-pre-aggregated to country-year inside
+The country-year sources (`scad`, `ucdp_prio`, `ucdp_vpp`, `mm`, `mmad`)
+are pre-aggregated to country-year inside
 [`conflict_data()`](https://rguseinov.github.io/peacebuilder/reference/conflict_data.md).
-Legacy campaign datasets return one row per campaign or episode;
+Legacy campaign and episode datasets, including MEC, return one row per
+campaign or episode;
 [`add_conflict()`](https://rguseinov.github.io/peacebuilder/reference/add_conflict.md)
 collapses these with a missing-safe maximum by default. Unmatched panel
 rows remain `NA`, because absence from a source is not always evidence
@@ -175,18 +177,22 @@ scad    <- conflict_data(1995, 2015, dataset = "scad",      coding_system = "cow
 ucdp    <- conflict_data(1990, 2020, dataset = "ucdp_prio", coding_system = "gw")
 mm_data <- conflict_data(1995, 2015, dataset = "mm",        coding_system = "cow")
 mmad    <- conflict_data(2005, 2020, dataset = "mmad",      coding_system = "cow")
+mec     <- conflict_data(1955, 2018, dataset = "mec",       coding_system = "cow")
 
 # Pipeline — all datasets work with add_conflict()
 panel |> add_conflict(dataset = "navco2.1")
 panel |> add_conflict(dataset = "ucdp_prio")
 panel |> add_conflict(dataset = "mmad")
+panel |> add_conflict(dataset = "mec")
 
-# Raw join without aggregation (for legacy campaign datasets)
+# Raw join without aggregation (for campaign and episode datasets)
 panel |> add_conflict(dataset = "navco1.3", aggregate = FALSE)
+panel |> add_conflict(dataset = "mec", aggregate = FALSE)
 ```
 
 > **Note:** `ucdp_vpp` requires the `readxl` package:
-> `install.packages("readxl")`
+> `install.packages("readxl")` MEC requires the `haven` package:
+> `install.packages("haven")`
 
 ## Using peacebuilder with peacesciencer
 

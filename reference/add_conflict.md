@@ -3,16 +3,16 @@
 Joins a conflict, protest, or revolutionary episode dataset onto an
 existing state panel at the country-year level.
 
-**New datasets** (`"scad"`, `"ucdp_prio"`, `"ucdp_vpp"`, `"mm"`,
-`"mmad"`) are already at the country-year level when loaded, so the
-`aggregate` argument has no effect for them.
+**Country-year datasets** (`"scad"`, `"ucdp_prio"`, `"ucdp_vpp"`,
+`"mm"`, `"mmad"`) are already at the country-year level when loaded, so
+the `aggregate` argument has no effect for them.
 
-**Legacy campaign datasets** (`"navco1.3"`, `"navco2.1"`,
-`"beissinger"`, `"csra"`) can have multiple rows per country-year. With
-`aggregate = TRUE` (the default) these are collapsed to country-year by
-taking the maximum of all numeric columns, and an `n_campaigns` count
-column is added. Set `aggregate = FALSE` to keep campaign-level rows
-(may produce duplicates).
+**Campaign and episode datasets** (`"navco1.3"`, `"navco2.1"`,
+`"beissinger"`, `"csra"`, `"mec"`) can have multiple rows per
+country-year. With `aggregate = TRUE` (the default) these are collapsed
+to country-year by taking the maximum of all numeric columns, and an
+`n_campaigns` count column is added. Set `aggregate = FALSE` to keep
+campaign-level rows (may produce duplicates).
 
 ## Usage
 
@@ -71,10 +71,16 @@ add_conflict(panel, dataset, aggregate = TRUE)
   :   Mass Mobilization in Autocracies Database (2003-2022). Prefix:
       `mmad_`.
 
+  `"mec"`
+
+  :   Major Episodes of Contention (1955-2018), with global
+      episode-level coverage. Prefix: `mec_`. Requires the `haven`
+      package.
+
 - aggregate:
 
   Logical. If `TRUE` (default), aggregates to country-year before
-  joining (relevant for legacy campaign datasets only). If `FALSE`,
+  joining (relevant for campaign and episode datasets only). If `FALSE`,
   performs a raw left join.
 
 ## Value
@@ -88,7 +94,7 @@ an unobserved event indicator is zero.
 ``` r
 panel <- build_states_panel(1990, 2010, coding_system = "cow") |>
   add_conflict(dataset = "navco2.1")
-#> Multiple campaigns per country-year detected in 'navco2.1'. Aggregating to country-year using max() for numeric columns. Use `aggregate = FALSE` or `conflict_data()` for campaign-level data.
+#> Multiple campaigns or episodes per country-year detected in 'navco2.1'. Aggregating to country-year using max() for numeric columns. Use `aggregate = FALSE` or `conflict_data()` for record-level data.
 
 panel <- build_states_panel(1990, 2010, coding_system = "cow") |>
   add_conflict(dataset = "ucdp_prio")
@@ -99,4 +105,10 @@ panel <- build_states_panel(2005, 2020, coding_system = "cow") |>
 # Raw join for legacy datasets — researcher handles aggregation manually
 panel <- build_states_panel(1990, 2010, coding_system = "cow") |>
   add_conflict(dataset = "navco1.3", aggregate = FALSE)
+
+# MEC is episode-level; keep individual episodes with aggregate = FALSE
+if (requireNamespace("haven", quietly = TRUE)) {
+  panel <- build_states_panel(1990, 2010, coding_system = "cow") |>
+    add_conflict(dataset = "mec", aggregate = FALSE)
+}
 ```
