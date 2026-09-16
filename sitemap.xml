@@ -6,6 +6,7 @@
 <url><loc>https://rguseinov.github.io/contentiousR/articles/case-study.html</loc></url>
 <url><loc>https://rguseinov.github.io/contentiousR/articles/contentiousR.html</loc></url>
 <url><loc>https://rguseinov.github.io/contentiousR/articles/data-sources.html</loc></url>
+<url><loc>https://rguseinov.github.io/contentiousR/articles/dataset-comparison.html</loc></url>
 <url><loc>https://rguseinov.github.io/contentiousR/articles/index.html</loc></url>
 <url><loc>https://rguseinov.github.io/contentiousR/authors.html</loc></url>
 <url><loc>https://rguseinov.github.io/contentiousR/index.html</loc></url>
@@ -32,6 +33,7 @@
 <url><loc>https://rguseinov.github.io/contentiousR/reference/conflict_data.html</loc></url>
 <url><loc>https://rguseinov.github.io/contentiousR/reference/contentiousR-package.html</loc></url>
 <url><loc>https://rguseinov.github.io/contentiousR/reference/detect_coding_system.html</loc></url>
+<url><loc>https://rguseinov.github.io/contentiousR/reference/fetch_campaign_events.html</loc></url>
 <url><loc>https://rguseinov.github.io/contentiousR/reference/index.html</loc></url>
 <url><loc>https://rguseinov.github.io/contentiousR/reference/lag_with_year_gap_check.html</loc></url>
 <url><loc>https://rguseinov.github.io/contentiousR/reference/load_gdp_data.html</loc></url>
@@ -40,6 +42,8 @@
 <url><loc>https://rguseinov.github.io/contentiousR/reference/load_population_data.html</loc></url>
 <url><loc>https://rguseinov.github.io/contentiousR/reference/load_vdem_data.html</loc></url>
 <url><loc>https://rguseinov.github.io/contentiousR/reference/plot_coverage.html</loc></url>
+<url><loc>https://rguseinov.github.io/contentiousR/reference/plot_regional_coverage.html</loc></url>
+<url><loc>https://rguseinov.github.io/contentiousR/reference/plot_temporal_coverage.html</loc></url>
 <url><loc>https://rguseinov.github.io/contentiousR/reference/read_rdata_from_extdata.html</loc></url>
 <url><loc>https://rguseinov.github.io/contentiousR/reference/read_sipri_sheet.html</loc></url>
 <url><loc>https://rguseinov.github.io/contentiousR/reference/safe_max.html</loc></url>

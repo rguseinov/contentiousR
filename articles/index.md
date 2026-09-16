@@ -11,3 +11,5 @@
 
 - [Case study: modeling revolutionary
   onset](https://rguseinov.github.io/contentiousR/articles/case-study.md):
+- [Comparing revolutionary-event
+  datasets](https://rguseinov.github.io/contentiousR/articles/dataset-comparison.md):

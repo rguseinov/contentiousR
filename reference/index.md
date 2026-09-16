@@ -32,6 +32,10 @@
 
 - [`plot_coverage()`](https://rguseinov.github.io/contentiousR/reference/plot_coverage.md)
   : Plot country-year onset/event coverage of a binary variable
+- [`plot_regional_coverage()`](https://rguseinov.github.io/contentiousR/reference/plot_regional_coverage.md)
+  : Compare regional coverage across conflict/campaign datasets
+- [`plot_temporal_coverage()`](https://rguseinov.github.io/contentiousR/reference/plot_temporal_coverage.md)
+  : Compare temporal coverage across conflict/campaign datasets
 
 ## Interoperate with other packages
 

@@ -133,6 +133,10 @@ for versions, transformations, source links, and licensing notes.
 
 - [`plot_coverage()`](https://rguseinov.github.io/contentiousR/reference/plot_coverage.md)
   : Plot country-year onset/event coverage of a binary variable
+- [`plot_regional_coverage()`](https://rguseinov.github.io/contentiousR/reference/plot_regional_coverage.md)
+  : Compare regional coverage across conflict/campaign datasets
+- [`plot_temporal_coverage()`](https://rguseinov.github.io/contentiousR/reference/plot_temporal_coverage.md)
+  : Compare temporal coverage across conflict/campaign datasets
 
 ## Interoperate with other packages
 
@@ -176,3 +180,5 @@ for versions, transformations, source links, and licensing notes.
 
 - [Case study: modeling revolutionary
   onset](https://rguseinov.github.io/contentiousR/articles/case-study.md):
+- [Comparing revolutionary-event
+  datasets](https://rguseinov.github.io/contentiousR/articles/dataset-comparison.md):
