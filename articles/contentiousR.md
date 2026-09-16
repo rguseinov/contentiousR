@@ -144,6 +144,27 @@ Each requested variable gets one new column named `<var>_l`. Call
 [`add_lag()`](https://rguseinov.github.io/contentiousR/reference/add_lag.md)
 again (optionally with a different `n`) for additional lags.
 
+## Checking coverage
+
+[`plot_coverage()`](https://rguseinov.github.io/contentiousR/reference/plot_coverage.md)
+draws a state-by-year heatmap of where a column is observed versus `NA`,
+for auditing a source before analysis. States that never match the
+source (e.g. India is not `"scad"`-eligible in this
+sub-Saharan/Latin-American dataset) are dropped by default
+(`drop_empty = TRUE`), since an all-grey row adds clutter without
+showing where coverage actually varies.
+
+``` r
+
+if (requireNamespace("ggplot2", quietly = TRUE)) {
+  build_states_panel(1990, 2015, coding_system = "cow") |>
+    add_conflict("scad") |>
+    plot_coverage("scad_onset")
+}
+```
+
+![](contentiousR_files/figure-html/unnamed-chunk-5-1.png)
+
 ## Optional V-Dem data
 
 V-Dem is not bundled and its R data package is not on CRAN. Install it

@@ -129,6 +129,11 @@ for versions, transformations, source links, and licensing notes.
 - [`add_lag()`](https://rguseinov.github.io/contentiousR/reference/add_lag.md)
   : Add lagged variables to a state panel
 
+## Diagnostics and visualization
+
+- [`plot_coverage()`](https://rguseinov.github.io/contentiousR/reference/plot_coverage.md)
+  : Plot country-year coverage of a variable
+
 ## Interoperate with other packages
 
 - [`as_peacesciencer_panel()`](https://rguseinov.github.io/contentiousR/reference/as_peacesciencer_panel.md)
