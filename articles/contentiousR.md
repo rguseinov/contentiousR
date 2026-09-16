@@ -145,6 +145,11 @@ panel |> add_pop()
 panel |> add_pop(dataset = "nmc")
 ```
 
+[`add_population()`](https://rguseinov.github.io/contentiousR/reference/add_population.md)
+is identical to
+[`add_pop()`](https://rguseinov.github.io/contentiousR/reference/add_pop.md),
+under the unabbreviated name.
+
 ## `load_vdem_data()` / `add_vdem()`
 
 V-Dem indicators. A default set of democracy, civil society, civil

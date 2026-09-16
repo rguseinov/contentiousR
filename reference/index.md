@@ -13,6 +13,8 @@
   : Add GDP data to a state panel
 - [`add_pop()`](https://rguseinov.github.io/contentiousR/reference/add_pop.md)
   : Add population data to a state panel
+- [`add_population()`](https://rguseinov.github.io/contentiousR/reference/add_population.md)
+  : Add population data to a state panel
 - [`add_vdem()`](https://rguseinov.github.io/contentiousR/reference/add_vdem.md)
   : Add V-Dem indicators to a state panel
 - [`add_conflict()`](https://rguseinov.github.io/contentiousR/reference/add_conflict.md)
