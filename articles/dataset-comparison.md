@@ -64,14 +64,15 @@ plot_temporal_coverage(
 
 ![](dataset-comparison_files/figure-html/unnamed-chunk-3-1.png)
 
-NAVCO 2.1 and MEC sit well above the other three here. This is expected,
-not a data quality problem: NAVCO 2.1 reports *campaign-years* (one row
-per year a campaign remained active) rather than a single onset row per
-campaign, and MEC’s underlying definition of a contentious episode is
+MEC sits well above the other four here. This is expected, not a data
+quality problem: MEC’s underlying definition of a contentious episode is
 broader — reformist as well as maximalist claims — than the “revolution”
-concept the other datasets target. Mixing an onset-coded dataset with a
-campaign-year-coded one in the same comparison is a legitimate choice,
-but worth remembering when reading the chart.
+concept the other datasets target, so it picks up substantially more
+episodes across every period. (NAVCO 2.1 is compared here at the same
+campaign-onset level as the other datasets, not its native campaign-year
+granularity — see
+[`?fetch_campaign_events`](https://rguseinov.github.io/contentiousR/reference/fetch_campaign_events.md)
+— which is why it tracks NAVCO 1.3 closely instead of dwarfing it.)
 
 With `by_region = TRUE`, the same data is faceted by region, as in the
 article’s Figure 4:
