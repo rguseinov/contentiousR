@@ -35,3 +35,10 @@
   : Load leader data
 - [`load_vdem_data()`](https://rguseinov.github.io/contentiousR/reference/load_vdem_data.md)
   : Load V-Dem data
+
+## Citation
+
+- [`cn_cite()`](https://rguseinov.github.io/contentiousR/reference/cn_cite.md)
+  : Cite a bundled data source
+- [`cn_bib`](https://rguseinov.github.io/contentiousR/reference/cn_bib.md)
+  : Bundled bibliography for cn_cite()
