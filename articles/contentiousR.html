@@ -138,12 +138,44 @@ data before joining them.</p>
 interpreting any source-specific variable.</p>
 </div>
 <div class="section level2">
+<h2 id="conflict-spells-peace-years">Conflict spells (peace-years)<a class="anchor" aria-label="anchor" href="#conflict-spells-peace-years"></a>
+</h2>
+<p><code><a href="../reference/add_spells.html">add_spells()</a></code> turns a binary conflict column into a
+duration counter — years since the last event for that state, restarting
+after each new one. This is the same construct as
+<code><a href="https://rdrr.io/pkg/peacesciencer/man/add_spells.html" class="external-link">peacesciencer::add_spells()</a></code>, useful as a control for
+temporal dependence in event-history models (e.g. with cubic splines).
+It needs a column without <code>NA</code>, so filter first:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">spell_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/build_states_panel.html">build_states_panel</a></span><span class="op">(</span><span class="fl">1990</span>, <span class="fl">2005</span>, coding_system <span class="op">=</span> <span class="st">"gw"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/add_conflict.html">add_conflict</a></span><span class="op">(</span><span class="st">"ucdp_prio"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html" class="external-link">drop_na</a></span><span class="op">(</span><span class="va">ucdp_prio_onset</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/add_spells.html">add_spells</a></span><span class="op">(</span>event <span class="op">=</span> <span class="st">"ucdp_prio_onset"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">spell_data</span><span class="op">[</span><span class="va">spell_data</span><span class="op">$</span><span class="va">gw</span> <span class="op">==</span> <span class="fl">2</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gw"</span>, <span class="st">"year"</span>, <span class="st">"ucdp_prio_onset"</span>, <span class="st">"ucdp_prio_spell"</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="co">#&gt;   gw year ucdp_prio_onset ucdp_prio_spell</span></span>
+<span><span class="co">#&gt; 1  2 2001               1               0</span></span>
+<span><span class="co">#&gt; 2  2 2002               0               0</span></span>
+<span><span class="co">#&gt; 3  2 2003               1               1</span></span>
+<span><span class="co">#&gt; 4  2 2004               0               0</span></span>
+<span><span class="co">#&gt; 5  2 2005               0               1</span></span></code></pre></div>
+<p>If <code>event</code> is omitted, <code><a href="../reference/add_spells.html">add_spells()</a></code> looks for
+exactly one column ending in <code>_onset</code>,
+<code>_incidence</code>, or <code>_ongoing</code> and uses that; it
+errors if none or several are found. <code>_onset</code>-style columns
+treat every <code>1</code> as an independent event by default;
+<code>_incidence</code>/<code>_ongoing</code>-style columns collapse a
+run of consecutive <code>1</code>s into one event, leaving the
+continuation years <code>NA</code> in the output (override this with the
+<code>ongoing</code> argument).</p>
+</div>
+<div class="section level2">
 <h2 id="optional-v-dem-data">Optional V-Dem data<a class="anchor" aria-label="anchor" href="#optional-v-dem-data"></a>
 </h2>
 <p>V-Dem is not bundled and its R data package is not on CRAN. Install
 it from its official repository, then request only the indicators you
 need:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"vdeminstitute/vdemdata"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">panel</span> <span class="op">|&gt;</span></span>
@@ -154,7 +186,7 @@ need:</p>
 <code>build_states_panel()</code><a class="anchor" aria-label="anchor" href="#build_states_panel"></a>
 </h2>
 <p>Creates a state-year panel with optional filters:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">panel</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/build_states_panel.html">build_states_panel</a></span><span class="op">(</span></span>
 <span>  start_year        <span class="op">=</span> <span class="fl">1946</span>,</span>
 <span>  end_year          <span class="op">=</span> <span class="fl">2019</span>,</span>
@@ -177,7 +209,7 @@ estimates from Fariss, Anders, Markowitz, and Barnum (2022) as
 coverage (1500–2019) but units that are not independently verified in
 this package — see
 <code><a href="../articles/data-sources.html">vignette("data-sources", package = "contentiousR")</a></code>.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Standalone</span></span>
 <span><span class="va">gdp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_gdp_data.html">load_gdp_data</a></span><span class="op">(</span>start_year <span class="op">=</span> <span class="fl">1990</span>, end_year <span class="op">=</span> <span class="fl">2015</span>, coding_system <span class="op">=</span> <span class="st">"cow"</span><span class="op">)</span></span>
 <span><span class="va">fariss_gdp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_gdp_data.html">load_gdp_data</a></span><span class="op">(</span><span class="fl">1700</span>, <span class="fl">2015</span>, dataset <span class="op">=</span> <span class="st">"fariss"</span>, coding_system <span class="op">=</span> <span class="st">"cow"</span><span class="op">)</span></span>
@@ -230,7 +262,7 @@ of War NMC v7.0</a></td>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Standalone</span></span>
 <span><span class="va">pop_wpp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_population_data.html">load_population_data</a></span><span class="op">(</span><span class="fl">1990</span>, <span class="fl">2015</span>, dataset <span class="op">=</span> <span class="st">"wpp"</span>, coding_system <span class="op">=</span> <span class="st">"cow"</span><span class="op">)</span></span>
 <span><span class="va">pop_nmc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_population_data.html">load_population_data</a></span><span class="op">(</span><span class="fl">1900</span>, <span class="fl">2015</span>, dataset <span class="op">=</span> <span class="st">"nmc"</span>, coding_system <span class="op">=</span> <span class="st">"cow"</span><span class="op">)</span></span>
@@ -290,7 +322,7 @@ of War NMC v7.0</a></td>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Standalone</span></span>
 <span><span class="va">milex_sipri</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_military_expenditure_data.html">load_military_expenditure_data</a></span><span class="op">(</span><span class="fl">1990</span>, <span class="fl">2015</span>, dataset <span class="op">=</span> <span class="st">"sipri"</span>, coding_system <span class="op">=</span> <span class="st">"cow"</span><span class="op">)</span></span>
 <span><span class="va">milex_barnum</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_military_expenditure_data.html">load_military_expenditure_data</a></span><span class="op">(</span><span class="fl">1900</span>, <span class="fl">2015</span>, dataset <span class="op">=</span> <span class="st">"barnum"</span>, coding_system <span class="op">=</span> <span class="st">"cow"</span><span class="op">)</span></span>
@@ -314,7 +346,7 @@ each represents and why they are not directly comparable to
 <p>V-Dem indicators. A default set of democracy, civil society, civil
 liberties, and rule-of-law variables is loaded when
 <code>vars = NULL</code>.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Standalone</span></span>
 <span><span class="va">vdem</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_vdem_data.html">load_vdem_data</a></span><span class="op">(</span></span>
 <span>  vars          <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"v2x_polyarchy"</span>, <span class="st">"v2x_libdem"</span><span class="op">)</span>,</span>
@@ -371,7 +403,7 @@ Leader List</a></td>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Standalone</span></span>
 <span><span class="va">arch</span>  <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_leader_data.html">load_leader_data</a></span><span class="op">(</span><span class="fl">1990</span>, <span class="fl">2015</span>, dataset <span class="op">=</span> <span class="st">"archigos"</span>, coding_system <span class="op">=</span> <span class="st">"cow"</span><span class="op">)</span></span>
 <span><span class="va">reign</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_leader_data.html">load_leader_data</a></span><span class="op">(</span><span class="fl">1990</span>, <span class="fl">2015</span>, dataset <span class="op">=</span> <span class="st">"reign"</span>,    coding_system <span class="op">=</span> <span class="st">"gw"</span><span class="op">)</span></span>
@@ -388,7 +420,7 @@ Leader List</a></td>
 describe the state system and unit of analysis. Use
 <code><a href="../reference/add_from_peacesciencer.html">add_from_peacesciencer()</a></code> to supply these temporarily and
 return a panel with only contentiousR’s original country-code key:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/svmiller/peacesciencer/" class="external-link">peacesciencer</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">analysis_data</span> <span class="op">|&gt;</span></span>

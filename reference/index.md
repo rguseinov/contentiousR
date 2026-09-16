@@ -23,6 +23,8 @@
   : Add conflict or protest data to a state panel
 - [`add_leader_data()`](https://rguseinov.github.io/contentiousR/reference/add_leader_data.md)
   : Add leader data to a state panel
+- [`add_spells()`](https://rguseinov.github.io/contentiousR/reference/add_spells.md)
+  : Add conflict spell (peace-years) durations to a state panel
 
 ## Interoperate with other packages
 

@@ -74,6 +74,42 @@ from the first year of an episode (`ucdp_prio_onset`). See
 [`vignette("data-sources", package = "contentiousR")`](https://rguseinov.github.io/contentiousR/articles/data-sources.md)
 before interpreting any source-specific variable.
 
+## Conflict spells (peace-years)
+
+[`add_spells()`](https://rguseinov.github.io/contentiousR/reference/add_spells.md)
+turns a binary conflict column into a duration counter — years since the
+last event for that state, restarting after each new one. This is the
+same construct as
+[`peacesciencer::add_spells()`](https://rdrr.io/pkg/peacesciencer/man/add_spells.html),
+useful as a control for temporal dependence in event-history models
+(e.g. with cubic splines). It needs a column without `NA`, so filter
+first:
+
+``` r
+
+spell_data <- build_states_panel(1990, 2005, coding_system = "gw") |>
+  add_conflict("ucdp_prio") |>
+  tidyr::drop_na(ucdp_prio_onset) |>
+  add_spells(event = "ucdp_prio_onset")
+
+spell_data[spell_data$gw == 2, c("gw", "year", "ucdp_prio_onset", "ucdp_prio_spell")]
+#>   gw year ucdp_prio_onset ucdp_prio_spell
+#> 1  2 2001               1               0
+#> 2  2 2002               0               0
+#> 3  2 2003               1               1
+#> 4  2 2004               0               0
+#> 5  2 2005               0               1
+```
+
+If `event` is omitted,
+[`add_spells()`](https://rguseinov.github.io/contentiousR/reference/add_spells.md)
+looks for exactly one column ending in `_onset`, `_incidence`, or
+`_ongoing` and uses that; it errors if none or several are found.
+`_onset`-style columns treat every `1` as an independent event by
+default; `_incidence`/`_ongoing`-style columns collapse a run of
+consecutive `1`s into one event, leaving the continuation years `NA` in
+the output (override this with the `ongoing` argument).
+
 ## Optional V-Dem data
 
 V-Dem is not bundled and its R data package is not on CRAN. Install it
