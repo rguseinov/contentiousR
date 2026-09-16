@@ -51,8 +51,8 @@ data. *Journal of Conflict Resolution*, 66(3), 553-591.
   `"nmc"`
 
   :   Correlates of War National Material Capabilities v7.0 (abridged):
-      total population (`tpop`) and urban population (`upop`), both in
-      thousands. Coverage: 1816-2022.
+      total population (`nmc_tpop`) and urban population (`nmc_upop`),
+      both in thousands. Coverage: 1816-2022.
 
   `"fariss"`
 
@@ -65,11 +65,12 @@ data. *Journal of Conflict Resolution*, 66(3), 553-591.
 
 ## Value
 
-A country-year data frame. Columns differ by dataset:
+A country-year data frame. Columns differ by dataset, each prefixed with
+the source's `dataset` key:
 
-**wpp:** `cow`/`gw`, `year`, `un_pop`.
+**wpp:** `cow`/`gw`, `year`, `wpp_pop`.
 
-**nmc:** `cow`/`gw`, `year`, `tpop`, `upop`.
+**nmc:** `cow`/`gw`, `year`, `nmc_tpop`, `nmc_upop`.
 
 **fariss:** `cow`/`gw`, `year`, `fariss_pop`.
 
@@ -79,12 +80,12 @@ The bundled UN WPP extract has three rows for some China country-years:
 a combined mainland+Hong Kong+Macao+Taiwan figure, a mainland-only
 figure, and a Hong Kong-only figure, all of which matched COW code 710
 during country-name conversion upstream. The mainland-only figure is
-consistently the median of the three, so `un_pop` is computed as the
+consistently the median of the three, so `wpp_pop` is computed as the
 median `pop` value within each `cow`-`year` group; for every other
 country-year (a single row) this is a no-op.
 
-NMC's `-9` missing-data sentinel is recoded to `NA` in `tpop` and
-`upop`.
+NMC's `-9` missing-data sentinel is recoded to `NA` in `nmc_tpop` and
+`nmc_upop`.
 
 `fariss_pop` is the model's own latent-scale estimate, taken directly
 from the `"latent_pop"` rows of the replication file. Its absolute units

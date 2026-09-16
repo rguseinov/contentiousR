@@ -130,8 +130,8 @@ Three population sources are available via `dataset`.
 
 | Dataset | Source | Coverage | Returned columns |
 |----|----|----|----|
-| `"wpp"` (default) | [UN World Population Prospects 2024](https://population.un.org/wpp/) | 1949–2023 | `un_pop` |
-| `"nmc"` | [Correlates of War NMC v7.0](https://correlatesofwar.org/data-sets/national-material-capabilities/) | 1816–2022 | `tpop`, `upop` |
+| `"wpp"` (default) | [UN World Population Prospects 2024](https://population.un.org/wpp/) | 1949–2023 | `wpp_pop` |
+| `"nmc"` | [Correlates of War NMC v7.0](https://correlatesofwar.org/data-sets/national-material-capabilities/) | 1816–2022 | `nmc_tpop`, `nmc_upop` |
 | `"fariss"` | Fariss et al. (2022) latent estimate | 1500–2019 | `fariss_pop` |
 
 ``` r

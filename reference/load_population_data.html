@@ -89,8 +89,8 @@ thousands. Coverage: 1949-2023.</p></dd>
 
 <dt><code>"nmc"</code></dt>
 <dd><p>Correlates of War National Material Capabilities v7.0
-(abridged): total population (<code>tpop</code>) and urban population
-(<code>upop</code>), both in thousands. Coverage: 1816-2022.</p></dd>
+(abridged): total population (<code>nmc_tpop</code>) and urban population
+(<code>nmc_upop</code>), both in thousands. Coverage: 1816-2022.</p></dd>
 
 <dt><code>"fariss"</code></dt>
 <dd><p>Latent population estimates (Fariss, Anders,
@@ -106,9 +106,10 @@ Markowitz &amp; Barnum 2022). Coverage: 1500-2019.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A country-year data frame. Columns differ by dataset:</p>
-<p><strong>wpp:</strong> <code>cow</code>/<code>gw</code>, <code>year</code>, <code>un_pop</code>.</p>
-<p><strong>nmc:</strong> <code>cow</code>/<code>gw</code>, <code>year</code>, <code>tpop</code>, <code>upop</code>.</p>
+    <p>A country-year data frame. Columns differ by dataset, each
+prefixed with the source's <code>dataset</code> key:</p>
+<p><strong>wpp:</strong> <code>cow</code>/<code>gw</code>, <code>year</code>, <code>wpp_pop</code>.</p>
+<p><strong>nmc:</strong> <code>cow</code>/<code>gw</code>, <code>year</code>, <code>nmc_tpop</code>, <code>nmc_upop</code>.</p>
 <p><strong>fariss:</strong> <code>cow</code>/<code>gw</code>, <code>year</code>, <code>fariss_pop</code>.</p>
     </div>
     <div class="section level2">
@@ -117,10 +118,11 @@ Markowitz &amp; Barnum 2022). Coverage: 1500-2019.</p></dd>
 a combined mainland+Hong Kong+Macao+Taiwan figure, a mainland-only
 figure, and a Hong Kong-only figure, all of which matched COW code 710
 during country-name conversion upstream. The mainland-only figure is
-consistently the median of the three, so <code>un_pop</code> is computed as the
+consistently the median of the three, so <code>wpp_pop</code> is computed as the
 median <code>pop</code> value within each <code>cow</code>-<code>year</code> group; for every other
 country-year (a single row) this is a no-op.</p>
-<p>NMC's <code>-9</code> missing-data sentinel is recoded to <code>NA</code> in <code>tpop</code> and <code>upop</code>.</p>
+<p>NMC's <code>-9</code> missing-data sentinel is recoded to <code>NA</code> in <code>nmc_tpop</code> and
+<code>nmc_upop</code>.</p>
 <p><code>fariss_pop</code> is the model's own latent-scale estimate, taken directly
 from the <code>"latent_pop"</code> rows of the replication file. Its absolute units
 are not independently verified here; consult Fariss et al. (2022) before

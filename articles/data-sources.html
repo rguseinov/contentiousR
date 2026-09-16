@@ -256,11 +256,12 @@ mainland-only figure, and a Hong Kong-only figure, all of which matched
 COW code 710 during country-name conversion upstream.
 <code>load_population_data(dataset = "wpp")</code> resolves this by
 taking the median <code>pop</code> value within each
-<code>cow</code>-<code>year</code> group, which is consistently the
-mainland-only figure; every other country-year has a single row, so the
-median is a no-op there.</p>
+<code>cow</code>-<code>year</code> group (returned as
+<code>wpp_pop</code>), which is consistently the mainland-only figure;
+every other country-year has a single row, so the median is a no-op
+there.</p>
 <p>NMC’s documented <code>-9</code> missing-data sentinel is recoded to
-<code>NA</code> in <code>tpop</code> and <code>upop</code>.</p>
+<code>NA</code> in <code>nmc_tpop</code> and <code>nmc_upop</code>.</p>
 <p>Fariss, Anders, Markowitz, and Barnum’s replication files contain one
 row per country-year for each underlying source indicator (e.g. Bairoch,
 Penn World Table, World Bank) plus one <code>"latent_*"</code> row

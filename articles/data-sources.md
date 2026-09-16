@@ -69,12 +69,12 @@ a combined mainland+Hong Kong+Macao+Taiwan figure, a mainland-only
 figure, and a Hong Kong-only figure, all of which matched COW code 710
 during country-name conversion upstream.
 `load_population_data(dataset = "wpp")` resolves this by taking the
-median `pop` value within each `cow`-`year` group, which is consistently
-the mainland-only figure; every other country-year has a single row, so
-the median is a no-op there.
+median `pop` value within each `cow`-`year` group (returned as
+`wpp_pop`), which is consistently the mainland-only figure; every other
+country-year has a single row, so the median is a no-op there.
 
-NMC’s documented `-9` missing-data sentinel is recoded to `NA` in `tpop`
-and `upop`.
+NMC’s documented `-9` missing-data sentinel is recoded to `NA` in
+`nmc_tpop` and `nmc_upop`.
 
 Fariss, Anders, Markowitz, and Barnum’s replication files contain one
 row per country-year for each underlying source indicator (e.g. Bairoch,
