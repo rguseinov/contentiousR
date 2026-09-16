@@ -12,6 +12,7 @@
 <url><loc>https://rguseinov.github.io/contentiousR/reference/add_conflict.html</loc></url>
 <url><loc>https://rguseinov.github.io/contentiousR/reference/add_from_peacesciencer.html</loc></url>
 <url><loc>https://rguseinov.github.io/contentiousR/reference/add_gdp.html</loc></url>
+<url><loc>https://rguseinov.github.io/contentiousR/reference/add_lag.html</loc></url>
 <url><loc>https://rguseinov.github.io/contentiousR/reference/add_leader_data.html</loc></url>
 <url><loc>https://rguseinov.github.io/contentiousR/reference/add_military_expenditure.html</loc></url>
 <url><loc>https://rguseinov.github.io/contentiousR/reference/add_pop.html</loc></url>
@@ -31,6 +32,7 @@
 <url><loc>https://rguseinov.github.io/contentiousR/reference/contentiousR-package.html</loc></url>
 <url><loc>https://rguseinov.github.io/contentiousR/reference/detect_coding_system.html</loc></url>
 <url><loc>https://rguseinov.github.io/contentiousR/reference/index.html</loc></url>
+<url><loc>https://rguseinov.github.io/contentiousR/reference/lag_with_year_gap_check.html</loc></url>
 <url><loc>https://rguseinov.github.io/contentiousR/reference/load_gdp_data.html</loc></url>
 <url><loc>https://rguseinov.github.io/contentiousR/reference/load_leader_data.html</loc></url>
 <url><loc>https://rguseinov.github.io/contentiousR/reference/load_military_expenditure_data.html</loc></url>

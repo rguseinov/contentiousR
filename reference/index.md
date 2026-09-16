@@ -25,6 +25,8 @@
   : Add leader data to a state panel
 - [`add_spells()`](https://rguseinov.github.io/contentiousR/reference/add_spells.md)
   : Add conflict spell (peace-years) durations to a state panel
+- [`add_lag()`](https://rguseinov.github.io/contentiousR/reference/add_lag.md)
+  : Add lagged variables to a state panel
 
 ## Interoperate with other packages
 

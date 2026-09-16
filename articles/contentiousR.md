@@ -110,6 +110,40 @@ default; `_incidence`/`_ongoing`-style columns collapse a run of
 consecutive `1`s into one event, leaving the continuation years `NA` in
 the output (override this with the `ongoing` argument).
 
+## Lagged variables
+
+[`add_lag()`](https://rguseinov.github.io/contentiousR/reference/add_lag.md)
+adds a lagged version of one or more columns, computed within each state
+after sorting by year — grouping by state before lagging is essential in
+panel data, otherwise a lag could pull in another country’s value.
+Unlike a plain
+[`dplyr::lag()`](https://dplyr.tidyverse.org/reference/lead-lag.html),
+it checks that the preceding row is genuinely `n` years earlier, so a
+gap in the year sequence produces `NA` rather than silently reaching
+further back than intended:
+
+``` r
+
+build_states_panel(1990, 1995, coding_system = "cow") |>
+  add_gdp() |>
+  add_lag(vars = c("gdp_pcap", "gdp_growth"), n = 1) |>
+  dplyr::filter(cow == 2) |>
+  dplyr::select(cow, year, gdp_pcap, gdp_pcap_l, gdp_growth_l)
+#> # A tibble: 6 × 5
+#>     cow  year gdp_pcap gdp_pcap_l gdp_growth_l
+#>   <dbl> <dbl>    <dbl>      <dbl>        <dbl>
+#> 1     2  1990   45755.        NA         NA   
+#> 2     2  1991   45035.     45755.         3.18
+#> 3     2  1992   45912.     45035.        -1.58
+#> 4     2  1993   46485.     45912.         1.95
+#> 5     2  1994   47696.     46485.         1.25
+#> 6     2  1995   48326.     47696.         2.60
+```
+
+Each requested variable gets one new column named `<var>_l`. Call
+[`add_lag()`](https://rguseinov.github.io/contentiousR/reference/add_lag.md)
+again (optionally with a different `n`) for additional lags.
+
 ## Optional V-Dem data
 
 V-Dem is not bundled and its R data package is not on CRAN. Install it
