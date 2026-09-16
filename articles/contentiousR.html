@@ -150,6 +150,107 @@ need:</p>
 <span>  <span class="fu"><a href="../reference/add_vdem.html">add_vdem</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"v2x_polyarchy"</span>, <span class="st">"v2x_libdem"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
+<h2 id="build_states_panel">
+<code>build_states_panel()</code><a class="anchor" aria-label="anchor" href="#build_states_panel"></a>
+</h2>
+<p>Creates a state-year panel with optional filters:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">panel</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/build_states_panel.html">build_states_panel</a></span><span class="op">(</span></span>
+<span>  start_year        <span class="op">=</span> <span class="fl">1946</span>,</span>
+<span>  end_year          <span class="op">=</span> <span class="fl">2019</span>,</span>
+<span>  coding_system     <span class="op">=</span> <span class="st">"cow"</span>,   <span class="co"># or "gw"</span></span>
+<span>  exclude_microstates <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  exclude_non_un    <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  exclude_islands   <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="load_gdp_data-add_gdp">
+<code>load_gdp_data()</code> / <code>add_gdp()</code><a class="anchor" aria-label="anchor" href="#load_gdp_data-add_gdp"></a>
+</h2>
+<p>Gapminder GDP per capita data. Returns <code>gdp_pcap</code>,
+<code>log_gdp_pcap</code>, and <code>gdp_growth</code>.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Standalone</span></span>
+<span><span class="va">gdp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_gdp_data.html">load_gdp_data</a></span><span class="op">(</span>start_year <span class="op">=</span> <span class="fl">1990</span>, end_year <span class="op">=</span> <span class="fl">2015</span>, coding_system <span class="op">=</span> <span class="st">"cow"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Pipeline</span></span>
+<span><span class="va">panel</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/add_gdp.html">add_gdp</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="load_vdem_data-add_vdem">
+<code>load_vdem_data()</code> / <code>add_vdem()</code><a class="anchor" aria-label="anchor" href="#load_vdem_data-add_vdem"></a>
+</h2>
+<p>V-Dem indicators. A default set of democracy, civil society, civil
+liberties, and rule-of-law variables is loaded when
+<code>vars = NULL</code>.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Standalone</span></span>
+<span><span class="va">vdem</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_vdem_data.html">load_vdem_data</a></span><span class="op">(</span></span>
+<span>  vars          <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"v2x_polyarchy"</span>, <span class="st">"v2x_libdem"</span><span class="op">)</span>,</span>
+<span>  start_year    <span class="op">=</span> <span class="fl">1990</span>,</span>
+<span>  end_year      <span class="op">=</span> <span class="fl">2015</span>,</span>
+<span>  coding_system <span class="op">=</span> <span class="st">"cow"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Pipeline</span></span>
+<span><span class="va">panel</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/add_vdem.html">add_vdem</a></span><span class="op">(</span>vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"v2x_polyarchy"</span>, <span class="st">"v2x_libdem"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="load_leader_data-add_leader_data">
+<code>load_leader_data()</code> /
+<code>add_leader_data()</code><a class="anchor" aria-label="anchor" href="#load_leader_data-add_leader_data"></a>
+</h2>
+<p>Country-year leader data from two sources. Each row contains the
+leader who held power at the end of the year; in transition years the
+latest-starting leader is kept.</p>
+<table class="table">
+<colgroup>
+<col width="25%">
+<col width="25%">
+<col width="25%">
+<col width="25%">
+</colgroup>
+<thead><tr class="header">
+<th>Dataset</th>
+<th>Source</th>
+<th>Coverage</th>
+<th>Key variables</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code>"archigos"</code></td>
+<td><a href="http://ksgleditsch.com/archigos.html" class="external-link">Archigos 4.1</a></td>
+<td>1875–2015</td>
+<td>
+<code>entry</code>, <code>exit</code>, <code>irregular_entry</code>,
+<code>irregular_exit</code>, <code>female_leader</code>,
+<code>yrborn</code>, <code>posttenurefate</code>,
+<code>leader_tenure</code>
+</td>
+</tr>
+<tr class="even">
+<td><code>"reign"</code></td>
+<td><a href="https://oefdatascience.github.io/REIGN.github.io/menu/reign_current.html" class="external-link">REIGN
+Leader List</a></td>
+<td>1921–2021</td>
+<td>
+<code>female_leader</code>, <code>military_bg</code>,
+<code>birthyear</code>, <code>leader_tenure</code>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Standalone</span></span>
+<span><span class="va">arch</span>  <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_leader_data.html">load_leader_data</a></span><span class="op">(</span><span class="fl">1990</span>, <span class="fl">2015</span>, dataset <span class="op">=</span> <span class="st">"archigos"</span>, coding_system <span class="op">=</span> <span class="st">"cow"</span><span class="op">)</span></span>
+<span><span class="va">reign</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_leader_data.html">load_leader_data</a></span><span class="op">(</span><span class="fl">1990</span>, <span class="fl">2015</span>, dataset <span class="op">=</span> <span class="st">"reign"</span>,    coding_system <span class="op">=</span> <span class="st">"gw"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Pipeline</span></span>
+<span><span class="va">panel</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/add_leader_data.html">add_leader_data</a></span><span class="op">(</span>dataset <span class="op">=</span> <span class="st">"archigos"</span><span class="op">)</span></span>
+<span><span class="va">panel</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/add_leader_data.html">add_leader_data</a></span><span class="op">(</span>dataset <span class="op">=</span> <span class="st">"reign"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
 <h2 id="interoperate-with-peacesciencer">Interoperate with peacesciencer<a class="anchor" aria-label="anchor" href="#interoperate-with-peacesciencer"></a>
 </h2>
 <p>Functions such as <code><a href="https://rdrr.io/pkg/peacesciencer/man/add_archigos.html" class="external-link">peacesciencer::add_archigos()</a></code> expect
@@ -157,7 +258,7 @@ need:</p>
 describe the state system and unit of analysis. Use
 <code><a href="../reference/add_from_peacesciencer.html">add_from_peacesciencer()</a></code> to supply these temporarily and
 return a panel with only contentiousR’s original country-code key:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/svmiller/peacesciencer/" class="external-link">peacesciencer</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">analysis_data</span> <span class="op">|&gt;</span></span>

@@ -219,6 +219,151 @@ sources; use <code>aggregate = FALSE</code> to retain individual
 episodes.</p>
 </div>
 <div class="section level2">
+<h2 id="conflict_data-add_conflict">
+<code>conflict_data()</code> / <code>add_conflict()</code><a class="anchor" aria-label="anchor" href="#conflict_data-add_conflict"></a>
+</h2>
+<p>Loads one of ten conflict, protest, and revolutionary-episode
+datasets. Every loader honors <code>start_year</code> and
+<code>end_year</code> and supports both COW and GW coding.</p>
+<table class="table">
+<colgroup>
+<col width="20%">
+<col width="20%">
+<col width="20%">
+<col width="20%">
+<col width="20%">
+</colgroup>
+<thead><tr class="header">
+<th>Dataset</th>
+<th>Source</th>
+<th>Coverage</th>
+<th>Output level</th>
+<th>Prefix</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code>"navco1.3"</code></td>
+<td><a href="https://doi.org/10.7910/DVN/ON9XND" class="external-link">NAVCO 1.3</a></td>
+<td>1900–2019†</td>
+<td>Campaign onset</td>
+<td><code>nvc1.3_</code></td>
+</tr>
+<tr class="even">
+<td><code>"navco2.1"</code></td>
+<td><a href="https://doi.org/10.7910/DVN/MHOXDV" class="external-link">NAVCO 2.1</a></td>
+<td>1945–2013</td>
+<td>Campaign-year</td>
+<td><code>nvc2.1_</code></td>
+</tr>
+<tr class="odd">
+<td><code>"beissinger"</code></td>
+<td><a href="https://mbeissinger.scholar.princeton.edu/revolutionary-episodes-dataset" class="external-link">Mark
+Beissinger’s Revolutionary Episodes Dataset</a></td>
+<td>1900–2014†</td>
+<td>Episode onset</td>
+<td><code>beissinger_</code></td>
+</tr>
+<tr class="even">
+<td><code>"csra"</code></td>
+<td><a href="https://social.hse.ru/en/mr/rev_bd" class="external-link">HSE CSRA Revolutions
+Dataset v1.1</a></td>
+<td>2000–2024</td>
+<td>Episode onset</td>
+<td><code>csra_</code></td>
+</tr>
+<tr class="odd">
+<td><code>"scad"</code></td>
+<td><a href="https://www.strausscenter.org/ccaps-research-areas/social-conflict/database/" class="external-link">Social
+Conflict Analysis Database 3.3</a></td>
+<td>1990–2017†</td>
+<td>Country-year events</td>
+<td><code>scad_</code></td>
+</tr>
+<tr class="even">
+<td><code>"ucdp_prio"</code></td>
+<td><a href="https://ucdp.uu.se/downloads/" class="external-link">UCDP/PRIO Armed Conflict
+v26.1</a></td>
+<td>1946–2025</td>
+<td>Country-year incidence and onset</td>
+<td><code>ucdp_prio_</code></td>
+</tr>
+<tr class="odd">
+<td><code>"ucdp_vpp"</code></td>
+<td><a href="https://ucdp.uu.se/downloads/" class="external-link">UCDP Violent Political
+Protest v26.1</a></td>
+<td>1989–2025</td>
+<td>Country-year incidence</td>
+<td><code>ucdp_vpp_</code></td>
+</tr>
+<tr class="even">
+<td><code>"mm"</code></td>
+<td><a href="https://massmobilization.github.io" class="external-link">Mass Mobilization
+Project v4</a></td>
+<td>1990–2020</td>
+<td>Country-year protests</td>
+<td><code>mm_</code></td>
+</tr>
+<tr class="odd">
+<td><code>"mmad"</code></td>
+<td><a href="https://mmadatabase.org" class="external-link">Mass Mobilization in Autocracies
+v5</a></td>
+<td>2003–2022</td>
+<td>Country-year events</td>
+<td><code>mmad_</code></td>
+</tr>
+<tr class="even">
+<td><code>"mec"</code></td>
+<td><a href="https://doi.org/10.1093/jopres/xjaf008" class="external-link">Major Episodes of
+Contention</a></td>
+<td>1955–2018</td>
+<td>Episode (global)</td>
+<td><code>mec_</code></td>
+</tr>
+</tbody>
+</table>
+<p>† The bundled source has a small number of records beginning in 1899.
+SCAD’s official coverage is 1990–2017, but one continuing event has a
+recorded 1989 start.</p>
+<p>The country-year sources (<code>scad</code>, <code>ucdp_prio</code>,
+<code>ucdp_vpp</code>, <code>mm</code>, <code>mmad</code>) are
+pre-aggregated to country-year inside <code><a href="../reference/conflict_data.html">conflict_data()</a></code>.
+Legacy campaign and episode datasets, including MEC, return one row per
+campaign or episode; <code><a href="../reference/add_conflict.html">add_conflict()</a></code> collapses these with a
+missing-safe maximum by default. Unmatched panel rows remain
+<code>NA</code>, because absence from a source is not always evidence of
+zero events.</p>
+<p>For UCDP/PRIO, <code>ucdp_prio_incidence</code> marks active
+conflict-years and <code>ucdp_prio_onset</code> marks the first year of
+a conflict episode as defined by the source’s <code>start_date2</code>.
+For VPP, prefer <code>ucdp_vpp_incidence</code>;
+<code>ucdp_vpp_onset</code> remains as a backwards-compatible incidence
+alias because the source has no episode-start field.</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Standalone</span></span>
+<span><span class="va">navco</span>   <span class="op">&lt;-</span> <span class="fu"><a href="../reference/conflict_data.html">conflict_data</a></span><span class="op">(</span><span class="fl">1990</span>, <span class="fl">2015</span>, dataset <span class="op">=</span> <span class="st">"navco2.1"</span>,  coding_system <span class="op">=</span> <span class="st">"cow"</span><span class="op">)</span></span>
+<span><span class="va">scad</span>    <span class="op">&lt;-</span> <span class="fu"><a href="../reference/conflict_data.html">conflict_data</a></span><span class="op">(</span><span class="fl">1995</span>, <span class="fl">2015</span>, dataset <span class="op">=</span> <span class="st">"scad"</span>,      coding_system <span class="op">=</span> <span class="st">"cow"</span><span class="op">)</span></span>
+<span><span class="va">ucdp</span>    <span class="op">&lt;-</span> <span class="fu"><a href="../reference/conflict_data.html">conflict_data</a></span><span class="op">(</span><span class="fl">1990</span>, <span class="fl">2020</span>, dataset <span class="op">=</span> <span class="st">"ucdp_prio"</span>, coding_system <span class="op">=</span> <span class="st">"gw"</span><span class="op">)</span></span>
+<span><span class="va">mm_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/conflict_data.html">conflict_data</a></span><span class="op">(</span><span class="fl">1995</span>, <span class="fl">2015</span>, dataset <span class="op">=</span> <span class="st">"mm"</span>,        coding_system <span class="op">=</span> <span class="st">"cow"</span><span class="op">)</span></span>
+<span><span class="va">mmad</span>    <span class="op">&lt;-</span> <span class="fu"><a href="../reference/conflict_data.html">conflict_data</a></span><span class="op">(</span><span class="fl">2005</span>, <span class="fl">2020</span>, dataset <span class="op">=</span> <span class="st">"mmad"</span>,      coding_system <span class="op">=</span> <span class="st">"cow"</span><span class="op">)</span></span>
+<span><span class="va">mec</span>     <span class="op">&lt;-</span> <span class="fu"><a href="../reference/conflict_data.html">conflict_data</a></span><span class="op">(</span><span class="fl">1955</span>, <span class="fl">2018</span>, dataset <span class="op">=</span> <span class="st">"mec"</span>,       coding_system <span class="op">=</span> <span class="st">"cow"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Pipeline — all datasets work with add_conflict()</span></span>
+<span><span class="va">panel</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/add_conflict.html">add_conflict</a></span><span class="op">(</span>dataset <span class="op">=</span> <span class="st">"navco2.1"</span><span class="op">)</span></span>
+<span><span class="va">panel</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/add_conflict.html">add_conflict</a></span><span class="op">(</span>dataset <span class="op">=</span> <span class="st">"ucdp_prio"</span><span class="op">)</span></span>
+<span><span class="va">panel</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/add_conflict.html">add_conflict</a></span><span class="op">(</span>dataset <span class="op">=</span> <span class="st">"mmad"</span><span class="op">)</span></span>
+<span><span class="va">panel</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/add_conflict.html">add_conflict</a></span><span class="op">(</span>dataset <span class="op">=</span> <span class="st">"mec"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Raw join without aggregation (for campaign and episode datasets)</span></span>
+<span><span class="va">panel</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/add_conflict.html">add_conflict</a></span><span class="op">(</span>dataset <span class="op">=</span> <span class="st">"navco1.3"</span>, aggregate <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">panel</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/add_conflict.html">add_conflict</a></span><span class="op">(</span>dataset <span class="op">=</span> <span class="st">"mec"</span>, aggregate <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<blockquote>
+<p><strong>Note:</strong> <code>ucdp_vpp</code> requires the
+<code>readxl</code> package: <code>install.packages("readxl")</code> MEC
+requires the <code>haven</code> package:
+<code>install.packages("haven")</code></p>
+</blockquote>
+</div>
+<div class="section level2">
 <h2 id="licensing">Licensing<a class="anchor" aria-label="anchor" href="#licensing"></a>
 </h2>
 <p>The package’s MIT license applies to the software, not to third-party

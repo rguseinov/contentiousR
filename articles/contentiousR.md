@@ -87,6 +87,77 @@ panel |>
   add_vdem(c("v2x_polyarchy", "v2x_libdem"))
 ```
 
+## `build_states_panel()`
+
+Creates a state-year panel with optional filters:
+
+``` r
+
+panel <- build_states_panel(
+  start_year        = 1946,
+  end_year          = 2019,
+  coding_system     = "cow",   # or "gw"
+  exclude_microstates = TRUE,
+  exclude_non_un    = TRUE,
+  exclude_islands   = FALSE
+)
+```
+
+## `load_gdp_data()` / `add_gdp()`
+
+Gapminder GDP per capita data. Returns `gdp_pcap`, `log_gdp_pcap`, and
+`gdp_growth`.
+
+``` r
+
+# Standalone
+gdp <- load_gdp_data(start_year = 1990, end_year = 2015, coding_system = "cow")
+
+# Pipeline
+panel |> add_gdp()
+```
+
+## `load_vdem_data()` / `add_vdem()`
+
+V-Dem indicators. A default set of democracy, civil society, civil
+liberties, and rule-of-law variables is loaded when `vars = NULL`.
+
+``` r
+
+# Standalone
+vdem <- load_vdem_data(
+  vars          = c("v2x_polyarchy", "v2x_libdem"),
+  start_year    = 1990,
+  end_year      = 2015,
+  coding_system = "cow"
+)
+
+# Pipeline
+panel |> add_vdem(vars = c("v2x_polyarchy", "v2x_libdem"))
+```
+
+## `load_leader_data()` / `add_leader_data()`
+
+Country-year leader data from two sources. Each row contains the leader
+who held power at the end of the year; in transition years the
+latest-starting leader is kept.
+
+| Dataset | Source | Coverage | Key variables |
+|----|----|----|----|
+| `"archigos"` | [Archigos 4.1](http://ksgleditsch.com/archigos.md) | 1875–2015 | `entry`, `exit`, `irregular_entry`, `irregular_exit`, `female_leader`, `yrborn`, `posttenurefate`, `leader_tenure` |
+| `"reign"` | [REIGN Leader List](https://oefdatascience.github.io/REIGN.github.io/menu/reign_current.html) | 1921–2021 | `female_leader`, `military_bg`, `birthyear`, `leader_tenure` |
+
+``` r
+
+# Standalone
+arch  <- load_leader_data(1990, 2015, dataset = "archigos", coding_system = "cow")
+reign <- load_leader_data(1990, 2015, dataset = "reign",    coding_system = "gw")
+
+# Pipeline
+panel |> add_leader_data(dataset = "archigos")
+panel |> add_leader_data(dataset = "reign")
+```
+
 ## Interoperate with peacesciencer
 
 Functions such as
