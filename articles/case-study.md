@@ -47,6 +47,22 @@ dim(panel)
 #> [1] 11257    17
 ```
 
+``` r
+
+head(panel) |>
+  mutate(across(where(is.numeric), ~ round(.x, 2))) |>
+  knitr::kable()
+```
+
+| cow | year | country | fariss_gdppc | wpp_pop | nmc_milex | v2x_polyarchy | v2x_execorr | leader_tenure | beissinger_onset | beissinger_spell | fariss_gdppc_l | wpp_pop_l | v2x_polyarchy_l | v2x_execorr_l | leader_tenure_l | nmc_milex_l |
+|---:|---:|:---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 2 | 1900 | United States | 17.37 | NA | 41481 | 0.42 | 0.06 | 4 | 0 | 0 | NA | NA | NA | NA | NA | NA |
+| 2 | 1901 | United States | 18.07 | NA | 36087 | 0.42 | 0.06 | 1 | 0 | 1 | 17.37 | NA | 0.42 | 0.06 | 4 | 41481 |
+| 2 | 1902 | United States | 18.44 | NA | 39722 | 0.42 | 0.06 | 2 | 0 | 2 | 18.07 | NA | 0.42 | 0.06 | 1 | 36087 |
+| 2 | 1903 | United States | 18.69 | NA | 43814 | 0.42 | 0.06 | 3 | 0 | 3 | 18.44 | NA | 0.42 | 0.06 | 2 | 39722 |
+| 2 | 1904 | United States | 18.74 | NA | 47918 | 0.42 | 0.06 | 4 | 0 | 4 | 18.69 | NA | 0.42 | 0.06 | 3 | 43814 |
+| 2 | 1905 | United States | 19.34 | NA | 45098 | 0.42 | 0.06 | 5 | 0 | 5 | 18.74 | NA | 0.42 | 0.06 | 4 | 47918 |
+
 `add_conflict(dataset = "beissinger", aggregate = TRUE)` is used rather
 than `aggregate = FALSE`: Beissinger is a legacy episode dataset, and a
 handful of country-years have more than one recorded episode
@@ -75,7 +91,7 @@ the source’s coverage.
 plot_coverage(panel, "beissinger_onset", drop_empty = TRUE)
 ```
 
-![](case-study_files/figure-html/unnamed-chunk-3-1.png)
+![](case-study_files/figure-html/unnamed-chunk-4-1.png)
 
 ## Model onset
 
