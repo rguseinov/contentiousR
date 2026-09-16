@@ -1,4 +1,4 @@
-# contentiousR: Build Peace Science Data Panels
+# contentiousR: Tools and Data for Contentious Politics and Civil Conflict Research
 
 contentiousR creates COW- or Gleditsch-Ward-coded state-year panels and
 joins bundled socioeconomic, conflict, protest, and leader data. V-Dem
