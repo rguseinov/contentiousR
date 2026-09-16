@@ -111,7 +111,9 @@ for versions, transformations, source links, and licensing notes.
 ## Add data to panels
 
 - [`add_gdp()`](https://rguseinov.github.io/contentiousR/reference/add_gdp.md)
-  : Add GDP per capita data to a state panel
+  : Add GDP data to a state panel
+- [`add_pop()`](https://rguseinov.github.io/contentiousR/reference/add_pop.md)
+  : Add population data to a state panel
 - [`add_vdem()`](https://rguseinov.github.io/contentiousR/reference/add_vdem.md)
   : Add V-Dem indicators to a state panel
 - [`add_conflict()`](https://rguseinov.github.io/contentiousR/reference/add_conflict.md)
@@ -131,9 +133,11 @@ for versions, transformations, source links, and licensing notes.
 - [`conflict_data()`](https://rguseinov.github.io/contentiousR/reference/conflict_data.md)
   : Load conflict and mobilisation data
 - [`load_gdp_data()`](https://rguseinov.github.io/contentiousR/reference/load_gdp_data.md)
-  : Load GDP per capita data
+  : Load GDP data
 - [`load_leader_data()`](https://rguseinov.github.io/contentiousR/reference/load_leader_data.md)
   : Load leader data
+- [`load_population_data()`](https://rguseinov.github.io/contentiousR/reference/load_population_data.md)
+  : Load population data
 - [`load_vdem_data()`](https://rguseinov.github.io/contentiousR/reference/load_vdem_data.md)
   : Load V-Dem data
 

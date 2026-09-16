@@ -87,10 +87,41 @@ scope, and limitations.</p>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td>GDP</td>
+<td>GDP: <code>"gapminder"</code>
+</td>
 <td>Gapminder v32</td>
 <td>Country-year</td>
 <td><a href="https://www.gapminder.org/gdp-per-capita/" class="external-link">Gapminder</a></td>
+</tr>
+<tr class="even">
+<td>GDP: <code>"fariss"</code>
+</td>
+<td>Fariss et al. 2022, latent estimate, 1500–2019</td>
+<td>Country-year</td>
+<td><a href="https://doi.org/10.7910/DVN/DC0ING" class="external-link">Dataverse</a></td>
+</tr>
+<tr class="odd">
+<td>Population: <code>"wpp"</code>
+</td>
+<td>UN World Population Prospects 2024, 1949–2023</td>
+<td>Country-year</td>
+<td><a href="https://population.un.org/wpp/" class="external-link">UN Population
+Division</a></td>
+</tr>
+<tr class="even">
+<td>Population: <code>"nmc"</code>
+</td>
+<td>National Material Capabilities v7.0, 1816–2022</td>
+<td>Country-year</td>
+<td><a href="https://correlatesofwar.org/data-sets/national-material-capabilities/" class="external-link">Correlates
+of War</a></td>
+</tr>
+<tr class="odd">
+<td>Population: <code>"fariss"</code>
+</td>
+<td>Fariss et al. 2022, latent estimate, 1500–2019</td>
+<td>Country-year</td>
+<td><a href="https://doi.org/10.7910/DVN/DC0ING" class="external-link">Dataverse</a></td>
 </tr>
 <tr class="even">
 <td><code>"navco1.3"</code></td>
@@ -219,15 +250,38 @@ and all published variables, using the source’s <code>byear</code> as
 same explicit aggregation policy as the other campaign and episode
 sources; use <code>aggregate = FALSE</code> to retain individual
 episodes.</p>
+<p>The bundled UN WPP extract has three rows for some China
+country-years: a combined mainland+Hong Kong+Macao+Taiwan figure, a
+mainland-only figure, and a Hong Kong-only figure, all of which matched
+COW code 710 during country-name conversion upstream.
+<code>load_population_data(dataset = "wpp")</code> resolves this by
+taking the median <code>pop</code> value within each
+<code>cow</code>-<code>year</code> group, which is consistently the
+mainland-only figure; every other country-year has a single row, so the
+median is a no-op there.</p>
+<p>NMC’s documented <code>-9</code> missing-data sentinel is recoded to
+<code>NA</code> in <code>tpop</code> and <code>upop</code>.</p>
+<p>Fariss, Anders, Markowitz, and Barnum’s replication files contain one
+row per country-year for each underlying source indicator (e.g. Bairoch,
+Penn World Table, World Bank) plus one <code>"latent_*"</code> row
+holding the model’s combined estimate.
+<code>load_gdp_data(dataset = "fariss")</code> and
+<code>load_population_data(dataset = "fariss")</code> keep only the
+<code>"latent_gdp"</code> / <code>"latent_gdppc"</code> /
+<code>"latent_pop"</code> rows. Their absolute units are not
+independently verified in this package; consult Fariss et al. (2022)
+before using <code>fariss_gdp</code>, <code>fariss_gdppc</code>, or
+<code>fariss_pop</code> outside of relative/comparative analysis.</p>
 </div>
 <div class="section level2">
 <h2 id="licensing">Licensing<a class="anchor" aria-label="anchor" href="#licensing"></a>
 </h2>
 <p>The package’s MIT license applies to the software, not to third-party
 data. Gapminder and UCDP identify their bundled data as CC BY 4.0; NAVCO
-2.1 and MEC are CC0. Other source files retain their creators’ terms.
-See <code>inst/COPYRIGHTS</code> and verify the applicable terms before
-redistributing a package build containing those files.</p>
+2.1 and MEC are CC0; UN WPP is CC BY 3.0 IGO. Other source files,
+including NMC and the Fariss et al. estimates, retain their creators’
+terms. See <code>inst/COPYRIGHTS</code> and verify the applicable terms
+before redistributing a package build containing those files.</p>
 </div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

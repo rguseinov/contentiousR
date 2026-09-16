@@ -7,7 +7,11 @@ limitations.
 
 | Argument | Bundled version and coverage | Unit returned | Source |
 |----|----|----|----|
-| GDP | Gapminder v32 | Country-year | [Gapminder](https://www.gapminder.org/gdp-per-capita/) |
+| GDP: `"gapminder"` | Gapminder v32 | Country-year | [Gapminder](https://www.gapminder.org/gdp-per-capita/) |
+| GDP: `"fariss"` | Fariss et al. 2022, latent estimate, 1500–2019 | Country-year | [Dataverse](https://doi.org/10.7910/DVN/DC0ING) |
+| Population: `"wpp"` | UN World Population Prospects 2024, 1949–2023 | Country-year | [UN Population Division](https://population.un.org/wpp/) |
+| Population: `"nmc"` | National Material Capabilities v7.0, 1816–2022 | Country-year | [Correlates of War](https://correlatesofwar.org/data-sets/national-material-capabilities/) |
+| Population: `"fariss"` | Fariss et al. 2022, latent estimate, 1500–2019 | Country-year | [Dataverse](https://doi.org/10.7910/DVN/DC0ING) |
 | `"navco1.3"` | NAVCO 1.3, 1900–2019[^1] | Campaign onset | [NAVCO project](https://ash.harvard.edu/programs/nonviolent-and-violent-campaigns-and-outcomes-data-project/) |
 | `"navco2.1"` | NAVCO 2.1, 1945–2013 | Campaign-year | [Dataverse](https://doi.org/10.7910/DVN/MHOXDV) |
 | `"beissinger"` | Revolutionary Episodes 1.0, 1900–2014[^2] | Episode onset | [Beissinger](https://mbeissinger.scholar.princeton.edu/revolutionary-episodes-dataset) |
@@ -60,12 +64,35 @@ left-censored episodes have a `mec_bdate` before 1955 but a source
 same explicit aggregation policy as the other campaign and episode
 sources; use `aggregate = FALSE` to retain individual episodes.
 
+The bundled UN WPP extract has three rows for some China country-years:
+a combined mainland+Hong Kong+Macao+Taiwan figure, a mainland-only
+figure, and a Hong Kong-only figure, all of which matched COW code 710
+during country-name conversion upstream.
+`load_population_data(dataset = "wpp")` resolves this by taking the
+median `pop` value within each `cow`-`year` group, which is consistently
+the mainland-only figure; every other country-year has a single row, so
+the median is a no-op there.
+
+NMC’s documented `-9` missing-data sentinel is recoded to `NA` in `tpop`
+and `upop`.
+
+Fariss, Anders, Markowitz, and Barnum’s replication files contain one
+row per country-year for each underlying source indicator (e.g. Bairoch,
+Penn World Table, World Bank) plus one `"latent_*"` row holding the
+model’s combined estimate. `load_gdp_data(dataset = "fariss")` and
+`load_population_data(dataset = "fariss")` keep only the `"latent_gdp"`
+/ `"latent_gdppc"` / `"latent_pop"` rows. Their absolute units are not
+independently verified in this package; consult Fariss et al. (2022)
+before using `fariss_gdp`, `fariss_gdppc`, or `fariss_pop` outside of
+relative/comparative analysis.
+
 ## Licensing
 
 The package’s MIT license applies to the software, not to third-party
 data. Gapminder and UCDP identify their bundled data as CC BY 4.0; NAVCO
-2.1 and MEC are CC0. Other source files retain their creators’ terms.
-See `inst/COPYRIGHTS` and verify the applicable terms before
+2.1 and MEC are CC0; UN WPP is CC BY 3.0 IGO. Other source files,
+including NMC and the Fariss et al. estimates, retain their creators’
+terms. See `inst/COPYRIGHTS` and verify the applicable terms before
 redistributing a package build containing those files.
 
 [^1]: The bundled file contains two records beginning in 1899.

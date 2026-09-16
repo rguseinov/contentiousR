@@ -13,6 +13,7 @@
 <url><loc>https://rguseinov.github.io/contentiousR/reference/add_from_peacesciencer.html</loc></url>
 <url><loc>https://rguseinov.github.io/contentiousR/reference/add_gdp.html</loc></url>
 <url><loc>https://rguseinov.github.io/contentiousR/reference/add_leader_data.html</loc></url>
+<url><loc>https://rguseinov.github.io/contentiousR/reference/add_pop.html</loc></url>
 <url><loc>https://rguseinov.github.io/contentiousR/reference/add_vdem.html</loc></url>
 <url><loc>https://rguseinov.github.io/contentiousR/reference/as_peacesciencer_panel.html</loc></url>
 <url><loc>https://rguseinov.github.io/contentiousR/reference/build_states_cow_panel.html</loc></url>
@@ -28,6 +29,7 @@
 <url><loc>https://rguseinov.github.io/contentiousR/reference/index.html</loc></url>
 <url><loc>https://rguseinov.github.io/contentiousR/reference/load_gdp_data.html</loc></url>
 <url><loc>https://rguseinov.github.io/contentiousR/reference/load_leader_data.html</loc></url>
+<url><loc>https://rguseinov.github.io/contentiousR/reference/load_population_data.html</loc></url>
 <url><loc>https://rguseinov.github.io/contentiousR/reference/load_vdem_data.html</loc></url>
 <url><loc>https://rguseinov.github.io/contentiousR/reference/read_rdata_from_extdata.html</loc></url>
 <url><loc>https://rguseinov.github.io/contentiousR/reference/safe_max.html</loc></url>

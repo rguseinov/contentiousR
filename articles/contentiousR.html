@@ -168,14 +168,76 @@ need:</p>
 <h2 id="load_gdp_data-add_gdp">
 <code>load_gdp_data()</code> / <code>add_gdp()</code><a class="anchor" aria-label="anchor" href="#load_gdp_data-add_gdp"></a>
 </h2>
-<p>Gapminder GDP per capita data. Returns <code>gdp_pcap</code>,
-<code>log_gdp_pcap</code>, and <code>gdp_growth</code>.</p>
+<p>Two GDP sources are available via <code>dataset</code>.
+<code>"gapminder"</code> (default) returns <code>gdp_pcap</code>,
+<code>log_gdp_pcap</code>, and <code>gdp_growth</code>.
+<code>"fariss"</code> returns the latent GDP and GDP per capita
+estimates from Fariss, Anders, Markowitz, and Barnum (2022) as
+<code>fariss_gdp</code> and <code>fariss_gdppc</code>, with much wider
+coverage (1500–2019) but units that are not independently verified in
+this package — see
+<code><a href="../articles/data-sources.html">vignette("data-sources", package = "contentiousR")</a></code>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Standalone</span></span>
 <span><span class="va">gdp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_gdp_data.html">load_gdp_data</a></span><span class="op">(</span>start_year <span class="op">=</span> <span class="fl">1990</span>, end_year <span class="op">=</span> <span class="fl">2015</span>, coding_system <span class="op">=</span> <span class="st">"cow"</span><span class="op">)</span></span>
+<span><span class="va">fariss_gdp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_gdp_data.html">load_gdp_data</a></span><span class="op">(</span><span class="fl">1700</span>, <span class="fl">2015</span>, dataset <span class="op">=</span> <span class="st">"fariss"</span>, coding_system <span class="op">=</span> <span class="st">"cow"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Pipeline</span></span>
-<span><span class="va">panel</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/add_gdp.html">add_gdp</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">panel</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/add_gdp.html">add_gdp</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">panel</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/add_gdp.html">add_gdp</a></span><span class="op">(</span>dataset <span class="op">=</span> <span class="st">"fariss"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="load_population_data-add_pop">
+<code>load_population_data()</code> / <code>add_pop()</code><a class="anchor" aria-label="anchor" href="#load_population_data-add_pop"></a>
+</h2>
+<p>Three population sources are available via <code>dataset</code>.</p>
+<table class="table">
+<colgroup>
+<col width="25%">
+<col width="25%">
+<col width="25%">
+<col width="25%">
+</colgroup>
+<thead><tr class="header">
+<th>Dataset</th>
+<th>Source</th>
+<th>Coverage</th>
+<th>Returned columns</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>
+<code>"wpp"</code> (default)</td>
+<td><a href="https://population.un.org/wpp/" class="external-link">UN World Population
+Prospects 2024</a></td>
+<td>1949–2023</td>
+<td><code>un_pop</code></td>
+</tr>
+<tr class="even">
+<td><code>"nmc"</code></td>
+<td><a href="https://correlatesofwar.org/data-sets/national-material-capabilities/" class="external-link">Correlates
+of War NMC v7.0</a></td>
+<td>1816–2022</td>
+<td>
+<code>tpop</code>, <code>upop</code>
+</td>
+</tr>
+<tr class="odd">
+<td><code>"fariss"</code></td>
+<td>Fariss et al. (2022) latent estimate</td>
+<td>1500–2019</td>
+<td><code>fariss_pop</code></td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Standalone</span></span>
+<span><span class="va">pop_wpp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_population_data.html">load_population_data</a></span><span class="op">(</span><span class="fl">1990</span>, <span class="fl">2015</span>, dataset <span class="op">=</span> <span class="st">"wpp"</span>, coding_system <span class="op">=</span> <span class="st">"cow"</span><span class="op">)</span></span>
+<span><span class="va">pop_nmc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_population_data.html">load_population_data</a></span><span class="op">(</span><span class="fl">1900</span>, <span class="fl">2015</span>, dataset <span class="op">=</span> <span class="st">"nmc"</span>, coding_system <span class="op">=</span> <span class="st">"cow"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Pipeline</span></span>
+<span><span class="va">panel</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/add_pop.html">add_pop</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">panel</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/add_pop.html">add_pop</a></span><span class="op">(</span>dataset <span class="op">=</span> <span class="st">"nmc"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="load_vdem_data-add_vdem">
@@ -184,7 +246,7 @@ need:</p>
 <p>V-Dem indicators. A default set of democracy, civil society, civil
 liberties, and rule-of-law variables is loaded when
 <code>vars = NULL</code>.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Standalone</span></span>
 <span><span class="va">vdem</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_vdem_data.html">load_vdem_data</a></span><span class="op">(</span></span>
 <span>  vars          <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"v2x_polyarchy"</span>, <span class="st">"v2x_libdem"</span><span class="op">)</span>,</span>
@@ -241,7 +303,7 @@ Leader List</a></td>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Standalone</span></span>
 <span><span class="va">arch</span>  <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_leader_data.html">load_leader_data</a></span><span class="op">(</span><span class="fl">1990</span>, <span class="fl">2015</span>, dataset <span class="op">=</span> <span class="st">"archigos"</span>, coding_system <span class="op">=</span> <span class="st">"cow"</span><span class="op">)</span></span>
 <span><span class="va">reign</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_leader_data.html">load_leader_data</a></span><span class="op">(</span><span class="fl">1990</span>, <span class="fl">2015</span>, dataset <span class="op">=</span> <span class="st">"reign"</span>,    coding_system <span class="op">=</span> <span class="st">"gw"</span><span class="op">)</span></span>
@@ -258,7 +320,7 @@ Leader List</a></td>
 describe the state system and unit of analysis. Use
 <code><a href="../reference/add_from_peacesciencer.html">add_from_peacesciencer()</a></code> to supply these temporarily and
 return a panel with only contentiousR’s original country-code key:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/svmiller/peacesciencer/" class="external-link">peacesciencer</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">analysis_data</span> <span class="op">|&gt;</span></span>

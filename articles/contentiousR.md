@@ -105,16 +105,44 @@ panel <- build_states_panel(
 
 ## `load_gdp_data()` / `add_gdp()`
 
-Gapminder GDP per capita data. Returns `gdp_pcap`, `log_gdp_pcap`, and
-`gdp_growth`.
+Two GDP sources are available via `dataset`. `"gapminder"` (default)
+returns `gdp_pcap`, `log_gdp_pcap`, and `gdp_growth`. `"fariss"` returns
+the latent GDP and GDP per capita estimates from Fariss, Anders,
+Markowitz, and Barnum (2022) as `fariss_gdp` and `fariss_gdppc`, with
+much wider coverage (1500–2019) but units that are not independently
+verified in this package — see
+[`vignette("data-sources", package = "contentiousR")`](https://rguseinov.github.io/contentiousR/articles/data-sources.md).
 
 ``` r
 
 # Standalone
 gdp <- load_gdp_data(start_year = 1990, end_year = 2015, coding_system = "cow")
+fariss_gdp <- load_gdp_data(1700, 2015, dataset = "fariss", coding_system = "cow")
 
 # Pipeline
 panel |> add_gdp()
+panel |> add_gdp(dataset = "fariss")
+```
+
+## `load_population_data()` / `add_pop()`
+
+Three population sources are available via `dataset`.
+
+| Dataset | Source | Coverage | Returned columns |
+|----|----|----|----|
+| `"wpp"` (default) | [UN World Population Prospects 2024](https://population.un.org/wpp/) | 1949–2023 | `un_pop` |
+| `"nmc"` | [Correlates of War NMC v7.0](https://correlatesofwar.org/data-sets/national-material-capabilities/) | 1816–2022 | `tpop`, `upop` |
+| `"fariss"` | Fariss et al. (2022) latent estimate | 1500–2019 | `fariss_pop` |
+
+``` r
+
+# Standalone
+pop_wpp <- load_population_data(1990, 2015, dataset = "wpp", coding_system = "cow")
+pop_nmc <- load_population_data(1900, 2015, dataset = "nmc", coding_system = "cow")
+
+# Pipeline
+panel |> add_pop()
+panel |> add_pop(dataset = "nmc")
 ```
 
 ## `load_vdem_data()` / `add_vdem()`
