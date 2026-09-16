@@ -150,6 +150,36 @@ is identical to
 [`add_pop()`](https://rguseinov.github.io/contentiousR/reference/add_pop.md),
 under the unabbreviated name.
 
+## `load_military_expenditure_data()` / `add_military_expenditure()`
+
+Three military expenditure sources are available via `dataset`.
+
+| Dataset | Source | Coverage | Returned columns |
+|----|----|----|----|
+| `"sipri"` (default) | [SIPRI Milex Database v1.2](https://www.sipri.org/databases/milex) | 1949–2025 | `sipri_milex`, `sipri_milburden` |
+| `"nmc"` | [Correlates of War NMC v7.0](https://correlatesofwar.org/data-sets/national-material-capabilities/) | 1816–2022 | `nmc_milex` |
+| `"barnum"` | Barnum et al. (2025) latent estimate | 1816–2019 | `barnum_milburden`, `barnum_sipri`, `barnum_nmc` |
+
+``` r
+
+# Standalone
+milex_sipri <- load_military_expenditure_data(1990, 2015, dataset = "sipri", coding_system = "cow")
+milex_barnum <- load_military_expenditure_data(1900, 2015, dataset = "barnum", coding_system = "cow")
+
+# Pipeline
+panel |> add_military_expenditure()
+panel |> add_military_expenditure(dataset = "barnum")
+```
+
+Unlike the Fariss GDP/population estimates, Barnum et al.’s underlying
+model does not publish a single combined military expenditure value on a
+real monetary scale, so `barnum_sipri` and `barnum_nmc` are the model’s
+posterior estimate of two specific indicators rather than one “latent”
+series. See
+[`vignette("data-sources", package = "contentiousR")`](https://rguseinov.github.io/contentiousR/articles/data-sources.md)
+for what each represents and why they are not directly comparable to
+`sipri_milex` / `nmc_milex`.
+
 ## `load_vdem_data()` / `add_vdem()`
 
 V-Dem indicators. A default set of democracy, civil society, civil

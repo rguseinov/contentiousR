@@ -15,6 +15,8 @@
   : Add population data to a state panel
 - [`add_population()`](https://rguseinov.github.io/contentiousR/reference/add_population.md)
   : Add population data to a state panel
+- [`add_military_expenditure()`](https://rguseinov.github.io/contentiousR/reference/add_military_expenditure.md)
+  : Add military expenditure data to a state panel
 - [`add_vdem()`](https://rguseinov.github.io/contentiousR/reference/add_vdem.md)
   : Add V-Dem indicators to a state panel
 - [`add_conflict()`](https://rguseinov.github.io/contentiousR/reference/add_conflict.md)
@@ -37,6 +39,8 @@
   : Load GDP data
 - [`load_leader_data()`](https://rguseinov.github.io/contentiousR/reference/load_leader_data.md)
   : Load leader data
+- [`load_military_expenditure_data()`](https://rguseinov.github.io/contentiousR/reference/load_military_expenditure_data.md)
+  : Load military expenditure data
 - [`load_population_data()`](https://rguseinov.github.io/contentiousR/reference/load_population_data.md)
   : Load population data
 - [`load_vdem_data()`](https://rguseinov.github.io/contentiousR/reference/load_vdem_data.md)

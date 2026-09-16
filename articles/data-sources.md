@@ -12,6 +12,9 @@ limitations.
 | Population: `"wpp"` | UN World Population Prospects 2024, 1949–2023 | Country-year | [UN Population Division](https://population.un.org/wpp/) |
 | Population: `"nmc"` | National Material Capabilities v7.0, 1816–2022 | Country-year | [Correlates of War](https://correlatesofwar.org/data-sets/national-material-capabilities/) |
 | Population: `"fariss"` | Fariss et al. 2022, latent estimate, 1500–2019 | Country-year | [Dataverse](https://doi.org/10.7910/DVN/DC0ING) |
+| Military expenditure: `"sipri"` | SIPRI Milex Database v1.2, 1949–2025 | Country-year | [SIPRI](https://www.sipri.org/databases/milex) |
+| Military expenditure: `"nmc"` | National Material Capabilities v7.0, 1816–2022 | Country-year | [Correlates of War](https://correlatesofwar.org/data-sets/national-material-capabilities/) |
+| Military expenditure: `"barnum"` | Barnum et al. 2025, latent estimate, 1816–2019 | Country-year | [Dataverse](https://doi.org/10.7910/DVN/RKJAKJ) |
 | `"navco1.3"` | NAVCO 1.3, 1900–2019[^1] | Campaign onset | [NAVCO project](https://ash.harvard.edu/programs/nonviolent-and-violent-campaigns-and-outcomes-data-project/) |
 | `"navco2.1"` | NAVCO 2.1, 1945–2013 | Campaign-year | [Dataverse](https://doi.org/10.7910/DVN/MHOXDV) |
 | `"beissinger"` | Revolutionary Episodes 1.0, 1900–2014[^2] | Episode onset | [Beissinger](https://mbeissinger.scholar.princeton.edu/revolutionary-episodes-dataset) |
@@ -86,13 +89,38 @@ independently verified in this package; consult Fariss et al. (2022)
 before using `fariss_gdp`, `fariss_gdppc`, or `fariss_pop` outside of
 relative/comparative analysis.
 
+The SIPRI workbook lists a small number of rows (e.g. “Africa”, “NATO”)
+that are regional or organizational aggregates rather than countries;
+these have no matching COW/Gleditsch-Ward code and are dropped.
+
+Barnum, Fariss, Markowitz, and Morales’s military expenditure
+replication file contains one row per country-year for each of 24
+underlying source indicators, each in its own original currency/unit,
+with no single combined value on a real monetary scale (unlike the
+Fariss GDP/population files, the paper does not publish the shared
+latent trait directly because “the average by itself does not have a
+real or direct monetary unit”). Instead,
+`load_military_expenditure_data(dataset = "barnum")` reports the model’s
+posterior estimate of two specific indicators: `barnum_sipri`
+(`"milex_con_2022_sipri"`) and `barnum_nmc` (`"milex_con_2017_nmc"`),
+which extend each one’s coverage back to 1816 using information from all
+24 sources. Both are in constant (inflation-adjusted) dollars, so
+`barnum_nmc` is not directly comparable to `nmc_milex` from
+`dataset = "nmc"`, which NMC documents in current-year dollars; their
+ratio varies smoothly over time (around 2.4 for the United States in
+1990, falling toward 1 by the mid-2010s) rather than reflecting
+disagreement between the sources. `barnum_milburden` (`milexgdp`) is a
+unit-free ratio of spending to GDP and so is published directly.
+
 ## Licensing
 
 The package’s MIT license applies to the software, not to third-party
 data. Gapminder and UCDP identify their bundled data as CC BY 4.0; NAVCO
 2.1 and MEC are CC0; UN WPP is CC BY 3.0 IGO. Other source files,
-including NMC and the Fariss et al. estimates, retain their creators’
-terms. See `inst/COPYRIGHTS` and verify the applicable terms before
+including NMC, SIPRI, and the Fariss et al. and Barnum et al. estimates,
+retain their creators’ terms — SIPRI in particular is free to use with
+attribution but requires separately negotiating a royalty for commercial
+use. See `inst/COPYRIGHTS` and verify the applicable terms before
 redistributing a package build containing those files.
 
 [^1]: The bundled file contains two records beginning in 1899.

@@ -242,13 +242,79 @@ of War NMC v7.0</a></td>
 under the unabbreviated name.</p>
 </div>
 <div class="section level2">
+<h2 id="load_military_expenditure_data-add_military_expenditure">
+<code>load_military_expenditure_data()</code> /
+<code>add_military_expenditure()</code><a class="anchor" aria-label="anchor" href="#load_military_expenditure_data-add_military_expenditure"></a>
+</h2>
+<p>Three military expenditure sources are available via
+<code>dataset</code>.</p>
+<table class="table">
+<colgroup>
+<col width="25%">
+<col width="25%">
+<col width="25%">
+<col width="25%">
+</colgroup>
+<thead><tr class="header">
+<th>Dataset</th>
+<th>Source</th>
+<th>Coverage</th>
+<th>Returned columns</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>
+<code>"sipri"</code> (default)</td>
+<td><a href="https://www.sipri.org/databases/milex" class="external-link">SIPRI Milex Database
+v1.2</a></td>
+<td>1949–2025</td>
+<td>
+<code>sipri_milex</code>, <code>sipri_milburden</code>
+</td>
+</tr>
+<tr class="even">
+<td><code>"nmc"</code></td>
+<td><a href="https://correlatesofwar.org/data-sets/national-material-capabilities/" class="external-link">Correlates
+of War NMC v7.0</a></td>
+<td>1816–2022</td>
+<td><code>nmc_milex</code></td>
+</tr>
+<tr class="odd">
+<td><code>"barnum"</code></td>
+<td>Barnum et al. (2025) latent estimate</td>
+<td>1816–2019</td>
+<td>
+<code>barnum_milburden</code>, <code>barnum_sipri</code>,
+<code>barnum_nmc</code>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Standalone</span></span>
+<span><span class="va">milex_sipri</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_military_expenditure_data.html">load_military_expenditure_data</a></span><span class="op">(</span><span class="fl">1990</span>, <span class="fl">2015</span>, dataset <span class="op">=</span> <span class="st">"sipri"</span>, coding_system <span class="op">=</span> <span class="st">"cow"</span><span class="op">)</span></span>
+<span><span class="va">milex_barnum</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_military_expenditure_data.html">load_military_expenditure_data</a></span><span class="op">(</span><span class="fl">1900</span>, <span class="fl">2015</span>, dataset <span class="op">=</span> <span class="st">"barnum"</span>, coding_system <span class="op">=</span> <span class="st">"cow"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Pipeline</span></span>
+<span><span class="va">panel</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/add_military_expenditure.html">add_military_expenditure</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">panel</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/add_military_expenditure.html">add_military_expenditure</a></span><span class="op">(</span>dataset <span class="op">=</span> <span class="st">"barnum"</span><span class="op">)</span></span></code></pre></div>
+<p>Unlike the Fariss GDP/population estimates, Barnum et al.’s
+underlying model does not publish a single combined military expenditure
+value on a real monetary scale, so <code>barnum_sipri</code> and
+<code>barnum_nmc</code> are the model’s posterior estimate of two
+specific indicators rather than one “latent” series. See
+<code><a href="../articles/data-sources.html">vignette("data-sources", package = "contentiousR")</a></code> for what
+each represents and why they are not directly comparable to
+<code>sipri_milex</code> / <code>nmc_milex</code>.</p>
+</div>
+<div class="section level2">
 <h2 id="load_vdem_data-add_vdem">
 <code>load_vdem_data()</code> / <code>add_vdem()</code><a class="anchor" aria-label="anchor" href="#load_vdem_data-add_vdem"></a>
 </h2>
 <p>V-Dem indicators. A default set of democracy, civil society, civil
 liberties, and rule-of-law variables is loaded when
 <code>vars = NULL</code>.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Standalone</span></span>
 <span><span class="va">vdem</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_vdem_data.html">load_vdem_data</a></span><span class="op">(</span></span>
 <span>  vars          <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"v2x_polyarchy"</span>, <span class="st">"v2x_libdem"</span><span class="op">)</span>,</span>
@@ -305,7 +371,7 @@ Leader List</a></td>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Standalone</span></span>
 <span><span class="va">arch</span>  <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_leader_data.html">load_leader_data</a></span><span class="op">(</span><span class="fl">1990</span>, <span class="fl">2015</span>, dataset <span class="op">=</span> <span class="st">"archigos"</span>, coding_system <span class="op">=</span> <span class="st">"cow"</span><span class="op">)</span></span>
 <span><span class="va">reign</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_leader_data.html">load_leader_data</a></span><span class="op">(</span><span class="fl">1990</span>, <span class="fl">2015</span>, dataset <span class="op">=</span> <span class="st">"reign"</span>,    coding_system <span class="op">=</span> <span class="st">"gw"</span><span class="op">)</span></span>
@@ -322,7 +388,7 @@ Leader List</a></td>
 describe the state system and unit of analysis. Use
 <code><a href="../reference/add_from_peacesciencer.html">add_from_peacesciencer()</a></code> to supply these temporarily and
 return a panel with only contentiousR’s original country-code key:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/svmiller/peacesciencer/" class="external-link">peacesciencer</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">analysis_data</span> <span class="op">|&gt;</span></span>
