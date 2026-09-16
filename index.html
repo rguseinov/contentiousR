@@ -60,7 +60,7 @@
 </h1></div>
 <!-- badges: start -->
 
-<p><code>contentiousR</code> is an R package for building country-year panel datasets in cross-national peace science research. It provides a flexible workflow for creating state panels and enriching them with socioeconomic, political, and conflict indicators — using either Correlates of War (COW) or Gleditsch-Ward (GW) country coding schemes.</p>
+<p><code>contentiousR</code> is an R package that provides tools and datasets for contentious politics and civil conflicts research. It provides a flexible workflow for creating state panels and enriching them with socioeconomic, political, and conflict indicators — using either Correlates of War (COW) or Gleditsch-Ward (GW) country coding schemes.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -76,7 +76,7 @@
 <div class="section level2">
 <h2 id="two-workflows-your-choice">Two workflows, your choice<a class="anchor" aria-label="anchor" href="#two-workflows-your-choice"></a>
 </h2>
-<p><code>contentiousR</code> supports two ways of working — use them separately or together.</p>
+<p><code>contentiousR</code> supports two ways of working - use them separately or together.</p>
 <div class="section level3">
 <h3 id="pipeline-workflow">Pipeline workflow<a class="anchor" aria-label="anchor" href="#pipeline-workflow"></a>
 </h3>
@@ -195,63 +195,63 @@
 <tbody>
 <tr>
 <td><code>"navco1.3"</code></td>
-<td>NAVCO 1.3</td>
+<td><a href="https://doi.org/10.7910/DVN/ON9XND" class="external-link">NAVCO 1.3</a></td>
 <td>1900–2019†</td>
 <td>Campaign onset</td>
 <td><code>nvc1.3_</code></td>
 </tr>
 <tr>
 <td><code>"navco2.1"</code></td>
-<td>NAVCO 2.1</td>
+<td><a href="https://doi.org/10.7910/DVN/MHOXDV" class="external-link">NAVCO 2.1</a></td>
 <td>1945–2013</td>
 <td>Campaign-year</td>
 <td><code>nvc2.1_</code></td>
 </tr>
 <tr>
 <td><code>"beissinger"</code></td>
-<td>Beissinger Revolutionary Episodes</td>
+<td><a href="https://mbeissinger.scholar.princeton.edu/revolutionary-episodes-dataset" class="external-link">Mark Beissinger’s Revolutionary Episodes Dataset</a></td>
 <td>1900–2014†</td>
 <td>Episode onset</td>
 <td><code>beissinger_</code></td>
 </tr>
 <tr>
 <td><code>"csra"</code></td>
-<td>HSE CSRA Revolutions Dataset</td>
+<td><a href="https://social.hse.ru/en/mr/rev_bd" class="external-link">HSE CSRA Revolutions Dataset v1.1</a></td>
 <td>2000–2024</td>
 <td>Episode onset</td>
 <td><code>csra_</code></td>
 </tr>
 <tr>
 <td><code>"scad"</code></td>
-<td>Social Conflict Analysis Database 3.3</td>
+<td><a href="https://www.strausscenter.org/ccaps-research-areas/social-conflict/database/" class="external-link">Social Conflict Analysis Database 3.3</a></td>
 <td>1990–2017†</td>
 <td>Country-year events</td>
 <td><code>scad_</code></td>
 </tr>
 <tr>
 <td><code>"ucdp_prio"</code></td>
-<td>UCDP/PRIO Armed Conflict v26.1</td>
+<td><a href="https://ucdp.uu.se/downloads/" class="external-link">UCDP/PRIO Armed Conflict v26.1</a></td>
 <td>1946–2025</td>
 <td>Country-year incidence and onset</td>
 <td><code>ucdp_prio_</code></td>
 </tr>
 <tr>
 <td><code>"ucdp_vpp"</code></td>
-<td>UCDP Violent Political Protest v26.1</td>
+<td><a href="https://ucdp.uu.se/downloads/" class="external-link">UCDP Violent Political Protest v26.1</a></td>
 <td>1989–2025</td>
 <td>Country-year incidence</td>
 <td><code>ucdp_vpp_</code></td>
 </tr>
 <tr>
 <td><code>"mm"</code></td>
-<td>Mass Mobilization Project v4</td>
+<td><a href="https://massmobilization.github.io" class="external-link">Mass Mobilization Project v4</a></td>
 <td>1990–2020</td>
 <td>Country-year protests</td>
 <td><code>mm_</code></td>
 </tr>
 <tr>
 <td><code>"mmad"</code></td>
-<td>Mass Mobilization in Autocracies v5</td>
+<td><a href="https://mmadatabase.org" class="external-link">Mass Mobilization in Autocracies v5</a></td>
 <td>2003–2022</td>
 <td>Country-year events</td>
 <td><code>mmad_</code></td>
@@ -294,6 +294,7 @@
 <div class="section level2">
 <h2 id="using-contentiousr-with-peacesciencer">Using contentiousR with peacesciencer<a class="anchor" aria-label="anchor" href="#using-contentiousr-with-peacesciencer"></a>
 </h2>
+<p><code>contentiousR</code> is designed to be compatible with <code>peacesciencer</code>. For this, additional functions were required.</p>
 <p><code>peacesciencer</code> uses <code>ccode</code>/<code>gwcode</code> keys and dispatch attributes that differ from contentiousR’s <code>cow</code>/<code>gw</code> interface. For a single addition, use <code><a href="reference/add_from_peacesciencer.html">add_from_peacesciencer()</a></code> to create that interface temporarily and return a clean contentiousR panel without the technical alias:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/svmiller/peacesciencer/" class="external-link">peacesciencer</a></span><span class="op">)</span></span>
@@ -327,7 +328,7 @@
 <tbody>
 <tr>
 <td><code>"archigos"</code></td>
-<td>Archigos 4.1</td>
+<td><a href="http://ksgleditsch.com/archigos.html" class="external-link">Archigos 4.1</a></td>
 <td>1875–2015</td>
 <td>
 <code>entry</code>, <code>exit</code>, <code>irregular_entry</code>, <code>irregular_exit</code>, <code>female_leader</code>, <code>yrborn</code>, <code>posttenurefate</code>, <code>leader_tenure</code>
@@ -335,7 +336,7 @@
 </tr>
 <tr>
 <td><code>"reign"</code></td>
-<td>REIGN Leader List</td>
+<td><a href="https://oefdatascience.github.io/REIGN.github.io/menu/reign_current.html" class="external-link">REIGN Leader List</a></td>
 <td>1921–2021</td>
 <td>
 <code>female_leader</code>, <code>military_bg</code>, <code>birthyear</code>, <code>leader_tenure</code>

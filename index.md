@@ -1,8 +1,8 @@
 # contentiousR
 
-`contentiousR` is an R package for building country-year panel datasets
-in cross-national peace science research. It provides a flexible
-workflow for creating state panels and enriching them with
+`contentiousR` is an R package that provides tools and datasets for
+contentious politics and civil conflicts research. It provides a
+flexible workflow for creating state panels and enriching them with
 socioeconomic, political, and conflict indicators — using either
 Correlates of War (COW) or Gleditsch-Ward (GW) country coding schemes.
 
@@ -27,7 +27,7 @@ remotes::install_github("rguseinov/contentiousR")
 
 ## Two workflows, your choice
 
-`contentiousR` supports two ways of working — use them separately or
+`contentiousR` supports two ways of working - use them separately or
 together.
 
 ### Pipeline workflow
@@ -138,15 +138,15 @@ and GW coding.
 
 | Dataset | Source | Coverage | Output level | Prefix |
 |----|----|----|----|----|
-| `"navco1.3"` | NAVCO 1.3 | 1900–2019† | Campaign onset | `nvc1.3_` |
-| `"navco2.1"` | NAVCO 2.1 | 1945–2013 | Campaign-year | `nvc2.1_` |
-| `"beissinger"` | Beissinger Revolutionary Episodes | 1900–2014† | Episode onset | `beissinger_` |
-| `"csra"` | HSE CSRA Revolutions Dataset | 2000–2024 | Episode onset | `csra_` |
-| `"scad"` | Social Conflict Analysis Database 3.3 | 1990–2017† | Country-year events | `scad_` |
-| `"ucdp_prio"` | UCDP/PRIO Armed Conflict v26.1 | 1946–2025 | Country-year incidence and onset | `ucdp_prio_` |
-| `"ucdp_vpp"` | UCDP Violent Political Protest v26.1 | 1989–2025 | Country-year incidence | `ucdp_vpp_` |
-| `"mm"` | Mass Mobilization Project v4 | 1990–2020 | Country-year protests | `mm_` |
-| `"mmad"` | Mass Mobilization in Autocracies v5 | 2003–2022 | Country-year events | `mmad_` |
+| `"navco1.3"` | [NAVCO 1.3](https://doi.org/10.7910/DVN/ON9XND) | 1900–2019† | Campaign onset | `nvc1.3_` |
+| `"navco2.1"` | [NAVCO 2.1](https://doi.org/10.7910/DVN/MHOXDV) | 1945–2013 | Campaign-year | `nvc2.1_` |
+| `"beissinger"` | [Mark Beissinger’s Revolutionary Episodes Dataset](https://mbeissinger.scholar.princeton.edu/revolutionary-episodes-dataset) | 1900–2014† | Episode onset | `beissinger_` |
+| `"csra"` | [HSE CSRA Revolutions Dataset v1.1](https://social.hse.ru/en/mr/rev_bd) | 2000–2024 | Episode onset | `csra_` |
+| `"scad"` | [Social Conflict Analysis Database 3.3](https://www.strausscenter.org/ccaps-research-areas/social-conflict/database/) | 1990–2017† | Country-year events | `scad_` |
+| `"ucdp_prio"` | [UCDP/PRIO Armed Conflict v26.1](https://ucdp.uu.se/downloads/) | 1946–2025 | Country-year incidence and onset | `ucdp_prio_` |
+| `"ucdp_vpp"` | [UCDP Violent Political Protest v26.1](https://ucdp.uu.se/downloads/) | 1989–2025 | Country-year incidence | `ucdp_vpp_` |
+| `"mm"` | [Mass Mobilization Project v4](https://massmobilization.github.io) | 1990–2020 | Country-year protests | `mm_` |
+| `"mmad"` | [Mass Mobilization in Autocracies v5](https://mmadatabase.org) | 2003–2022 | Country-year events | `mmad_` |
 | `"mec"` | [Major Episodes of Contention](https://doi.org/10.1093/jopres/xjaf008) | 1955–2018 | Episode (global) | `mec_` |
 
 † The bundled source has a small number of records beginning in 1899.
@@ -196,6 +196,9 @@ panel |> add_conflict(dataset = "mec", aggregate = FALSE)
 
 ## Using contentiousR with peacesciencer
 
+`contentiousR` is designed to be compatible with `peacesciencer`. For
+this, additional functions were required.
+
 `peacesciencer` uses `ccode`/`gwcode` keys and dispatch attributes that
 differ from contentiousR’s `cow`/`gw` interface. For a single addition,
 use
@@ -228,8 +231,8 @@ latest-starting leader is kept.
 
 | Dataset | Source | Coverage | Key variables |
 |----|----|----|----|
-| `"archigos"` | Archigos 4.1 | 1875–2015 | `entry`, `exit`, `irregular_entry`, `irregular_exit`, `female_leader`, `yrborn`, `posttenurefate`, `leader_tenure` |
-| `"reign"` | REIGN Leader List | 1921–2021 | `female_leader`, `military_bg`, `birthyear`, `leader_tenure` |
+| `"archigos"` | [Archigos 4.1](http://ksgleditsch.com/archigos.md) | 1875–2015 | `entry`, `exit`, `irregular_entry`, `irregular_exit`, `female_leader`, `yrborn`, `posttenurefate`, `leader_tenure` |
+| `"reign"` | [REIGN Leader List](https://oefdatascience.github.io/REIGN.github.io/menu/reign_current.html) | 1921–2021 | `female_leader`, `military_bg`, `birthyear`, `leader_tenure` |
 
 ``` r
 
