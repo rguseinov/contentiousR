@@ -31,7 +31,7 @@
 ## Diagnostics and visualization
 
 - [`plot_coverage()`](https://rguseinov.github.io/contentiousR/reference/plot_coverage.md)
-  : Plot country-year coverage of a variable
+  : Plot country-year onset/event coverage of a binary variable
 
 ## Interoperate with other packages
 

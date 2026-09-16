@@ -144,15 +144,16 @@ Each requested variable gets one new column named `<var>_l`. Call
 [`add_lag()`](https://rguseinov.github.io/contentiousR/reference/add_lag.md)
 again (optionally with a different `n`) for additional lags.
 
-## Checking coverage
+## Visualizing onsets
 
 [`plot_coverage()`](https://rguseinov.github.io/contentiousR/reference/plot_coverage.md)
-draws a state-by-year heatmap of where a column is observed versus `NA`,
-for auditing a source before analysis. States that never match the
-source (e.g. India is not `"scad"`-eligible in this
-sub-Saharan/Latin-American dataset) are dropped by default
-(`drop_empty = TRUE`), since an all-grey row adds clutter without
-showing where coverage actually varies.
+draws a state-by-year heatmap of a binary (0/1) event column: `1` years
+are shaded as an event, `0` years as no event, and years where the
+source has no data — either `var` is `NA`, or the state does not appear
+in the panel that year at all, e.g. before independence — are left
+blank. States that never have the event are dropped by default
+(`drop_empty = TRUE`), since an all-blank/grey row adds clutter without
+showing where events actually happened.
 
 ``` r
 

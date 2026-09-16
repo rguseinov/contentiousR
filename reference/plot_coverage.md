@@ -1,9 +1,11 @@
-# Plot country-year coverage of a variable
+# Plot country-year onset/event coverage of a binary variable
 
-Draws a country-by-year heatmap showing which country-years have a
-non-missing value for `var`, and which are `NA`. Useful for auditing a
-source's actual coverage (or the coverage of a panel assembled with
-several `add_*()` calls) before running an analysis.
+Draws a country-by-year heatmap of a binary (0/1) event column: `1`
+years are shaded as an event, `0` years as no event, and years where the
+state does not appear in `panel` at all (e.g. before independence) or
+`var` is `NA` are left blank. Useful for eyeballing when and where
+events (e.g. conflict onsets) actually occurred, as opposed to just
+where a source has any data.
 
 ## Usage
 
@@ -21,21 +23,23 @@ plot_coverage(panel, var, drop_empty = TRUE)
 
 - var:
 
-  Character. Name of the column in `panel` to check coverage for.
+  Character. Name of a binary (0/1) column in `panel`, such as
+  `"ucdp_prio_onset"`.
 
 - drop_empty:
 
-  Logical. If `TRUE` (default), drop states with zero observed years for
-  `var` before plotting. A state that never matches a source (e.g. it
-  never appears in a conflict dataset) contributes a fully-grey row that
-  adds clutter without showing where coverage actually varies; set to
-  `FALSE` to include these states anyway.
+  Logical. If `TRUE` (default), drop states with zero years where
+  `var == 1` before plotting. A state that never has the event
+  contributes a row with no blue tiles at all, which adds clutter
+  without showing where/when events happened; set to `FALSE` to include
+  these states anyway.
 
 ## Value
 
-A `ggplot` object (one tile per country-year, filled by whether `var` is
-observed). States are ordered top-to-bottom by their share of observed
-years, most-covered first. Requires the `ggplot2` package.
+A `ggplot` object (one tile per country-year, filled by `"Event"` /
+`"No event"`, with unobserved country-years left blank). States are
+ordered top-to-bottom by their number of events, most first. Requires
+the `ggplot2` package.
 
 ## Examples
 
@@ -43,7 +47,7 @@ years, most-covered first. Requires the `ggplot2` package.
 if (requireNamespace("ggplot2", quietly = TRUE)) {
   build_states_panel(1990, 2015, coding_system = "cow") |>
     add_conflict("ucdp_prio") |>
-    plot_coverage("ucdp_prio_incidence")
+    plot_coverage("ucdp_prio_onset")
 }
 
 ```

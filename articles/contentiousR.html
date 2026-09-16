@@ -199,15 +199,16 @@ silently reaching further back than intended:</p>
 (optionally with a different <code>n</code>) for additional lags.</p>
 </div>
 <div class="section level2">
-<h2 id="checking-coverage">Checking coverage<a class="anchor" aria-label="anchor" href="#checking-coverage"></a>
+<h2 id="visualizing-onsets">Visualizing onsets<a class="anchor" aria-label="anchor" href="#visualizing-onsets"></a>
 </h2>
-<p><code><a href="../reference/plot_coverage.html">plot_coverage()</a></code> draws a state-by-year heatmap of where a
-column is observed versus <code>NA</code>, for auditing a source before
-analysis. States that never match the source (e.g. India is not
-<code>"scad"</code>-eligible in this sub-Saharan/Latin-American dataset)
-are dropped by default (<code>drop_empty = TRUE</code>), since an
-all-grey row adds clutter without showing where coverage actually
-varies.</p>
+<p><code><a href="../reference/plot_coverage.html">plot_coverage()</a></code> draws a state-by-year heatmap of a
+binary (0/1) event column: <code>1</code> years are shaded as an event,
+<code>0</code> years as no event, and years where the source has no data
+— either <code>var</code> is <code>NA</code>, or the state does not
+appear in the panel that year at all, e.g. before independence — are
+left blank. States that never have the event are dropped by default
+(<code>drop_empty = TRUE</code>), since an all-blank/grey row adds
+clutter without showing where events actually happened.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"ggplot2"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="../reference/build_states_panel.html">build_states_panel</a></span><span class="op">(</span><span class="fl">1990</span>, <span class="fl">2015</span>, coding_system <span class="op">=</span> <span class="st">"cow"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
