@@ -7,29 +7,29 @@ limitations.
 
 | Argument | Bundled version and coverage | Unit returned | Source |
 |----|----|----|----|
-| GDP: `"gapminder"` | Gapminder v32 | Country-year | [Gapminder](https://www.gapminder.org/gdp-per-capita/) |
+| GDP: `"gapminder"` | Gapminder v32 | Country-year | [Gapminder](https://www.gapminder.org/data/documentation/gd001/) |
 | GDP: `"fariss"` | Fariss et al. 2022, latent estimate, 1500–2019 | Country-year | [Dataverse](https://doi.org/10.7910/DVN/DC0ING) |
 | Population: `"wpp"` | UN World Population Prospects 2024, 1949–2023 | Country-year | [UN Population Division](https://population.un.org/wpp/) |
 | Population: `"nmc"` | National Material Capabilities v7.0, 1816–2022 | Country-year | [Correlates of War](https://correlatesofwar.org/data-sets/national-material-capabilities/) |
 | Population: `"fariss"` | Fariss et al. 2022, latent estimate, 1500–2019 | Country-year | [Dataverse](https://doi.org/10.7910/DVN/DC0ING) |
-| Military expenditure: `"sipri"` | SIPRI Milex Database v1.2, 1949–2025 | Country-year | [SIPRI](https://www.sipri.org/databases/milex) |
+| Military expenditure: `"sipri"` | SIPRI Military Expenditure Database v1.2, 1949–2025 | Country-year | [SIPRI](https://www.sipri.org/databases/milex) |
 | Military expenditure: `"nmc"` | National Material Capabilities v7.0, 1816–2022 | Country-year | [Correlates of War](https://correlatesofwar.org/data-sets/national-material-capabilities/) |
 | Military expenditure: `"barnum"` | Barnum et al. 2025, latent estimate, 1816–2019 | Country-year | [Dataverse](https://doi.org/10.7910/DVN/RKJAKJ) |
-| `"navco1.3"` | NAVCO 1.3, 1900–2019[^1] | Campaign onset | [NAVCO project](https://ash.harvard.edu/programs/nonviolent-and-violent-campaigns-and-outcomes-data-project/) |
+| `"navco1.3"` | NAVCO 1.3, 1900–2019[^1] | Campaign onset | [Dataverse](https://doi.org/10.7910/DVN/ON9XND) |
 | `"navco2.1"` | NAVCO 2.1, 1945–2013 | Campaign-year | [Dataverse](https://doi.org/10.7910/DVN/MHOXDV) |
-| `"beissinger"` | Revolutionary Episodes 1.0, 1900–2014[^2] | Episode onset | [Beissinger](https://mbeissinger.scholar.princeton.edu/revolutionary-episodes-dataset) |
-| `"csra"` | CSRA 1.1, 2000–2024 | Episode onset | [HSE University](https://social.hse.ru/en/mr/rev_bd) |
+| `"beissinger"` | Revolutionary Episodes Dataset, 1900–2014[^2] | Episode onset | [Mark Beissinger](https://mbeissinger.scholar.princeton.edu/revolutionary-episodes-dataset) |
+| `"csra"` | CSRA Revolutions Dataset v1.1, 2000–2024 | Episode onset | [HSE University](https://social.hse.ru/en/mr/rev_bd) |
 | `"scad"` | SCAD 3.3, 1990–2017[^3] | Country-year | [Strauss Center](https://www.strausscenter.org/ccaps-research-areas/social-conflict/database/) |
 | `"ucdp_prio"` | UCDP/PRIO 26.1, 1946–2025 | Country-year | [UCDP](https://ucdp.uu.se/downloads/) |
 | `"ucdp_vpp"` | UCDP VPP 26.1, 1989–2025 | Country-year | [UCDP](https://ucdp.uu.se/downloads/) |
-| `"mm"` | Mass Mobilization v4, 1990–2020 | Country-year | [Project repository](https://github.com/MassMobilization) |
-| `"mmad"` | MMAD 5.0, 2003–2022 | Country-year | [MMAD](https://mmadatabase.org/) |
+| `"mm"` | Mass Mobilization, 1990–2020 | Country-year | [Project website](https://massmobilization.github.io) |
+| `"mmad"` | MMAD v5.0, 2003–2022 | Country-year | [MMAD](https://mmadatabase.org/) |
 | `"mec"` | Major Episodes of Contention, 1955–2018 | Episode (global) | [Article](https://doi.org/10.1093/jopres/xjaf008) / [data](https://doi.org/10.7910/DVN/JQWQNW) |
 | `"archigos"` | Archigos 4.1, 1875–2015 | Country-year | [Archigos](https://ksgleditsch.com/archigos.html) |
 | `"reign"` | REIGN, 1921–2021 | Country-year | [REIGN](https://oefdatascience.github.io/REIGN.github.io/) |
 | V-Dem | Installed `vdemdata` release | Country-year | [V-Dem](https://v-dem.net/data/the-v-dem-dataset/) |
 
-## Transformations that affect interpretation
+## Package-related ransformations and explanations
 
 SCAD repeats events when they span multiple locations. For country-level
 use, `contentiousR` retains one row per positive event ID before
@@ -61,11 +61,11 @@ always evidence of zero events.
 
 MEC contains 2,734 reformist and maximalist contentious episodes
 worldwide. `contentiousR` preserves its episode-level rows and all
-published variables, using the source’s `byear` as `year`. Fourteen
-left-censored episodes have a `mec_bdate` before 1955 but a source
-`byear` of 1955. With `add_conflict(aggregate = TRUE)`, MEC follows the
-same explicit aggregation policy as the other campaign and episode
-sources; use `aggregate = FALSE` to retain individual episodes.
+published variables, using the source’s `byear` (beginning year) as
+`year`. Fourteen left-censored episodes have a `mec_bdate` before 1955
+but a source `byear` of 1955. With `add_conflict(aggregate = TRUE)`, MEC
+follows the same explicit aggregation policy as the other campaign and
+episode sources; use `aggregate = FALSE` to retain individual episodes.
 
 The bundled UN WPP extract has three rows for some China country-years:
 a combined mainland+Hong Kong+Macao+Taiwan figure, a mainland-only
