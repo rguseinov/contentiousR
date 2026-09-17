@@ -132,8 +132,19 @@ conflict_data <- function(
     } else {
       # suppressMessages: Beissinger CSV has a duplicate "ongoing" column;
       # readr renames them to ongoing...14 / ongoing...77 and prints a message
-      data <- suppressMessages(readr::read_csv(path, show_col_types = FALSE))
+      data <- suppressMessages(readr::read_csv(
+        path, show_col_types = FALSE,
+        locale = readr::locale(encoding = "UTF-8")
+      ))
     }
+    # Mark text columns UTF-8 immediately: some later step in this
+    # function's own dplyr pipeline (not just the final return value)
+    # apparently forces these "unknown"-encoded-but-genuinely-UTF-8 columns
+    # through a native-encoding conversion partway through, which is where
+    # the Windows-only embedded-nul corruption actually happens -- fixing
+    # only the returned data frame at the very end of this function was not
+    # enough.
+    data <- mark_utf8(data)
   }
 
   # ═══════════════════════════════════════════════════════════════════════════
