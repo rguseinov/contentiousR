@@ -14,7 +14,7 @@ cn_bib
 
 ## Format
 
-A `bibentry` object of length 15.
+A `bibentry` object of length 22.
 
 ## Source
 

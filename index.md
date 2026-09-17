@@ -94,7 +94,28 @@ If you use `contentiousR` in your research, please cite:
 > Politics and Civil Conflict Research*. R package version 0.1.0.
 > <https://github.com/rguseinov/contentiousR>
 
-Please also cite every original data source used in an analysis. See the
-[data-source
+Please also cite every third-party data source used in an analysis —
+`contentiousR` only assembles and reshapes this data, it does not
+replace citing the original creators.
+[`cn_cite()`](https://rguseinov.github.io/contentiousR/reference/cn_cite.md)
+looks up the bundled citation for a function or `dataset =` value and
+prints it as ready-to-paste BibTeX:
+
+``` r
+
+cn_cite("navco2.1")
+cn_cite("add_gdp()")
+```
+
+See the [data-source
 guide](https://rguseinov.github.io/contentiousR/articles/data-sources.html)
-for versions, transformations, source links, and licensing notes.
+for versions, transformations, source links, and licensing notes, and
+[`?cn_cite`](https://rguseinov.github.io/contentiousR/reference/cn_cite.md)
+for the full lookup interface.
+
+## Acknowledgments
+
+The package logo was generated with ChatGPT. Claude (Anthropic) was used
+to proofread the documentation and vignettes for grammatical and
+typographical errors and to refine the wording of several passages, and
+to review the package’s R code.
