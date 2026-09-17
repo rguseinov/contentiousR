@@ -1,12 +1,13 @@
-# Case study: modeling revolutionary onset
+# Usage example: modeling revolutionary onset
 
-This walks through a complete workflow with `contentiousR`: assemble a
-country-year panel from several sources, check its coverage, and fit a
-rare-events logit of revolutionary onset. It is a demonstration of
-package mechanics, not a substantive research claim — the model below is
-illustrative and has not been vetted as a serious specification.
+This walks through a complete workflow with `contentiousR`: construct a
+country-year panel from several sources, check its coverage, and
+estimate a rare-events logit of revolutionary onset. It is rather a
+demonstration of package mechanics than a substantive research claim —
+the model below is illustrative and has not been vetted as a serious
+specification.
 
-## Assemble the panel
+## Construct the panel
 
 ``` r
 
@@ -32,7 +33,7 @@ panel <- build_states_panel(1900, 2010, coding_system = "cow") |>
     cow, year, country, fariss_gdppc, wpp_pop, nmc_milex,
     v2x_polyarchy, v2x_execorr, leader_tenure, beissinger_onset
   ) |>
-  mutate(across(starts_with("beissinger_"), ~ tidyr::replace_na(.x, 0))) |>
+  mutate(across(starts_with("beissinger_"), ~ tidyr::replace_na(.x, 0))) |> # fill non-onsets with zeros
   add_spells() |>
   add_lag(
     vars = c(
@@ -64,25 +65,15 @@ head(panel) |>
 | 2 | 1905 | United States | 19.34 | NA | 45098 | 0.42 | 0.06 | 5 | 0 | 5 | 18.74 | NA | 0.42 | 0.06 | 4 | 47918 |
 
 `add_conflict(dataset = "beissinger", aggregate = TRUE)` is used rather
-than `aggregate = FALSE`: Beissinger is a legacy episode dataset, and a
-handful of country-years have more than one recorded episode
-(e.g. Germany in 1918). Left unaggregated, those country-years would
-produce duplicate `cow`-`year` rows, which breaks the
-one-row-per-state-year assumption that
-[`add_spells()`](https://rguseinov.github.io/contentiousR/reference/add_spells.md)
-and
-[`add_lag()`](https://rguseinov.github.io/contentiousR/reference/add_lag.md)
-both rely on. Aggregating collapses these to a single row per
-country-year with a missing-safe maximum, which is exactly what a binary
-onset indicator needs. `beissinger_onset` still has `NA` for
-country-years the source doesn’t cover at all; `replace_na(0)` treats
-“not covered” as “no onset” so that
+than `aggregate = FALSE`: Revolutionary Episodes Dataset is an episode
+dataset, and a handful of country-years have more than one recorded
+episode (e.g. Germany in 1918). Left unaggregated, those country-years
+would produce duplicate `cow`-`year` rows. `replace_na(0)` treats “not
+covered” as “no onset” so that
 [`add_spells()`](https://rguseinov.github.io/contentiousR/reference/add_spells.md)
 (which cannot span `NA`) can compute a peace-years counter
 (`beissinger_spell`) across the whole panel. This is a modeling choice,
-not a neutral default — it assumes the absence of a recorded episode
-means no revolution occurred, which will not be true for every gap in
-the source’s coverage.
+not a neutral default.
 
 ## Check coverage
 
@@ -95,12 +86,12 @@ plot_coverage(panel, "beissinger_onset", drop_empty = TRUE)
 
 ## Model onset
 
-Onsets are rare, which biases ordinary maximum-likelihood logit. The
-model below uses `brglm2`’s Jeffreys-prior penalized likelihood
-(`method = "brglmFit"`, `type = "MPL_Jeffreys"`) instead, with a natural
-spline on `beissinger_spell` to flexibly control for time since the last
-episode (a standard alternative to cubic-spline peace-years terms in
-duration models) and year fixed effects.
+Onsets are rare, which biases a regular logit model. The model below
+uses `brglm2`’s Jeffreys-prior penalized likelihood
+(`method = "brglmFit"`, `type = "MPL_Jeffreys"`) instead (see Kosmidis
+and Firth 2009), with a natural spline on `beissinger_spell` to flexibly
+control for time since the last episode and year fixed effects. One-year
+lagged controls are included in the estimation.
 
 ``` r
 
@@ -147,4 +138,10 @@ co[!grepl("factor\\(year\\)", rownames(co)), ]
 ```
 
 Year fixed effects are omitted from the printed table above for
-readability; they are still in the fitted model.
+readability.
+
+## Reference
+
+Kosmidis, I., and D. Firth. 2009. “Bias Reduction in Exponential Family
+Nonlinear Models.” Biometrika 96 (4): 793–804.
+<https://doi.org/10.1093/biomet/asp055>.
