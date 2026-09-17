@@ -159,12 +159,25 @@ showing where events actually happened.
 
 if (requireNamespace("ggplot2", quietly = TRUE)) {
   build_states_panel(1990, 2015, coding_system = "cow") |>
-    add_conflict("scad") |>
-    plot_coverage("scad_onset")
+    add_conflict("ucdp_prio") |>
+    plot_coverage("ucdp_prio_onset")
 }
 ```
 
 ![](contentiousR_files/figure-html/unnamed-chunk-5-1.png)
+
+`ucdp_prio` is used here rather than, say, `scad`, because its `onset`
+column has a genuine `0`: `add_conflict("ucdp_prio")` codes every
+country-year with an *active* conflict as either a fresh episode (`1`)
+or a continuation of one already under way (`0`), so both colors
+actually appear. `scad_onset` (and similarly `beissinger_onset`) only
+has rows for country-years with at least one recorded event — there is
+no explicit “we checked and found nothing” `0` — so plotting it directly
+shows just `Event` and blank, never grey. The [case study
+article](https://rguseinov.github.io/contentiousR/articles/case-study.md)
+turns that `NA` into an explicit `0` with `replace_na()` before plotting
+`beissinger_onset`, which is a modeling assumption (absence of a
+recorded event means no event), not a neutral default.
 
 ## Optional V-Dem data
 
