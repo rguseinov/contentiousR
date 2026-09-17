@@ -1,8 +1,6 @@
 # Build a COW-coded state panel
 
-`build_states_cow_panel()` is retained for compatibility with
-contentiousR 0.0.1. New code should use
-`build_states_panel(coding_system = "cow")`.
+Build a COW-coded state panel
 
 ## Usage
 
@@ -46,9 +44,3 @@ build_states_cow_panel(
 ## Value
 
 A data frame with COW-coded state-year observations.
-
-## Examples
-
-``` r
-panel <- build_states_cow_panel(1990, 1995)
-```

@@ -336,15 +336,21 @@ helper changes country codes, rows, or substantive variables.
 Barnum, M., Fariss, C. J., Markowitz, J. N., & Morales, G. (2025).
 Measuring arms: Introducing the global military spending dataset.
 Journal of Conflict Resolution, 69(2-3), 540-567.
-<https://doi.org/10.1177/00220027241232964> Fariss, C. J., Anders, T.,
-Markowitz, J. N., & Barnum, M. (2022). New estimates of over 500 years
-of historic GDP and population data. Journal of Conflict Resolution,
-66(3), 553-591. <https://doi.org/10.1177/00220027211054432> Miller, S.
-V. (2022). {peacesciencer}: An R package for quantitative peace science
-research. Conflict Management and Peace Science, 39(6), 755-779.
-<https://doi.org/10.1177/07388942221077926> Singer, J. David. (1988).
-Reconstructing the Correlates of War Dataset on Material Capabilities of
-States, 1816-1985. International Interactions, 14: 115-32. Singer, J.
-David, Stuart Bremer, and John Stuckey. (1972). “Capability
+<https://doi.org/10.1177/00220027241232964>
+
+Fariss, C. J., Anders, T., Markowitz, J. N., & Barnum, M. (2022). New
+estimates of over 500 years of historic GDP and population data. Journal
+of Conflict Resolution, 66(3), 553-591.
+<https://doi.org/10.1177/00220027211054432>
+
+Miller, S. V. (2022). {peacesciencer}: An R package for quantitative
+peace science research. Conflict Management and Peace Science, 39(6),
+755-779. <https://doi.org/10.1177/07388942221077926>
+
+Singer, J. David. (1988). Reconstructing the Correlates of War Dataset
+on Material Capabilities of States, 1816-1985. International
+Interactions, 14: 115-32.
+
+Singer, J. David, Stuart Bremer, and John Stuckey. (1972). “Capability
 Distribution, Uncertainty, and Major Power War, 1820-1965.” in Bruce
 Russett (ed) Peace, War, and Numbers, Beverly Hills: Sage, 19-48.

@@ -101,9 +101,13 @@
   [`add_from_peacesciencer()`](https://rguseinov.github.io/contentiousR/reference/add_from_peacesciencer.md)
   to apply a state-year `peacesciencer` function while keeping temporary
   `ccode`/`gwcode` keys out of the result.
-- Restored the previously exported
-  [`build_states_cow_panel()`](https://rguseinov.github.io/contentiousR/reference/build_states_cow_panel.md)
-  entry point for compatibility with contentiousR 0.0.1.
+- [`build_states_cow_panel()`](https://rguseinov.github.io/contentiousR/reference/build_states_cow_panel.md)
+  is internal again (not exported). It’s the actual COW-panel
+  implementation `build_states_panel(coding_system = "cow")` dispatches
+  to, but there’s no public reason to call it directly instead of
+  [`build_states_panel()`](https://rguseinov.github.io/contentiousR/reference/build_states_panel.md)
+  – and its GW counterpart, `build_states_gw_panel()`, was never
+  exported in the first place.
 - Added strict validation for years, logical flags, panel keys, and
   output-key uniqueness.
 - Added `ucdp_vpp_incidence`. The existing `ucdp_vpp_onset` column

@@ -74,7 +74,8 @@
 <h3 id="api-and-robustness-0-1-0">API and robustness<a class="anchor" aria-label="anchor" href="#api-and-robustness-0-1-0"></a></h3>
 <ul><li>Added <code><a href="../reference/as_peacesciencer_panel.html">as_peacesciencer_panel()</a></code> to supply the state-year key aliases and metadata required by <code>peacesciencer</code> while preserving contentiousR’s API.</li>
 <li>Added <code><a href="../reference/add_from_peacesciencer.html">add_from_peacesciencer()</a></code> to apply a state-year <code>peacesciencer</code> function while keeping temporary <code>ccode</code>/<code>gwcode</code> keys out of the result.</li>
-<li>Restored the previously exported <code><a href="../reference/build_states_cow_panel.html">build_states_cow_panel()</a></code> entry point for compatibility with contentiousR 0.0.1.</li>
+<li>
+<code><a href="../reference/build_states_cow_panel.html">build_states_cow_panel()</a></code> is internal again (not exported). It’s the actual COW-panel implementation <code>build_states_panel(coding_system = "cow")</code> dispatches to, but there’s no public reason to call it directly instead of <code><a href="../reference/build_states_panel.html">build_states_panel()</a></code> – and its GW counterpart, <code>build_states_gw_panel()</code>, was never exported in the first place.</li>
 <li>Added strict validation for years, logical flags, panel keys, and output-key uniqueness.</li>
 <li>Added <code>ucdp_vpp_incidence</code>. The existing <code>ucdp_vpp_onset</code> column remains as a compatibility alias and is now documented as incidence rather than onset.</li>
 <li>Removed the <code>magrittr</code> dependency in favor of R’s native pipe.</li>

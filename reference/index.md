@@ -4,8 +4,6 @@
 
 - [`build_states_panel()`](https://rguseinov.github.io/contentiousR/reference/build_states_panel.md)
   : Build a state panel
-- [`build_states_cow_panel()`](https://rguseinov.github.io/contentiousR/reference/build_states_cow_panel.md)
-  : Build a COW-coded state panel
 
 ## Add data to panels
 
