@@ -1,8 +1,10 @@
 # Get started with contentiousR
 
 `contentiousR` creates reproducible country-year panels for contentious
-politics and civil conflicts research. Every public loader supports
-Correlates of War (`"cow"`) and Gleditsch-Ward (`"gw"`) country codes.
+politics and civil conflicts research, offers diagnostics and
+visualization tools, and allows interoperation with `peacesciencer`.
+Every public loader supports Correlates of War (`"cow"`) and
+Gleditsch-Ward (`"gw"`) country codes.
 
 ## Build and enrich a panel
 
