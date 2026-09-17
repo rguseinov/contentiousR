@@ -114,14 +114,3 @@ Guseinov, R., Ustyuzhanin, V., & Korotayev, A. (2026). Talking about the
 \[same\] revolution? A comparative analysis of main datasets of
 revolutionary events. *Defence and Peace Economics*, 1–31.
 [doi:10.1080/10242694.2026.2704178](https://doi.org/10.1080/10242694.2026.2704178)
-
-``` bibtex
-@article{guseinov2026talking,
-  title={Talking about the [same] revolution? A comparative analysis of main datasets of revolutionary events},
-  author={Guseinov, Ruslan and Ustyuzhanin, Vadim and Korotayev, Andrey},
-  journal={Defence and Peace Economics},
-  pages={1--31},
-  year={2026},
-  publisher={Taylor \& Francis}
-}
-```

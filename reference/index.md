@@ -27,6 +27,8 @@
   : Add conflict spell (peace-years) durations to a state panel
 - [`add_lag()`](https://rguseinov.github.io/contentiousR/reference/add_lag.md)
   : Add lagged variables to a state panel
+- [`add_regions()`](https://rguseinov.github.io/contentiousR/reference/add_regions.md)
+  : Add region names to a state panel
 
 ## Diagnostics and visualization
 
