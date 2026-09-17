@@ -1,0 +1,288 @@
+% Bundled bibliography backing cn_cite()/cn_bib. Edit this file, then re-run
+% data-raw/contentiousR_bib.R and devtools::document() to refresh data/cn_bib.rda.
+%
+% Entries below are tagged with their origin:
+%   [from libbib.bib]  -- copied as-is from the user's Zotero export
+%                         (Zotero `file = {...}` paths dropped; not useful
+%                         inside the package)
+%   [NEW, needs check]  -- not found in libbib.bib; assembled from a web
+%                          search, not verified against the original source
+%
+% `keywords` mirrors peacesciencer's ps_bib convention: the contentiousR
+% function(s) and/or `dataset =` value each entry documents, so a future
+% cite_data("archigos") could grep this field the same way ps_cite() does.
+
+% ---- GDP --------------------------------------------------------------
+
+% [from libbib.bib]
+@misc{gapminderGDPCapitaConstant2024,
+  title = {{{GDP}} per Capita in Constant {{PPP}} Dollars},
+  author = {Gapminder},
+  year = 2024,
+  url = {https://www.gapminder.org/gdp-per-capita/},
+  keywords = {load_gdp_data(), add_gdp()}
+}
+
+% ---- GDP and population (Fariss et al. latent estimates) ---------------
+
+% [NEW, needs check] -- assembled from the citation already used in
+% R/load_gdp_data.R, R/load_population_data.R, and vignettes/contentiousR.Rmd's
+% References section; not cross-checked against libbib.bib.
+@article{farissNewEstimatesOver2022,
+  title = {New Estimates of over 500 Years of Historic {{GDP}} and Population Data},
+  author = {Fariss, Christopher J. and Anders, Therese and Markowitz, Jonathan N. and Barnum, Miranda},
+  year = 2022,
+  journal = {Journal of Conflict Resolution},
+  volume = {66},
+  number = {3},
+  pages = {553--591},
+  doi = {10.1177/00220027211054432},
+  keywords = {load_gdp_data(), add_gdp(), load_population_data(), add_population(), fariss}
+}
+
+% ---- Population ----------------------------------------------------------
+
+% [NEW, needs check] -- assembled from the citation already used in
+% R/load_population_data.R; not cross-checked against libbib.bib.
+@misc{unWorldPopulationProspects2024,
+  title = {World {{Population Prospects}} 2024},
+  author = {{United Nations, Department of Economic and Social Affairs, Population Division}},
+  year = 2024,
+  url = {https://population.un.org/wpp/},
+  keywords = {load_population_data(), add_population(), wpp}
+}
+
+% [NEW, needs check] -- assembled from the citation already used in
+% R/load_population_data.R and R/load_military_expenditure_data.R (NMC is
+% shared across both); not cross-checked against libbib.bib.
+@incollection{singerCapabilityDistributionUncertainty1972,
+  title = {Capability Distribution, Uncertainty, and Major Power War, 1820-1965},
+  author = {Singer, J. David and Bremer, Stuart and Stuckey, John},
+  year = 1972,
+  booktitle = {Peace, War, and Numbers},
+  editor = {Russett, Bruce},
+  pages = {19--48},
+  publisher = {Sage},
+  address = {Beverly Hills},
+  keywords = {load_population_data(), add_population(), load_military_expenditure_data(), add_military_expenditure(), nmc}
+}
+
+% [NEW, needs check] -- added to vignettes/contentiousR.Rmd's References
+% section alongside the 1972 CINC paper; not cross-checked against libbib.bib.
+@article{singerReconstructingCorrelatesWar1988,
+  title = {Reconstructing the {{Correlates}} of {{War}} Dataset on Material Capabilities of States, 1816-1985},
+  author = {Singer, J. David},
+  year = 1988,
+  journal = {International Interactions},
+  volume = {14},
+  pages = {115--132},
+  keywords = {load_population_data(), add_population(), load_military_expenditure_data(), add_military_expenditure(), nmc}
+}
+
+% ---- Military expenditure -------------------------------------------------
+
+% [NEW, needs check] -- assembled from the citation already used in
+% R/load_military_expenditure_data.R; URL updated to match the DOI used in
+% vignettes/contentiousR.Rmd's data source table. Not cross-checked against
+% libbib.bib.
+@misc{sipriMilitaryExpenditureDatabase2025,
+  title = {{{SIPRI}} Military Expenditure Database},
+  author = {{Stockholm International Peace Research Institute}},
+  year = 2025,
+  doi = {10.55163/CQGC9685},
+  keywords = {load_military_expenditure_data(), add_military_expenditure(), sipri}
+}
+
+% [NEW, needs check] -- assembled from the citation already used in
+% R/load_military_expenditure_data.R and vignettes/contentiousR.Rmd's
+% References section; not cross-checked against libbib.bib.
+@article{barnumMeasuringArmsIntroducing2025,
+  title = {Measuring Arms: {{Introducing}} the Global Military Spending Dataset},
+  author = {Barnum, Miranda and Fariss, Christopher J. and Markowitz, Jonathan N. and Morales, G.},
+  year = 2025,
+  journal = {Journal of Conflict Resolution},
+  volume = {69},
+  number = {2-3},
+  pages = {540--567},
+  doi = {10.1177/00220027241232964},
+  keywords = {load_military_expenditure_data(), add_military_expenditure(), barnum}
+}
+
+% ---- Dataset comparison (regional/temporal coverage plots) --------------
+
+% [NEW, needs check] -- assembled from the citation already used in
+% R/plot_dataset_comparison.R; not cross-checked against libbib.bib.
+@article{guseinovTalkingSameRevolution2026,
+  title = {Talking about the [Same] Revolution? {{A}} Comparative Analysis of Main Datasets of Revolutionary Events},
+  author = {Guseinov, Ruslan and Ustyuzhanin, Vadim and Korotayev, Andrey},
+  year = 2026,
+  journal = {Defence and Peace Economics},
+  pages = {1--31},
+  doi = {10.1080/10242694.2026.2704178},
+  keywords = {plot_regional_coverage(), plot_temporal_coverage()}
+}
+
+% ---- V-Dem --------------------------------------------------------------
+
+% [from libbib.bib]
+@article{coppedgeVdemCountryyearCountry2025,
+  title = {V-Dem [Country--Year/Country--Date] Dataset V15. Varieties of Democracy (v-Dem) Project},
+  author = {Coppedge, Michael and Gerring, John and Knutsen, Carl Henrik and Lindberg, Staffan I and Teorell, Jan and Altman, David and Bernhard, Michael and Fish, M Steven and Glynn, Adam and Hicken, Allen and others},
+  year = 2025,
+  journal = {Varieties of Democracy},
+  keywords = {load_vdem_data(), add_vdem()}
+}
+
+% ---- Conflict / protest / revolutionary-episode datasets ---------------
+
+% [from libbib.bib]
+@misc{chenowethListCampaignsNAVCO2020,
+  title = {List of {{Campaigns}} in {{NAVCO}} 1.3},
+  author = {Chenoweth, Erica and Shay, {\relax CW}},
+  year = 2020,
+  publisher = {Harvard Dataverse},
+  doi = {10.7910/DVN/ON9XND/PTMCCV},
+  keywords = {conflict_data(), add_conflict(), navco1.3}
+}
+
+% [from libbib.bib]
+@misc{chenowethNAVCO21Dataset2019,
+  title = {{{NAVCO}} 2.1 {{Dataset}}},
+  author = {Chenoweth, Erica and Shay, Christopher Wiley},
+  year = 2019,
+  publisher = {Harvard Dataverse},
+  doi = {10.7910/DVN/MHOXDV},
+  keywords = {conflict_data(), add_conflict(), navco2.1}
+}
+
+% [from libbib.bib]
+@misc{beissingerRevolutionaryEpisodesDataset2022,
+  title = {Revolutionary {{Episodes Dataset}}},
+  author = {Beissinger, M},
+  year = 2022,
+  urldate = {2025-02-15},
+  url = {https://mbeissinger.scholar.princeton.edu/revolutionary-episodes-dataset},
+  keywords = {conflict_data(), add_conflict(), beissinger}
+}
+
+% [NEW, needs check] -- not in libbib.bib. Found via web search; version/
+% author order not cross-checked against the dataset's own citation page.
+@misc{ustyuzhaninRevolutionsDataset2025,
+  title = {Revolutions Dataset},
+  author = {Ustyuzhanin, Vadim and Korotayev, Andrey and Semichev, Daniil},
+  year = 2025,
+  publisher = {HSE University, Centre for Stability and Risk Analysis},
+  url = {https://social.hse.ru/en/mr/rev_bd/},
+  keywords = {conflict_data(), add_conflict(), csra}
+}
+
+% [from libbib.bib; doi added from DESCRIPTION -- verify it matches this exact entry]
+@article{salehyanSocialConflictAfrica2012,
+  title = {Social Conflict in {{Africa}}: {{A}} New Database},
+  author = {Salehyan, Idean and Hendrix, Cullen S and Hamner, Jesse and Case, Christina and Linebarger, Christopher and Stull, Emily and Williams, Jennifer},
+  year = 2012,
+  journal = {International Interactions},
+  volume = {38},
+  number = {4},
+  pages = {503--511},
+  publisher = {Taylor \& Francis},
+  doi = {10.1177/0022002711435330},
+  keywords = {conflict_data(), add_conflict(), scad}
+}
+
+% [from libbib.bib; doi added from DESCRIPTION -- verify it matches this exact entry]
+@article{gleditschArmedConflict194620012002,
+  title = {Armed Conflict 1946-2001: {{A}} New Dataset},
+  author = {Gleditsch, Nils Petter and Wallensteen, Peter and Eriksson, Mikael and Sollenberg, Margareta and Strand, H{\aa}vard},
+  year = 2002,
+  journal = {Journal of peace research},
+  volume = {39},
+  number = {5},
+  pages = {615--637},
+  publisher = {Sage Publications London},
+  doi = {10.1177/0022343302039005007},
+  keywords = {conflict_data(), add_conflict(), ucdp_prio}
+}
+
+% [from libbib.bib]
+@article{svenssonViolentPoliticalProtest2022,
+  title = {Violent Political Protest: Introducing a New {{Uppsala Conflict Data Program}} Data Set on Organized Violence, 1989-2019},
+  author = {Svensson, I and Schaftenaar, S and Allansson, M},
+  year = 2022,
+  journal = {Journal of Conflict Resolution},
+  volume = {66},
+  number = {9},
+  pages = {1703--1730},
+  keywords = {conflict_data(), add_conflict(), ucdp_vpp}
+}
+
+% [NEW, needs check] -- not in libbib.bib. Found via web search.
+@misc{clarkMassMobilizationProtest2016,
+  title = {Mass Mobilization Protest Data},
+  author = {Clark, David H. and Regan, Patrick M.},
+  year = 2016,
+  publisher = {Harvard Dataverse},
+  doi = {10.7910/DVN/HTTWYL},
+  keywords = {conflict_data(), add_conflict(), mm}
+}
+
+% [NEW, needs check] -- not in libbib.bib. This is the monograph that
+% introduces MMAD, not a standalone dataset paper -- confirm this is the
+% citation you want (vs. a specific MMAD codebook/version reference).
+@book{weidmannInternetPoliticalProtest2019,
+  title = {The Internet and Political Protest in Autocracies},
+  author = {Weidmann, Nils B. and R{\o}d, Espen Geelmuyden},
+  year = 2019,
+  publisher = {Oxford University Press},
+  url = {https://mmadatabase.org/},
+  keywords = {conflict_data(), add_conflict(), mmad}
+}
+
+% [NEW, needs check] -- not in libbib.bib. DOI matches the one already in
+% DESCRIPTION, so the identity is solid; title/journal taken from the
+% publisher listing, not cross-checked character-for-character.
+@article{chenowethMajorEpisodesContention2026,
+  title = {The {{Major Episodes}} of {{Contention}} ({{MEC}}) Data Project: An Introduction},
+  author = {Chenoweth, Erica and Kang, Sooyeon},
+  year = 2026,
+  journal = {Journal of Peace Research},
+  doi = {10.1093/jopres/xjaf008},
+  keywords = {conflict_data(), add_conflict(), mec}
+}
+
+% ---- Leader data ---------------------------------------------------------
+
+% [from libbib.bib]
+@article{goemansIntroducingArchigosDataset2009,
+  title = {Introducing {{Archigos}}: {{A}} Dataset of Political Leaders},
+  author = {Goemans, Henk E and Gleditsch, Kristian Skrede and Chiozza, Giacomo},
+  year = 2009,
+  journal = {Journal of Peace research},
+  volume = {46},
+  number = {2},
+  pages = {269--283},
+  publisher = {Sage Publications Sage UK: London, England},
+  keywords = {load_leader_data(), add_leader_data(), archigos}
+}
+
+% [from libbib.bib]
+@misc{bellRulersElectionsIrregular2021,
+  title = {The {{Rulers}}, {{Elections}}, and {{Irregular Governance}} ({{REIGN}}) {{Dataset}}},
+  author = {Bell, Curtis and Besaw, Clayton and Frank, Matthew},
+  year = 2021,
+  keywords = {load_leader_data(), add_leader_data(), reign}
+}
+
+% ---- Package dependency (not a bundled data source, but citable) --------
+
+% [from libbib.bib]
+@article{arel-bundockCountrycodePackageConvert2018,
+  title = {Countrycode: {{An R}} Package to Convert Country Names and Country Codes},
+  author = {{Arel-Bundock}, Vincent and Enevoldsen, Nils and Yetman, C. J.},
+  year = 2018,
+  journal = {Journal of Open Source Software},
+  volume = {3},
+  number = {28},
+  pages = {848},
+  keywords = {countrycode}
+}

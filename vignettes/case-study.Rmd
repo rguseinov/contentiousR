@@ -1,0 +1,114 @@
+---
+title: "Usage example: modeling revolutionary onset"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Usage example: modeling revolutionary onset}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+has_deps <- requireNamespace("vdemdata", quietly = TRUE) &&
+  requireNamespace("brglm2", quietly = TRUE) &&
+  requireNamespace("ggplot2", quietly = TRUE)
+```
+
+```{r eval = !has_deps, echo = FALSE, results = "asis"}
+cat(
+  "This article needs the `vdemdata`, `brglm2`, and `ggplot2` packages, ",
+  "which are not all installed. Install them and rebuild the vignette to ",
+  "see the full walkthrough.",
+  sep = ""
+)
+```
+
+This walks through a complete workflow with `contentiousR`: construct a
+country-year panel from several sources, check its coverage, and estimate a
+rare-events logit of revolutionary onset. It is rather a demonstration of package
+mechanics than a substantive research claim — the model below is
+illustrative and has not been vetted as a serious specification.
+
+## Construct the panel
+
+```{r eval = has_deps}
+library(contentiousR)
+library(dplyr)
+
+panel <- build_states_panel(1900, 2010, coding_system = "cow") |>
+  add_gdp(dataset = "fariss") |>
+  add_population(dataset = "wpp") |>
+  add_vdem(vars = c("v2x_polyarchy", "v2x_libdem", "v2x_execorr")) |>
+  add_leader_data(dataset = "archigos") |>
+  add_military_expenditure(dataset = "nmc") |>
+  add_conflict(dataset = "beissinger", aggregate = TRUE) |>
+  select(
+    cow, year, country, fariss_gdppc, wpp_pop, nmc_milex,
+    v2x_polyarchy, v2x_execorr, leader_tenure, beissinger_onset
+  ) |>
+  mutate(across(starts_with("beissinger_"), ~ tidyr::replace_na(.x, 0))) |> # fill non-onsets with zeros
+  add_spell_duration() |>
+  add_lag(
+    vars = c(
+      "fariss_gdppc", "wpp_pop", "v2x_polyarchy",
+      "v2x_execorr", "leader_tenure", "nmc_milex"
+    ),
+    n = 1
+  )
+
+dim(panel)
+```
+
+<div style="overflow-x: auto;">
+```{r eval = has_deps}
+head(panel) |>
+  mutate(across(where(is.numeric), ~ round(.x, 2))) |>
+  knitr::kable()
+```
+</div>
+
+`add_conflict(dataset = "beissinger", aggregate = TRUE)` is used rather than
+`aggregate = FALSE`: Revolutionary Episodes Dataset is an episode dataset, and a handful
+of country-years have more than one recorded episode (e.g. Germany in
+1918). Left unaggregated, those country-years would produce duplicate
+`cow`-`year` rows. `replace_na(0)` treats "not covered" as "no onset"
+so that `add_spell_duration()` (which cannot span `NA`) can
+compute a peace-years counter (`beissinger_spell`) across the whole panel.
+This is a modeling choice, not a neutral default.
+
+## Check coverage
+
+```{r eval = has_deps, fig.width = 7, fig.height = 6}
+plot_coverage(panel, "beissinger_onset", drop_empty = TRUE)
+```
+
+## Model onset
+
+Onsets are rare, which biases a regular logit model. The model
+below uses `brglm2`'s Jeffreys-prior penalized likelihood
+(`method = "brglmFit"`, `type = "MPL_Jeffreys"`) instead (see Kosmidis and Firth 2009), with a natural
+spline on `beissinger_spell` to flexibly control for time since the last
+episode and year fixed effects. One-year lagged controls are included in the estimation.
+
+```{r eval = has_deps}
+library(brglm2)
+
+model <- glm(
+  beissinger_onset ~ log(fariss_gdppc_l + 0.1) + wpp_pop_l +
+    v2x_polyarchy_l + I(v2x_polyarchy_l^2) + v2x_execorr_l +
+    leader_tenure_l + I(leader_tenure_l^2) + nmc_milex_l +
+    splines::bs(beissinger_spell, 3) + as.factor(year),
+  family = binomial("logit"),
+  method = "brglmFit", type = "MPL_Jeffreys",
+  data = panel
+)
+
+co <- summary(model)$coefficients
+co[!grepl("factor\\(year\\)", rownames(co)), ]
+```
+
+Year fixed effects are omitted from the printed table above for
+readability.
+
+## Reference
+Kosmidis, I., and D. Firth. 2009. “Bias Reduction in Exponential Family Nonlinear Models.” Biometrika 96 (4): 793–804. [https://doi.org/10.1093/biomet/asp055](https://doi.org/10.1093/biomet/asp055).

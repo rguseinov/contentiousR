@@ -1,0 +1,13 @@
+^contentiousR\.Rproj$
+^data-raw$
+^\.claude$
+^\.Rproj\.user$
+^LICENSE\.md$
+^packagedevelop\.R$
+^_pkgdown\.yml$
+^\.github$
+^cran-comments\.md$
+^CONTRIBUTING\.md$
+^\.lintr$
+^docs$
+^pkgdown$
