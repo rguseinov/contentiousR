@@ -25,7 +25,7 @@ compute_spells(unit, year, event, ongoing)
 - ongoing:
 
   Logical. See
-  [`add_spells()`](https://rguseinov.github.io/contentiousR/reference/add_spells.md).
+  [`add_spell_duration()`](https://rguseinov.github.io/contentiousR/reference/add_spell_duration.md).
 
 ## Value
 

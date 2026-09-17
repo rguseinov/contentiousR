@@ -122,7 +122,7 @@ for versions, transformations, source links, and licensing notes.
   : Add conflict or protest data to a state panel
 - [`add_leader_data()`](https://rguseinov.github.io/contentiousR/reference/add_leader_data.md)
   : Add leader data to a state panel
-- [`add_spells()`](https://rguseinov.github.io/contentiousR/reference/add_spells.md)
+- [`add_spell_duration()`](https://rguseinov.github.io/contentiousR/reference/add_spell_duration.md)
   : Add conflict spell (peace-years) durations to a state panel
 - [`add_lag()`](https://rguseinov.github.io/contentiousR/reference/add_lag.md)
   : Add lagged variables to a state panel

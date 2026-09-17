@@ -34,7 +34,7 @@ panel <- build_states_panel(1900, 2010, coding_system = "cow") |>
     v2x_polyarchy, v2x_execorr, leader_tenure, beissinger_onset
   ) |>
   mutate(across(starts_with("beissinger_"), ~ tidyr::replace_na(.x, 0))) |> # fill non-onsets with zeros
-  add_spells() |>
+  add_spell_duration() |>
   add_lag(
     vars = c(
       "fariss_gdppc", "wpp_pop", "v2x_polyarchy",
@@ -70,7 +70,7 @@ dataset, and a handful of country-years have more than one recorded
 episode (e.g. Germany in 1918). Left unaggregated, those country-years
 would produce duplicate `cow`-`year` rows. `replace_na(0)` treats “not
 covered” as “no onset” so that
-[`add_spells()`](https://rguseinov.github.io/contentiousR/reference/add_spells.md)
+[`add_spell_duration()`](https://rguseinov.github.io/contentiousR/reference/add_spell_duration.md)
 (which cannot span `NA`) can compute a peace-years counter
 (`beissinger_spell`) across the whole panel. This is a modeling choice,
 not a neutral default.

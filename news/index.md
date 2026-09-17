@@ -62,6 +62,16 @@
   Use
   [`add_population()`](https://rguseinov.github.io/contentiousR/reference/add_population.md)
   instead.
+- Renamed
+  [`add_spells()`](https://rdrr.io/pkg/peacesciencer/man/add_spells.html)
+  to
+  [`add_spell_duration()`](https://rguseinov.github.io/contentiousR/reference/add_spell_duration.md)
+  to stop it silently shadowing (or being shadowed by)
+  [`peacesciencer::add_spells()`](https://rdrr.io/pkg/peacesciencer/man/add_spells.html)
+  when both packages are attached in the same session – the two are
+  similar in spirit but not interchangeable (contentiousR’s version
+  works on any binary `_onset`/`_incidence`/`_ongoing` column, not a
+  fixed set of bundled columns).
 - [`conflict_data()`](https://rguseinov.github.io/contentiousR/reference/conflict_data.md)
   now applies `start_year` and `end_year` consistently to every bundled
   source.

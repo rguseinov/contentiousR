@@ -145,17 +145,19 @@ interpreting any source-specific variable.</p>
 <div class="section level2">
 <h2 id="conflict-spells-peace-years">Conflict spells (peace-years)<a class="anchor" aria-label="anchor" href="#conflict-spells-peace-years"></a>
 </h2>
-<p><code><a href="../reference/add_spells.html">add_spells()</a></code> turns a binary conflict column into a
-duration counter — years since the last event for that state, restarting
-after each new one. This is the same construct as
-<code><a href="https://rdrr.io/pkg/peacesciencer/man/add_spells.html" class="external-link">peacesciencer::add_spells()</a></code>, useful as a control for
-temporal dependence in event-history models (e.g. with cubic splines).
-It needs a column without <code>NA</code>, so filter first:</p>
+<p><code><a href="../reference/add_spell_duration.html">add_spell_duration()</a></code> turns a binary conflict column into
+a duration counter — years since the last event for that state,
+restarting after each new one. This is the same construct as
+<code><a href="https://rdrr.io/pkg/peacesciencer/man/add_spells.html" class="external-link">peacesciencer::add_spells()</a></code> (named differently here to
+avoid colliding with it when both packages are attached), useful as a
+control for temporal dependence in event-history models (e.g. with cubic
+splines). It needs a column without <code>NA</code>, so filter
+first:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">spell_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/build_states_panel.html">build_states_panel</a></span><span class="op">(</span><span class="fl">1990</span>, <span class="fl">2005</span>, coding_system <span class="op">=</span> <span class="st">"gw"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/add_conflict.html">add_conflict</a></span><span class="op">(</span><span class="st">"ucdp_prio"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html" class="external-link">drop_na</a></span><span class="op">(</span><span class="va">ucdp_prio_onset</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/add_spells.html">add_spells</a></span><span class="op">(</span>event <span class="op">=</span> <span class="st">"ucdp_prio_onset"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="../reference/add_spell_duration.html">add_spell_duration</a></span><span class="op">(</span>event <span class="op">=</span> <span class="st">"ucdp_prio_onset"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">spell_data</span><span class="op">[</span><span class="va">spell_data</span><span class="op">$</span><span class="va">gw</span> <span class="op">==</span> <span class="fl">2</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gw"</span>, <span class="st">"year"</span>, <span class="st">"ucdp_prio_onset"</span>, <span class="st">"ucdp_prio_spell"</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">#&gt;   gw year ucdp_prio_onset ucdp_prio_spell</span></span>
@@ -164,8 +166,8 @@ It needs a column without <code>NA</code>, so filter first:</p>
 <span><span class="co">#&gt; 3  2 2003               1               1</span></span>
 <span><span class="co">#&gt; 4  2 2004               0               0</span></span>
 <span><span class="co">#&gt; 5  2 2005               0               1</span></span></code></pre></div>
-<p>If <code>event</code> is omitted, <code><a href="../reference/add_spells.html">add_spells()</a></code> looks for
-exactly one column ending in <code>_onset</code>,
+<p>If <code>event</code> is omitted, <code><a href="../reference/add_spell_duration.html">add_spell_duration()</a></code>
+looks for exactly one column ending in <code>_onset</code>,
 <code>_incidence</code>, or <code>_ongoing</code> and uses that; it
 errors if none or several are found. <code>_onset</code>-style columns
 treat every <code>1</code> as an independent event by default;
