@@ -6,9 +6,7 @@ Correlates of War (`"cow"`) and Gleditsch-Ward (`"gw"`) country codes.
 
 ## Build and enrich a panel
 
-Start with the universe of states, then add data with left joins. The
-add functions infer the coding system and requested years from the
-panel.
+Construct a state panel, then add data.
 
 ``` r
 
@@ -35,9 +33,7 @@ analysis_data[1:4, c(
 #> 4        Canada 2000 48531.95                  NA  Chretien
 ```
 
-An unmatched row remains `NA`. This is deliberate: a source may not
-cover a country-year, and lack of a match should not automatically be
-interpreted as zero events.
+An unmatched row remains `NA`, as a source may not cover a country-year.
 
 ## Load data separately
 
@@ -114,9 +110,8 @@ the output (override this with the `ongoing` argument).
 
 [`add_lag()`](https://rguseinov.github.io/contentiousR/reference/add_lag.md)
 adds a lagged version of one or more columns, computed within each state
-after sorting by year — grouping by state before lagging is essential in
-panel data, otherwise a lag could pull in another country’s value.
-Unlike a plain
+after sorting by year and grouping by state before lagging. Unlike a
+plain
 [`dplyr::lag()`](https://dplyr.tidyverse.org/reference/lead-lag.html),
 it checks that the preceding row is genuinely `n` years earlier, so a
 gap in the year sequence produces `NA` rather than silently reaching
@@ -165,19 +160,6 @@ if (requireNamespace("ggplot2", quietly = TRUE)) {
 ```
 
 ![](contentiousR_files/figure-html/unnamed-chunk-5-1.png)
-
-`ucdp_prio` is used here rather than, say, `scad`, because its `onset`
-column has a genuine `0`: `add_conflict("ucdp_prio")` codes every
-country-year with an *active* conflict as either a fresh episode (`1`)
-or a continuation of one already under way (`0`), so both colors
-actually appear. `scad_onset` (and similarly `beissinger_onset`) only
-has rows for country-years with at least one recorded event — there is
-no explicit “we checked and found nothing” `0` — so plotting it directly
-shows just `Event` and blank, never grey. The [case study
-article](https://rguseinov.github.io/contentiousR/articles/case-study.md)
-turns that `NA` into an explicit `0` with `replace_na()` before plotting
-`beissinger_onset`, which is a modeling assumption (absence of a
-recorded event means no event), not a neutral default.
 
 ## Optional V-Dem data
 
@@ -256,8 +238,8 @@ Three military expenditure sources are available via `dataset`.
 
 | Dataset | Source | Coverage | Returned columns |
 |----|----|----|----|
-| `"sipri"` (default) | [SIPRI Milex Database v1.2](https://www.sipri.org/databases/milex) | 1949–2025 | `sipri_milex`, `sipri_milburden` |
-| `"nmc"` | [Correlates of War NMC v7.0](https://correlatesofwar.org/data-sets/national-material-capabilities/) | 1816–2022 | `nmc_milex` |
+| `"sipri"` (default) | [SIPRI Military Expenditure Database](https://doi.org/10.55163/CQGC9685) | 1949–2025 | `sipri_milex`, `sipri_milburden` |
+| `"nmc"` | [National Material Capabilities v7.0](https://correlatesofwar.org/data-sets/national-material-capabilities/) | 1816–2022 | `nmc_milex` |
 | `"barnum"` | Barnum et al. (2025) latent estimate | 1816–2019 | `barnum_milburden`, `barnum_sipri`, `barnum_nmc` |
 
 ``` r
@@ -321,7 +303,11 @@ panel |> add_leader_data(dataset = "archigos")
 panel |> add_leader_data(dataset = "reign")
 ```
 
-## Interoperate with peacesciencer
+## Interoperate with `peacesciencer`
+
+`contentiousR` supports `peacesciencer` (see Miller 2022). It means you
+can add data from `peacesciencer` within the same data construction
+pipeline.
 
 Functions such as
 [`peacesciencer::add_archigos()`](https://rdrr.io/pkg/peacesciencer/man/add_archigos.html)
@@ -343,3 +329,21 @@ For multiple consecutive additions, call
 [`as_peacesciencer_panel()`](https://rguseinov.github.io/contentiousR/reference/as_peacesciencer_panel.md)
 once and then apply the `peacesciencer` functions directly. Neither
 helper changes country codes, rows, or substantive variables.
+
+## References
+
+Barnum, M., Fariss, C. J., Markowitz, J. N., & Morales, G. (2025).
+Measuring arms: Introducing the global military spending dataset.
+Journal of Conflict Resolution, 69(2-3), 540-567.
+<https://doi.org/10.1177/00220027241232964> Fariss, C. J., Anders, T.,
+Markowitz, J. N., & Barnum, M. (2022). New estimates of over 500 years
+of historic GDP and population data. Journal of Conflict Resolution,
+66(3), 553-591. <https://doi.org/10.1177/00220027211054432> Miller, S.
+V. (2022). {peacesciencer}: An R package for quantitative peace science
+research. Conflict Management and Peace Science, 39(6), 755-779.
+<https://doi.org/10.1177/07388942221077926> Singer, J. David. (1988).
+Reconstructing the Correlates of War Dataset on Material Capabilities of
+States, 1816-1985. International Interactions, 14: 115-32. Singer, J.
+David, Stuart Bremer, and John Stuckey. (1972). “Capability
+Distribution, Uncertainty, and Major Power War, 1820-1965.” in Bruce
+Russett (ed) Peace, War, and Numbers, Beverly Hills: Sage, 19-48.
