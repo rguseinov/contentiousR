@@ -12,6 +12,9 @@ empirically highly convergent in their regional and temporal coverage —
 CNTS being the main exception, since it appears to record coups and coup
 attempts rather than the same underlying concept of revolution.
 
+This section follows Guseinov, Ustyuzhanin, and Korotayev (2026) — see
+the [Reference](#reference) below — on the comparison of
+revolutionary-event datasets.
 [`plot_regional_coverage()`](https://rguseinov.github.io/contentiousR/reference/plot_regional_coverage.md)
 and
 [`plot_temporal_coverage()`](https://rguseinov.github.io/contentiousR/reference/plot_temporal_coverage.md)
@@ -108,9 +111,17 @@ plot_regional_coverage(c("navco1.3", "navco2.1"), 1950, 2013, metric = "count")
 ## Reference
 
 Guseinov, R., Ustyuzhanin, V., & Korotayev, A. (2026). Talking about the
-``` math
-same
-```
-revolution? A comparative analysis of main datasets of revolutionary
-events. *Defence and Peace Economics*.
+\[same\] revolution? A comparative analysis of main datasets of
+revolutionary events. *Defence and Peace Economics*, 1–31.
 [doi:10.1080/10242694.2026.2704178](https://doi.org/10.1080/10242694.2026.2704178)
+
+``` bibtex
+@article{guseinov2026talking,
+  title={Talking about the [same] revolution? A comparative analysis of main datasets of revolutionary events},
+  author={Guseinov, Ruslan and Ustyuzhanin, Vadim and Korotayev, Andrey},
+  journal={Defence and Peace Economics},
+  pages={1--31},
+  year={2026},
+  publisher={Taylor \& Francis}
+}
+```
