@@ -180,3 +180,33 @@ read_rdata_from_extdata <- function(filename) {
   }
   env[[obj_names]]
 }
+
+
+#' Mark every character column of a data frame as UTF-8
+#'
+#' @param data A data frame.
+#'
+#' @return `data`, with `Encoding()` set to `"UTF-8"` on every element of
+#'   every character column.
+#'
+#' @details
+#' Several bundled sources (NAVCO 1.3/2.1, Beissinger, CSRA) contain
+#' genuinely UTF-8-encoded text (e.g. curly apostrophes in campaign names
+#' like "Student's Anti-Chun Protest") that R leaves tagged as
+#' `Encoding() == "unknown"` after loading, whether from an `.RData` file
+#' or `readr::read_csv()` without an explicit `locale`. An "unknown"
+#' encoding is treated as the platform's native encoding wherever it's
+#' next converted -- harmless on macOS/Linux, where native is already
+#' UTF-8, but on Windows this silently corrupts the string (observed as
+#' an embedded `nul` byte, which makes `R CMD check`'s vignette rebuild
+#' fail outright). Explicitly tagging the bytes as UTF-8, which they
+#' already are, avoids that native-encoding guess entirely.
+#'
+#' @keywords internal
+mark_utf8 <- function(data) {
+  char_cols <- names(data)[vapply(data, is.character, logical(1))]
+  for (col in char_cols) {
+    Encoding(data[[col]]) <- "UTF-8"
+  }
+  data
+}

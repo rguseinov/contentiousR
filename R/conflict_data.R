@@ -719,7 +719,8 @@ conflict_data <- function(
       .data$year >= .env$start_year & .data$year <= .env$end_year
     ) |>
     tidyr::drop_na(dplyr::all_of(c(coding_system, "year"))) |>
-    dplyr::arrange(.data[[coding_system]], .data$year)
+    dplyr::arrange(.data[[coding_system]], .data$year) |>
+    mark_utf8()
 
   if (!dataset %in% campaign_datasets) {
     check_unique_key(data, c(coding_system, "year"))

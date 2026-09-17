@@ -121,3 +121,22 @@ test_that("MEC can be joined raw or with the existing aggregation policy", {
   expect_false(anyDuplicated(aggregated[c("cow", "year")]) > 0L)
   expect_true("n_campaigns" %in% names(aggregated))
 })
+
+test_that("conflict_data() text columns are tagged UTF-8, not left unknown", {
+  # An "unknown"-encoded but genuinely UTF-8 string (e.g. NAVCO 1.3's
+  # "Student’s Anti-Chun Protest" campaign name) is treated as the
+  # platform's native encoding wherever it's next converted -- harmless on
+  # macOS/Linux, but this silently corrupted into an embedded nul byte on
+  # Windows, making R CMD check's vignette rebuild fail outright.
+  for (ds in c("navco1.3", "navco2.1", "beissinger", "csra")) {
+    events <- conflict_data(1900, 2020, dataset = ds, coding_system = "cow")
+    char_cols <- names(events)[vapply(events, is.character, logical(1))]
+    for (col in char_cols) {
+      non_ascii <- grepl("[^\x01-\x7f]", events[[col]])
+      expect_false(
+        any(non_ascii & Encoding(events[[col]]) == "unknown"),
+        info = paste(ds, col)
+      )
+    }
+  }
+})
