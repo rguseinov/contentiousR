@@ -76,18 +76,15 @@
 
     
     
-<p><code>contentiousR</code> bundles several campaign/episode datasets
-that all aim to record the same broad phenomenon — mass anti-regime
-contention — but differ in coding rules, sourcing, and scope: NAVCO 1.3,
-NAVCO 2.1, Beissinger’s Revolutionary Episodes Dataset, the CSRA
-Revolutions Dataset, and Major Episodes of Contention (MEC). Guseinov,
-Ustyuzhanin, and Korotayev (2026) compare exactly these kinds of
-datasets (NAVCO 1.3/2.1, CNTS, Beissinger, CSRA, and Historical Regime
-Data) and find that, while not conceptually identical, the major sources
-are empirically highly convergent in their regional and temporal
-coverage — CNTS being the main exception, since it appears to record
-coups and coup attempts rather than the same underlying concept of
-revolution.</p>
+<p>One can argue that <code>contentiousR</code> bundles several
+campaign/episode datasets that all aim to record the same broad
+phenomenon — mass anti-regime contention — but differ in coding rules,
+sourcing, and scope. Guseinov, Ustyuzhanin, and Korotayev (2026) compare
+such kinds of datasets and find that, while not conceptually identical,
+the major sources are empirically highly convergent in their regional
+and temporal coverage — CNTS being the main exception, since it appears
+to record coups and coup attempts rather than the same underlying
+concept of revolution.</p>
 <p>This section follows Guseinov, Ustyuzhanin, and Korotayev (2026) —
 see the <a href="#reference">Reference</a> below — on the comparison of
 revolutionary-event datasets. <code><a href="../reference/plot_regional_coverage.html">plot_regional_coverage()</a></code> and
@@ -99,9 +96,7 @@ a fixed pair, so you can compare two, three, or all five at once.</p>
 <h2 id="regional-coverage">Regional coverage<a class="anchor" aria-label="anchor" href="#regional-coverage"></a>
 </h2>
 <p>For each dataset, this shows what share of its events falls in each
-World Bank region
-(<code>countrycode::countrycode(..., "region")</code>), so datasets of
-very different total size remain comparable. Pass
+region, so datasets of very different total size remain comparable. Pass
 <code>metric = "count"</code> instead of the default
 <code>"share"</code> for raw counts.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -116,7 +111,7 @@ very different total size remain comparable. Pass
 <p><img src="dataset-comparison_files/figure-html/unnamed-chunk-2-1.png" class="r-plt" alt="" width="768"></p>
 <p>Sub-Saharan Africa and Europe &amp; Central Asia account for a large
 share of events across every dataset here, broadly matching the source
-article’s Figure 1 (drawn from NAVCO, CNTS, Beissinger, and CSRA).</p>
+article’s Figure 1.</p>
 </div>
 <div class="section level2">
 <h2 id="temporal-coverage">Temporal coverage<a class="anchor" aria-label="anchor" href="#temporal-coverage"></a>
@@ -132,14 +127,12 @@ panel, as in the article’s Figure 5:</p>
 <span>  coding_system <span class="op">=</span> <span class="st">"cow"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="dataset-comparison_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" alt="" width="768"></p>
-<p>MEC sits well above the other four here. This is expected, not a data
-quality problem: MEC’s underlying definition of a contentious episode is
-broader — reformist as well as maximalist claims — than the “revolution”
-concept the other datasets target, so it picks up substantially more
-episodes across every period. (NAVCO 2.1 is compared here at the same
-campaign-onset level as the other datasets, not its native campaign-year
-granularity — see <code><a href="../reference/fetch_campaign_events.html">?fetch_campaign_events</a></code> — which is why it
-tracks NAVCO 1.3 closely instead of dwarfing it.)</p>
+<p>MEC sits well above the other four here. This is expected: MEC’s
+underlying definition of a contentious episode is broader — reformist as
+well as maximalist claims — than the “revolution” concept the other
+datasets target, so it picks up substantially more episodes across every
+period. (NAVCO 2.1 is compared here at the same campaign-onset level as
+the other datasets).</p>
 <p>With <code>by_region = TRUE</code>, the same data is faceted by
 region, as in the article’s Figure 4:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -158,8 +151,7 @@ region, as in the article’s Figure 4:</p>
 <p>Both functions take any subset of <code><a href="../reference/conflict_data.html">conflict_data()</a></code>’s
 campaign/episode datasets (<code>"navco1.3"</code>,
 <code>"navco2.1"</code>, <code>"beissinger"</code>, <code>"csra"</code>,
-<code>"mec"</code>), so a narrower, more like-for-like comparison is
-just as easy — for example, the two NAVCO versions on their own:</p>
+<code>"mec"</code>), so a narrower comparison is also possible:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_regional_coverage.html">plot_regional_coverage</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"navco1.3"</span>, <span class="st">"navco2.1"</span><span class="op">)</span>, <span class="fl">1950</span>, <span class="fl">2013</span>, metric <span class="op">=</span> <span class="st">"count"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="dataset-comparison_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" alt="" width="768"></p>
