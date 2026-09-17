@@ -39,9 +39,12 @@ returns one row per campaign-*year*, so a single long-running campaign
 contributes many rows. Comparing that directly against onset-coded
 datasets would overstate NAVCO 2.1's event counts by roughly the average
 campaign duration. To keep the comparison on the same onset-level
-footing as the source article, `"navco2.1"` is collapsed here to one row
-per campaign (`nvc2.1_camp_name`), keeping its earliest year. Because
-that earliest year can fall before `start_year`, the collapse is done
-over the dataset's full native coverage (1945-2013) before the requested
-year range is applied, so campaigns already underway at `start_year` are
-not mistaken for new onsets.
+footing as the source article, `"navco2.1"` is filtered here to
+`nvc2.1_ONSET == 1`,
+[`conflict_data()`](https://rguseinov.github.io/contentiousR/reference/conflict_data.md)'s
+own per-campaign onset flag (keyed on the numeric campaign `id`, not the
+free-text campaign name, which is not unique – e.g. three distinct
+"Myanmar Regime Change Campaign" entries share that name). That flag is
+computed over the dataset's full native coverage before
+`start_year`/`end_year` filtering, so campaigns already under way at
+`start_year` are not mistaken for new onsets.

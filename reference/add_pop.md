@@ -2,11 +2,16 @@
 
 Joins country-year population data onto an existing state panel. The
 coding system and year range are detected automatically from the panel.
+`add_population()` is an identical alias, under the unabbreviated name
+matching
+[`load_population_data()`](https://rguseinov.github.io/contentiousR/reference/load_population_data.md).
 
 ## Usage
 
 ``` r
 add_pop(panel, dataset = c("wpp", "nmc", "fariss"))
+
+add_population(panel, dataset = c("wpp", "nmc", "fariss"))
 ```
 
 ## Arguments

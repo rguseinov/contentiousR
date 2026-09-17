@@ -45,12 +45,23 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.0" id="contentiousr-010">contentiousR 0.1.0<a class="anchor" aria-label="anchor" href="#contentiousr-010"></a></h2>
 <div class="section level3">
+<h3 id="visualization-0-1-0">Visualization<a class="anchor" aria-label="anchor" href="#visualization-0-1-0"></a></h3>
+<ul><li>Added <code><a href="../reference/plot_regional_coverage.html">plot_regional_coverage()</a></code> and <code><a href="../reference/plot_temporal_coverage.html">plot_temporal_coverage()</a></code> to compare regional and temporal event coverage across any combination of <code><a href="../reference/conflict_data.html">conflict_data()</a></code> campaign/episode datasets, plus a “Comparing revolutionary-event datasets” article reproducing the descriptive exercise in Guseinov, Ustyuzhanin &amp; Korotayev (2026).</li>
+<li>Added <code><a href="../reference/add_regions.html">add_regions()</a></code> to join one or more <code>countrycode</code> region classifications (<code>region</code>, <code>region23</code>, <code>un.region.name</code>, <code>un.regionsub.name</code>) onto a state panel by <code>cow</code>/<code>gw</code> code.</li>
+</ul></div>
+<div class="section level3">
 <h3 id="data-0-1-0">Data<a class="anchor" aria-label="anchor" href="#data-0-1-0"></a></h3>
 <ul><li>Added the Major Episodes of Contention (MEC) dataset: 2,734 globally covered reformist and maximalist episodes from 1955 through 2018. MEC is available through <code>conflict_data(dataset = "mec")</code> and <code>add_conflict(dataset = "mec")</code>. Episode-level rows are preserved unless the existing <code>aggregate = TRUE</code> policy is requested.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="correctness-0-1-0">Correctness<a class="anchor" aria-label="anchor" href="#correctness-0-1-0"></a></h3>
 <ul><li>
+<code><a href="../reference/fetch_campaign_events.html">fetch_campaign_events()</a></code> (used by <code><a href="../reference/plot_regional_coverage.html">plot_regional_coverage()</a></code> and <code><a href="../reference/plot_temporal_coverage.html">plot_temporal_coverage()</a></code>) now compares NAVCO 2.1 at the same campaign-onset level as the other datasets, using <code><a href="../reference/conflict_data.html">conflict_data()</a></code>’s own <code>nvc2.1_ONSET</code> flag (keyed on the numeric campaign id) instead of re-deriving onsets from the campaign name, which is not unique and could silently merge distinct campaigns that happen to share a name.</li>
+<li>
+<code>gdp_growth</code> (<code><a href="../reference/load_gdp_data.html">load_gdp_data()</a></code>, <code>dataset = "gapminder"</code>) is now <code>NA</code> unless the preceding row is genuinely one year earlier for the same country, the same gap-safety check <code><a href="../reference/add_lag.html">add_lag()</a></code> uses.</li>
+<li>
+<code><a href="../reference/add_pop.html">add_population()</a></code> is now documented on the same reference page as <code><a href="../reference/add_pop.html">add_pop()</a></code> (its identical alias) instead of a separate, visually duplicate entry.</li>
+<li>
 <code><a href="../reference/conflict_data.html">conflict_data()</a></code> now applies <code>start_year</code> and <code>end_year</code> consistently to every bundled source.</li>
 <li>UCDP/PRIO output now distinguishes conflict incidence from episode onset. <code>ucdp_prio_onset</code> is based on <code>start_date2</code>; the new <code>ucdp_prio_incidence</code> column identifies all active conflict-years.</li>
 <li>SCAD country-year totals now exclude UCDP placeholder records, deduplicate multi-location rows by event ID, and treat documented negative death-count codes as missing.</li>
@@ -71,6 +82,8 @@
 <div class="section level3">
 <h3 id="release-infrastructure-0-1-0">Release infrastructure<a class="anchor" aria-label="anchor" href="#release-infrastructure-0-1-0"></a></h3>
 <ul><li>Added broader test coverage, two introductory vignettes, package-level documentation, data provenance and licensing notes, pkgdown configuration, and GitHub Actions for package checks and site deployment.</li>
+<li>Added a case study article assembling a panel and modeling revolutionary onset, and a “Comparing revolutionary-event datasets” article (see Visualization above).</li>
+<li>Added a package logo, shown in the README and the pkgdown site navbar.</li>
 </ul></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

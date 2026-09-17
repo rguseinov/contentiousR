@@ -68,6 +68,13 @@ dataset:
 
 ## Details
 
+`gdp_growth` (gapminder only) is `NA` unless the preceding row is
+genuinely one year earlier for the same country, the same gap-safety
+check
+[`add_lag()`](https://rguseinov.github.io/contentiousR/reference/add_lag.md)
+uses, so a missing year never silently produces a growth rate computed
+against the wrong base year.
+
 `fariss_gdp` and `fariss_gdppc` are the model's own latent-scale
 estimates, taken directly from the `"latent_gdp"`/`"latent_gdppc"` rows
 of the replication files (as opposed to the underlying raw indicator

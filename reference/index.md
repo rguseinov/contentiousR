@@ -12,8 +12,7 @@
 - [`add_gdp()`](https://rguseinov.github.io/contentiousR/reference/add_gdp.md)
   : Add GDP data to a state panel
 - [`add_pop()`](https://rguseinov.github.io/contentiousR/reference/add_pop.md)
-  : Add population data to a state panel
-- [`add_population()`](https://rguseinov.github.io/contentiousR/reference/add_population.md)
+  [`add_population()`](https://rguseinov.github.io/contentiousR/reference/add_pop.md)
   : Add population data to a state panel
 - [`add_military_expenditure()`](https://rguseinov.github.io/contentiousR/reference/add_military_expenditure.md)
   : Add military expenditure data to a state panel

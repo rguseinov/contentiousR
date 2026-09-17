@@ -2,6 +2,24 @@
 
 ## contentiousR 0.1.0
 
+### Visualization
+
+- Added
+  [`plot_regional_coverage()`](https://rguseinov.github.io/contentiousR/reference/plot_regional_coverage.md)
+  and
+  [`plot_temporal_coverage()`](https://rguseinov.github.io/contentiousR/reference/plot_temporal_coverage.md)
+  to compare regional and temporal event coverage across any combination
+  of
+  [`conflict_data()`](https://rguseinov.github.io/contentiousR/reference/conflict_data.md)
+  campaign/episode datasets, plus a “Comparing revolutionary-event
+  datasets” article reproducing the descriptive exercise in Guseinov,
+  Ustyuzhanin & Korotayev (2026).
+- Added
+  [`add_regions()`](https://rguseinov.github.io/contentiousR/reference/add_regions.md)
+  to join one or more `countrycode` region classifications (`region`,
+  `region23`, `un.region.name`, `un.regionsub.name`) onto a state panel
+  by `cow`/`gw` code.
+
 ### Data
 
 - Added the Major Episodes of Contention (MEC) dataset: 2,734 globally
@@ -12,6 +30,28 @@
 
 ### Correctness
 
+- [`fetch_campaign_events()`](https://rguseinov.github.io/contentiousR/reference/fetch_campaign_events.md)
+  (used by
+  [`plot_regional_coverage()`](https://rguseinov.github.io/contentiousR/reference/plot_regional_coverage.md)
+  and
+  [`plot_temporal_coverage()`](https://rguseinov.github.io/contentiousR/reference/plot_temporal_coverage.md))
+  now compares NAVCO 2.1 at the same campaign-onset level as the other
+  datasets, using
+  [`conflict_data()`](https://rguseinov.github.io/contentiousR/reference/conflict_data.md)’s
+  own `nvc2.1_ONSET` flag (keyed on the numeric campaign id) instead of
+  re-deriving onsets from the campaign name, which is not unique and
+  could silently merge distinct campaigns that happen to share a name.
+- `gdp_growth`
+  ([`load_gdp_data()`](https://rguseinov.github.io/contentiousR/reference/load_gdp_data.md),
+  `dataset = "gapminder"`) is now `NA` unless the preceding row is
+  genuinely one year earlier for the same country, the same gap-safety
+  check
+  [`add_lag()`](https://rguseinov.github.io/contentiousR/reference/add_lag.md)
+  uses.
+- [`add_population()`](https://rguseinov.github.io/contentiousR/reference/add_pop.md)
+  is now documented on the same reference page as
+  [`add_pop()`](https://rguseinov.github.io/contentiousR/reference/add_pop.md)
+  (its identical alias) instead of a separate, visually duplicate entry.
 - [`conflict_data()`](https://rguseinov.github.io/contentiousR/reference/conflict_data.md)
   now applies `start_year` and `end_year` consistently to every bundled
   source.
@@ -57,3 +97,7 @@
   documentation, data provenance and licensing notes, pkgdown
   configuration, and GitHub Actions for package checks and site
   deployment.
+- Added a case study article assembling a panel and modeling
+  revolutionary onset, and a “Comparing revolutionary-event datasets”
+  article (see Visualization above).
+- Added a package logo, shown in the README and the pkgdown site navbar.

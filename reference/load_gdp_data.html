@@ -115,7 +115,11 @@ dataset:</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p><code>fariss_gdp</code> and <code>fariss_gdppc</code> are the model's own latent-scale
+    <p><code>gdp_growth</code> (gapminder only) is <code>NA</code> unless the preceding row is
+genuinely one year earlier for the same country, the same gap-safety
+check <code><a href="add_lag.html">add_lag()</a></code> uses, so a missing year never silently produces a
+growth rate computed against the wrong base year.</p>
+<p><code>fariss_gdp</code> and <code>fariss_gdppc</code> are the model's own latent-scale
 estimates, taken directly from the <code>"latent_gdp"</code>/<code>"latent_gdppc"</code> rows of
 the replication files (as opposed to the underlying raw indicator series
 also present in those files). Their absolute units are not independently

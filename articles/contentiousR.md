@@ -250,7 +250,7 @@ panel |> add_pop()
 panel |> add_pop(dataset = "nmc")
 ```
 
-[`add_population()`](https://rguseinov.github.io/contentiousR/reference/add_population.md)
+[`add_population()`](https://rguseinov.github.io/contentiousR/reference/add_pop.md)
 is identical to
 [`add_pop()`](https://rguseinov.github.io/contentiousR/reference/add_pop.md),
 under the unabbreviated name.
