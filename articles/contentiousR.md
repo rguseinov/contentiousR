@@ -229,7 +229,7 @@ panel |> add_gdp()
 panel |> add_gdp(dataset = "fariss")
 ```
 
-## `load_population_data()` / `add_pop()`
+## `load_population_data()` / `add_population()`
 
 Three population sources are available via `dataset`.
 
@@ -246,14 +246,9 @@ pop_wpp <- load_population_data(1990, 2015, dataset = "wpp", coding_system = "co
 pop_nmc <- load_population_data(1900, 2015, dataset = "nmc", coding_system = "cow")
 
 # Pipeline
-panel |> add_pop()
-panel |> add_pop(dataset = "nmc")
+panel |> add_population()
+panel |> add_population(dataset = "nmc")
 ```
-
-[`add_population()`](https://rguseinov.github.io/contentiousR/reference/add_pop.md)
-is identical to
-[`add_pop()`](https://rguseinov.github.io/contentiousR/reference/add_pop.md),
-under the unabbreviated name.
 
 ## `load_military_expenditure_data()` / `add_military_expenditure()`
 

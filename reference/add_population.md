@@ -1,9 +1,7 @@
 # Add population data to a state panel
 
-Identical to
-[`add_pop()`](https://rguseinov.github.io/contentiousR/reference/add_pop.md),
-under the unabbreviated name matching
-[`load_population_data()`](https://rguseinov.github.io/contentiousR/reference/load_population_data.md).
+Joins country-year population data onto an existing state panel. The
+coding system and year range are detected automatically from the panel.
 
 ## Usage
 
@@ -33,4 +31,7 @@ The input panel with population columns added via left join.
 ``` r
 panel <- build_states_panel(1990, 2010, coding_system = "cow") |>
   add_population(dataset = "wpp")
+
+panel <- build_states_panel(1990, 2010, coding_system = "cow") |>
+  add_population(dataset = "nmc")
 ```

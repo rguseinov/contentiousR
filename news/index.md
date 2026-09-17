@@ -48,10 +48,20 @@
   check
   [`add_lag()`](https://rguseinov.github.io/contentiousR/reference/add_lag.md)
   uses.
-- [`add_population()`](https://rguseinov.github.io/contentiousR/reference/add_pop.md)
-  is now documented on the same reference page as
-  [`add_pop()`](https://rguseinov.github.io/contentiousR/reference/add_pop.md)
-  (its identical alias) instead of a separate, visually duplicate entry.
+- Removed `add_pop()`. It was an exact duplicate of
+  [`add_population()`](https://rguseinov.github.io/contentiousR/reference/add_population.md)
+  (same body, same arguments, two visually identical Reference entries)
+  and every other `add_*()`/`load_*_data()` pair in the package already
+  shares one name
+  ([`add_vdem()`](https://rguseinov.github.io/contentiousR/reference/add_vdem.md)/[`load_vdem_data()`](https://rguseinov.github.io/contentiousR/reference/load_vdem_data.md),
+  [`add_leader_data()`](https://rguseinov.github.io/contentiousR/reference/add_leader_data.md)/[`load_leader_data()`](https://rguseinov.github.io/contentiousR/reference/load_leader_data.md),
+  etc.) –
+  [`add_population()`](https://rguseinov.github.io/contentiousR/reference/add_population.md)
+  is the one that matches
+  [`load_population_data()`](https://rguseinov.github.io/contentiousR/reference/load_population_data.md).
+  Use
+  [`add_population()`](https://rguseinov.github.io/contentiousR/reference/add_population.md)
+  instead.
 - [`conflict_data()`](https://rguseinov.github.io/contentiousR/reference/conflict_data.md)
   now applies `start_year` and `end_year` consistently to every bundled
   source.
