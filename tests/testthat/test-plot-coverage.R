@@ -67,3 +67,27 @@ test_that("plot_coverage uses cow/gw as the label when no country column is pres
 
   expect_equal(levels(p$data$label), "2")
 })
+
+test_that("show_labels controls whether row labels are drawn", {
+  skip_if_not_installed("ggplot2")
+
+  panel <- data.frame(
+    cow     = rep(c(2, 20), each = 3),
+    country = rep(c("A", "B"), each = 3),
+    year    = rep(2000:2002, 2),
+    x       = c(1, 0, 1, 1, 0, 1)
+  )
+
+  with_labels <- plot_coverage(panel, "x", show_labels = TRUE)
+  no_labels   <- plot_coverage(panel, "x", show_labels = FALSE)
+
+  get_axis_text_y <- function(p) p$theme$axis.text.y
+
+  expect_false(inherits(get_axis_text_y(with_labels), "element_blank"))
+  expect_true(inherits(get_axis_text_y(no_labels), "element_blank"))
+
+  expect_error(
+    plot_coverage(panel, "x", show_labels = NA),
+    "`show_labels` must be `TRUE` or `FALSE`"
+  )
+})

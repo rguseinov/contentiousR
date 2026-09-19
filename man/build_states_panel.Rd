@@ -14,9 +14,9 @@ build_states_panel(
 )
 }
 \arguments{
-\item{start_year}{First year.}
+\item{start_year}{First year. Must be \code{1816} or later.}
 
-\item{end_year}{Last year.}
+\item{end_year}{Last year. Must be \code{2025} or earlier.}
 
 \item{coding_system}{Country coding system. Either \code{"cow"} or \code{"gw"}.}
 

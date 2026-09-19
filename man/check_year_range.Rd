@@ -4,12 +4,16 @@
 \alias{check_year_range}
 \title{Check year range}
 \usage{
-check_year_range(start_year, end_year)
+check_year_range(start_year, end_year, min_year = NULL, max_year = NULL)
 }
 \arguments{
 \item{start_year}{First year.}
 
 \item{end_year}{Last year.}
+
+\item{min_year}{Optional. If given, \code{start_year} must be at least this.}
+
+\item{max_year}{Optional. If given, \code{end_year} must be at most this.}
 }
 \description{
 Check year range

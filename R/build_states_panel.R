@@ -1,7 +1,7 @@
 #' Build a state panel
 #'
-#' @param start_year First year.
-#' @param end_year Last year.
+#' @param start_year First year. Must be `1816` or later.
+#' @param end_year Last year. Must be `2025` or earlier.
 #' @param coding_system Country coding system. Either `"cow"` or `"gw"`.
 #' @param exclude_microstates Logical. Exclude entities identified as
 #'   microstates by [states::state_panel()].
@@ -23,7 +23,7 @@ build_states_panel <- function(
     exclude_non_un = TRUE,
     exclude_islands = FALSE
 ) {
-  check_year_range(start_year, end_year)
+  check_year_range(start_year, end_year, min_year = 1816, max_year = 2025)
   check_flag(exclude_microstates, "exclude_microstates")
   check_flag(exclude_non_un, "exclude_non_un")
   check_flag(exclude_islands, "exclude_islands")
@@ -67,7 +67,7 @@ build_states_cow_panel <- function(
     exclude_islands = FALSE
 ) {
 
-  check_year_range(start_year, end_year)
+  check_year_range(start_year, end_year, min_year = 1816, max_year = 2025)
   check_flag(exclude_microstates, "exclude_microstates")
   check_flag(exclude_non_un, "exclude_non_un")
   check_flag(exclude_islands, "exclude_islands")
@@ -135,7 +135,7 @@ build_states_gw_panel <- function(
     exclude_islands = FALSE
 ) {
 
-  check_year_range(start_year, end_year)
+  check_year_range(start_year, end_year, min_year = 1816, max_year = 2025)
   check_flag(exclude_microstates, "exclude_microstates")
   check_flag(exclude_non_un, "exclude_non_un")
   check_flag(exclude_islands, "exclude_islands")

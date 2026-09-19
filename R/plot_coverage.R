@@ -17,6 +17,10 @@
 #'   event contributes a row with no blue tiles at all, which adds clutter
 #'   without showing where/when events happened; set to `FALSE` to include
 #'   these states anyway.
+#' @param show_labels Logical. If `TRUE` (default), label each row with its
+#'   country (or `cow`/`gw` code, if `panel` has no `country` column). Set
+#'   to `FALSE` to drop these labels, which otherwise overlap and become
+#'   illegible once `panel` covers more than a few dozen states.
 #'
 #' @return A `ggplot` object (one tile per country-year, filled by
 #'   `"Event"` / `"No event"`, with unobserved country-years left blank).
@@ -28,10 +32,14 @@
 #'   build_states_panel(1990, 2015, coding_system = "cow") |>
 #'     add_conflict("ucdp_prio") |>
 #'     plot_coverage("ucdp_prio_onset")
+#'
+#'   build_states_panel(1990, 2015, coding_system = "cow") |>
+#'     add_conflict("ucdp_prio") |>
+#'     plot_coverage("ucdp_prio_onset", show_labels = FALSE)
 #' }
 #'
 #' @export
-plot_coverage <- function(panel, var, drop_empty = TRUE) {
+plot_coverage <- function(panel, var, drop_empty = TRUE, show_labels = TRUE) {
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     stop(
       "Package 'ggplot2' is required for plot_coverage(). ",
@@ -49,6 +57,7 @@ plot_coverage <- function(panel, var, drop_empty = TRUE) {
     stop("`var` must be binary (0/1, with NA for unobserved years).", call. = FALSE)
   }
   check_flag(drop_empty, "drop_empty")
+  check_flag(show_labels, "show_labels")
 
   label_col <- if ("country" %in% names(panel)) "country" else coding_system
 
@@ -86,7 +95,7 @@ plot_coverage <- function(panel, var, drop_empty = TRUE) {
   plot_data$label  <- factor(plot_data$label, levels = events_by_label$label)
   plot_data$status <- factor(plot_data$status, levels = c("Event", "No event"))
 
-  ggplot2::ggplot(
+  p <- ggplot2::ggplot(
     plot_data,
     ggplot2::aes(x = .data$year, y = .data$label, fill = .data$status)
   ) +
@@ -99,6 +108,16 @@ plot_coverage <- function(panel, var, drop_empty = TRUE) {
       drop = FALSE
     ) +
     ggplot2::labs(x = "Year", y = NULL, title = paste("Coverage of", var)) +
-    ggplot2::theme_minimal() +
-    ggplot2::theme(axis.text.y = ggplot2::element_text(size = 6))
+    ggplot2::theme_minimal()
+
+  if (show_labels) {
+    p <- p + ggplot2::theme(axis.text.y = ggplot2::element_text(size = 6))
+  } else {
+    p <- p + ggplot2::theme(
+      axis.text.y  = ggplot2::element_blank(),
+      axis.ticks.y = ggplot2::element_blank()
+    )
+  }
+
+  p
 }

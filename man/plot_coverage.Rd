@@ -4,7 +4,7 @@
 \alias{plot_coverage}
 \title{Plot country-year onset/event coverage of a binary variable}
 \usage{
-plot_coverage(panel, var, drop_empty = TRUE)
+plot_coverage(panel, var, drop_empty = TRUE, show_labels = TRUE)
 }
 \arguments{
 \item{panel}{A data frame produced by \code{build_states_panel()}, containing
@@ -18,6 +18,11 @@ years where \code{var == 1} before plotting. A state that never has the
 event contributes a row with no blue tiles at all, which adds clutter
 without showing where/when events happened; set to \code{FALSE} to include
 these states anyway.}
+
+\item{show_labels}{Logical. If \code{TRUE} (default), label each row with its
+country (or \code{cow}/\code{gw} code, if \code{panel} has no \code{country} column). Set
+to \code{FALSE} to drop these labels, which otherwise overlap and become
+illegible once \code{panel} covers more than a few dozen states.}
 }
 \value{
 A \code{ggplot} object (one tile per country-year, filled by
@@ -38,6 +43,10 @@ if (requireNamespace("ggplot2", quietly = TRUE)) {
   build_states_panel(1990, 2015, coding_system = "cow") |>
     add_conflict("ucdp_prio") |>
     plot_coverage("ucdp_prio_onset")
+
+  build_states_panel(1990, 2015, coding_system = "cow") |>
+    add_conflict("ucdp_prio") |>
+    plot_coverage("ucdp_prio_onset", show_labels = FALSE)
 }
 
 }

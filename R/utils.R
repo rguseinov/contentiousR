@@ -2,9 +2,11 @@
 #'
 #' @param start_year First year.
 #' @param end_year Last year.
+#' @param min_year Optional. If given, `start_year` must be at least this.
+#' @param max_year Optional. If given, `end_year` must be at most this.
 #'
 #' @keywords internal
-check_year_range <- function(start_year, end_year) {
+check_year_range <- function(start_year, end_year, min_year = NULL, max_year = NULL) {
   if (
     !is.numeric(start_year) || length(start_year) != 1L ||
       is.na(start_year) || !is.finite(start_year) || start_year %% 1 != 0
@@ -21,6 +23,14 @@ check_year_range <- function(start_year, end_year) {
 
   if (start_year > end_year) {
     stop("`start_year` must be less than or equal to `end_year`.", call. = FALSE)
+  }
+
+  if (!is.null(min_year) && start_year < min_year) {
+    stop("`start_year` must be ", min_year, " or later.", call. = FALSE)
+  }
+
+  if (!is.null(max_year) && end_year > max_year) {
+    stop("`end_year` must be ", max_year, " or earlier.", call. = FALSE)
   }
 
   invisible(TRUE)

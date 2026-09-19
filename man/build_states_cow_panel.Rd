@@ -13,9 +13,9 @@ build_states_cow_panel(
 )
 }
 \arguments{
-\item{start_year}{First year.}
+\item{start_year}{First year. Must be \code{1816} or later.}
 
-\item{end_year}{Last year.}
+\item{end_year}{Last year. Must be \code{2025} or earlier.}
 
 \item{exclude_microstates}{Logical. Exclude entities identified as
 microstates by \code{\link[states:state_panel]{states::state_panel()}}.}

@@ -66,3 +66,15 @@ test_that("the internal COW panel builder matches the public dispatcher", {
     build_states_panel(1990, 1991, coding_system = "cow")
   )
 })
+
+test_that("build_states_panel() enforces the 1816-2025 year range", {
+  expect_error(
+    build_states_panel(1800, 2010),
+    "`start_year` must be 1816 or later"
+  )
+  expect_error(
+    build_states_panel(1900, 2030),
+    "`end_year` must be 2025 or earlier"
+  )
+  expect_no_error(build_states_panel(1816, 2025, coding_system = "cow"))
+})
