@@ -45,6 +45,17 @@
   own `nvc2.1_ONSET` flag (keyed on the numeric campaign id) instead of
   re-deriving onsets from the campaign name, which is not unique and
   could silently merge distinct campaigns that happen to share a name.
+- [`fetch_campaign_events()`](https://rguseinov.github.io/contentiousR/reference/fetch_campaign_events.md)’s
+  `region` field now stays at exactly 7 categories.
+  [`countrycode::countrycode()`](https://rdrr.io/pkg/countrycode/man/countrycode.html)’s
+  `"region"` destination labels a few pre-1990 historical entities
+  (Yemen Arab Republic, Yemen People’s Republic, the United Arab
+  Republic) with the World Bank’s older “Middle East & North Africa”
+  string while every other MENA country gets the newer “Middle East,
+  North Africa, Afghanistan & Pakistan” string; since campaign data
+  covering the 1950s-80s includes those historical codes, the region was
+  silently splitting into two bars in
+  [`plot_regional_coverage()`](https://rguseinov.github.io/contentiousR/reference/plot_regional_coverage.md)/[`plot_temporal_coverage()`](https://rguseinov.github.io/contentiousR/reference/plot_temporal_coverage.md).
 - `gdp_growth`
   ([`load_gdp_data()`](https://rguseinov.github.io/contentiousR/reference/load_gdp_data.md),
   `dataset = "gapminder"`) is now `NA` unless the preceding row is
