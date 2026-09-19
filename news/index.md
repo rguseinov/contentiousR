@@ -8,6 +8,13 @@
   gained a `show_labels` argument (default `TRUE`). Set it to `FALSE` to
   drop the per-row country/code labels, which otherwise overlap and
   become illegible once the panel covers more than a few dozen states.
+- [`plot_regional_coverage()`](https://rguseinov.github.io/contentiousR/reference/plot_regional_coverage.md)’s
+  region labels are now horizontal and word-wrapped instead of angled,
+  and its region field’s canonical “Middle East” label is the shorter
+  “Middle East & North Africa” form.
+  [`plot_temporal_coverage()`](https://rguseinov.github.io/contentiousR/reference/plot_temporal_coverage.md)’s
+  period labels are now vertical instead of angled. Both plots no longer
+  set a `ggplot2` title (redundant with a caption in a manuscript).
 - Added
   [`plot_regional_coverage()`](https://rguseinov.github.io/contentiousR/reference/plot_regional_coverage.md)
   and
