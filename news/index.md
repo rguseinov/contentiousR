@@ -4,6 +4,10 @@
 
 ### Visualization
 
+- [`plot_coverage()`](https://rguseinov.github.io/contentiousR/reference/plot_coverage.md)
+  gained a `show_labels` argument (default `TRUE`). Set it to `FALSE` to
+  drop the per-row country/code labels, which otherwise overlap and
+  become illegible once the panel covers more than a few dozen states.
 - Added
   [`plot_regional_coverage()`](https://rguseinov.github.io/contentiousR/reference/plot_regional_coverage.md)
   and
@@ -110,6 +114,9 @@
   exported in the first place.
 - Added strict validation for years, logical flags, panel keys, and
   output-key uniqueness.
+- [`build_states_panel()`](https://rguseinov.github.io/contentiousR/reference/build_states_panel.md)
+  now validates `start_year`/`end_year` against the Correlates of War /
+  Gleditsch-Ward state system’s actual coverage: `1816`-`2025`.
 - Added `ucdp_vpp_incidence`. The existing `ucdp_vpp_onset` column
   remains as a compatibility alias and is now documented as incidence
   rather than onset.

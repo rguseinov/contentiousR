@@ -46,7 +46,9 @@
 <h2 class="pkg-version" data-toc-text="0.1.0" id="contentiousr-010">contentiousR 0.1.0<a class="anchor" aria-label="anchor" href="#contentiousr-010"></a></h2>
 <div class="section level3">
 <h3 id="visualization-0-1-0">Visualization<a class="anchor" aria-label="anchor" href="#visualization-0-1-0"></a></h3>
-<ul><li>Added <code><a href="../reference/plot_regional_coverage.html">plot_regional_coverage()</a></code> and <code><a href="../reference/plot_temporal_coverage.html">plot_temporal_coverage()</a></code> to compare regional and temporal event coverage across any combination of <code><a href="../reference/conflict_data.html">conflict_data()</a></code> campaign/episode datasets, plus a “Comparing revolutionary-event datasets” article reproducing the descriptive exercise in Guseinov, Ustyuzhanin &amp; Korotayev (2026).</li>
+<ul><li>
+<code><a href="../reference/plot_coverage.html">plot_coverage()</a></code> gained a <code>show_labels</code> argument (default <code>TRUE</code>). Set it to <code>FALSE</code> to drop the per-row country/code labels, which otherwise overlap and become illegible once the panel covers more than a few dozen states.</li>
+<li>Added <code><a href="../reference/plot_regional_coverage.html">plot_regional_coverage()</a></code> and <code><a href="../reference/plot_temporal_coverage.html">plot_temporal_coverage()</a></code> to compare regional and temporal event coverage across any combination of <code><a href="../reference/conflict_data.html">conflict_data()</a></code> campaign/episode datasets, plus a “Comparing revolutionary-event datasets” article reproducing the descriptive exercise in Guseinov, Ustyuzhanin &amp; Korotayev (2026).</li>
 <li>Added <code><a href="../reference/add_regions.html">add_regions()</a></code> to join one or more <code>countrycode</code> region classifications (<code>region</code>, <code>region23</code>, <code>un.region.name</code>, <code>un.regionsub.name</code>) onto a state panel by <code>cow</code>/<code>gw</code> code.</li>
 </ul></div>
 <div class="section level3">
@@ -77,6 +79,8 @@
 <li>
 <code><a href="../reference/build_states_cow_panel.html">build_states_cow_panel()</a></code> is internal again (not exported). It’s the actual COW-panel implementation <code>build_states_panel(coding_system = "cow")</code> dispatches to, but there’s no public reason to call it directly instead of <code><a href="../reference/build_states_panel.html">build_states_panel()</a></code> – and its GW counterpart, <code>build_states_gw_panel()</code>, was never exported in the first place.</li>
 <li>Added strict validation for years, logical flags, panel keys, and output-key uniqueness.</li>
+<li>
+<code><a href="../reference/build_states_panel.html">build_states_panel()</a></code> now validates <code>start_year</code>/<code>end_year</code> against the Correlates of War / Gleditsch-Ward state system’s actual coverage: <code>1816</code>-<code>2025</code>.</li>
 <li>Added <code>ucdp_vpp_incidence</code>. The existing <code>ucdp_vpp_onset</code> column remains as a compatibility alias and is now documented as incidence rather than onset.</li>
 <li>Removed the <code>magrittr</code> dependency in favor of R’s native pipe.</li>
 </ul></div>

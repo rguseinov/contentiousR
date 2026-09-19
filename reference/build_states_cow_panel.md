@@ -18,11 +18,11 @@ build_states_cow_panel(
 
 - start_year:
 
-  First year.
+  First year. Must be `1816` or later.
 
 - end_year:
 
-  Last year.
+  Last year. Must be `2025` or earlier.
 
 - exclude_microstates:
 

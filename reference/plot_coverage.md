@@ -10,7 +10,7 @@ where a source has any data.
 ## Usage
 
 ``` r
-plot_coverage(panel, var, drop_empty = TRUE)
+plot_coverage(panel, var, drop_empty = TRUE, show_labels = TRUE)
 ```
 
 ## Arguments
@@ -34,6 +34,13 @@ plot_coverage(panel, var, drop_empty = TRUE)
   without showing where/when events happened; set to `FALSE` to include
   these states anyway.
 
+- show_labels:
+
+  Logical. If `TRUE` (default), label each row with its country (or
+  `cow`/`gw` code, if `panel` has no `country` column). Set to `FALSE`
+  to drop these labels, which otherwise overlap and become illegible
+  once `panel` covers more than a few dozen states.
+
 ## Value
 
 A `ggplot` object (one tile per country-year, filled by `"Event"` /
@@ -48,6 +55,10 @@ if (requireNamespace("ggplot2", quietly = TRUE)) {
   build_states_panel(1990, 2015, coding_system = "cow") |>
     add_conflict("ucdp_prio") |>
     plot_coverage("ucdp_prio_onset")
+
+  build_states_panel(1990, 2015, coding_system = "cow") |>
+    add_conflict("ucdp_prio") |>
+    plot_coverage("ucdp_prio_onset", show_labels = FALSE)
 }
 
 ```
