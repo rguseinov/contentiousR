@@ -35,5 +35,16 @@ e.g. three distinct "Myanmar Regime Change Campaign" entries share that
 name). That flag is computed over the dataset's full native coverage
 before \code{start_year}/\code{end_year} filtering, so campaigns already under way
 at \code{start_year} are not mistaken for new onsets.
+
+\code{countrycode::countrycode()}'s \code{"region"} destination is not a clean
+7-category classification: a handful of pre-1990 historical entities
+(Yemen Arab Republic, Yemen People's Republic, the United Arab
+Republic) still carry the World Bank's older "Middle East & North
+Africa" label, while every other country in that region carries the
+newer "Middle East, North Africa, Afghanistan & Pakistan" label --
+these historical COW/GW codes do appear in campaign data covering the
+1950s-80s, so left as-is they'd split one region into two bars. The
+older label is recoded to the newer one here so the region breakdown
+stays at exactly 7 categories.
 }
 \keyword{internal}

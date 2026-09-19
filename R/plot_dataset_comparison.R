@@ -23,6 +23,17 @@
 #' before `start_year`/`end_year` filtering, so campaigns already under way
 #' at `start_year` are not mistaken for new onsets.
 #'
+#' `countrycode::countrycode()`'s `"region"` destination is not a clean
+#' 7-category classification: a handful of pre-1990 historical entities
+#' (Yemen Arab Republic, Yemen People's Republic, the United Arab
+#' Republic) still carry the World Bank's older "Middle East & North
+#' Africa" label, while every other country in that region carries the
+#' newer "Middle East, North Africa, Afghanistan & Pakistan" label --
+#' these historical COW/GW codes do appear in campaign data covering the
+#' 1950s-80s, so left as-is they'd split one region into two bars. The
+#' older label is recoded to the newer one here so the region breakdown
+#' stays at exactly 7 categories.
+#'
 #' @keywords internal
 fetch_campaign_events <- function(datasets, start_year, end_year, coding_system) {
   region_dest <- if (coding_system == "cow") "cown" else "gwn"
@@ -47,6 +58,8 @@ fetch_campaign_events <- function(datasets, start_year, end_year, coding_system)
   events$region <- suppressWarnings(
     countrycode::countrycode(events$unit, region_dest, "region")
   )
+  events$region[events$region == "Middle East & North Africa"] <-
+    "Middle East, North Africa, Afghanistan & Pakistan"
   tidyr::drop_na(events, "region")
 }
 

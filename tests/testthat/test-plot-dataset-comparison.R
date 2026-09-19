@@ -71,3 +71,22 @@ test_that("fetch_campaign_events keeps distinct navco2.1 campaigns that share a 
   events <- fetch_campaign_events("navco2.1", 1945, 2013, "cow")
   expect_equal(sum(events$dataset == "navco2.1"), sum(raw$nvc2.1_ONSET == 1))
 })
+
+test_that("fetch_campaign_events collapses the region field to 7 clean categories", {
+  # countrycode::countrycode()'s "region" destination isn't a clean 7-value
+  # classification: a few pre-1990 historical entities (Yemen Arab
+  # Republic, Yemen People's Republic, the United Arab Republic) still
+  # carry the World Bank's older "Middle East & North Africa" label while
+  # every other MENA country carries the newer "Middle East, North Africa,
+  # Afghanistan & Pakistan" label. Campaign data covering the 1950s-80s
+  # does include those historical codes, so without recoding, one region
+  # would silently split into two bars.
+  events <- fetch_campaign_events(
+    c("navco1.3", "navco2.1", "beissinger", "csra", "mec"), 1950, 2013, "cow"
+  )
+  expect_length(unique(events$region), 7L)
+  expect_false("Middle East & North Africa" %in% events$region)
+  expect_true(
+    "Middle East, North Africa, Afghanistan & Pakistan" %in% events$region
+  )
+})
