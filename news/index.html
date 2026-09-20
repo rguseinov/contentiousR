@@ -45,6 +45,19 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.0" id="contentiousr-010">contentiousR 0.1.0<a class="anchor" aria-label="anchor" href="#contentiousr-010"></a></h2>
 <div class="section level3">
+<h3 id="bug-fixes-0-1-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-1-0"></a></h3>
+<ul><li>
+<code>load_vdem_data(coding_system = "cow")</code> no longer silently drops East Germany (COW 265, 1949-1990); it was previously excluded only in the <code>"cow"</code> branch, so V-Dem coverage for Germany differed depending on the chosen coding system with no indication why.</li>
+<li>
+<code><a href="../reference/add_spell_duration.html">add_spell_duration()</a></code> now computes spells from the actual calendar-year difference instead of row position within a state. A gap in the input years (e.g. left by <code>tidyr::drop_na(event)</code>, which the package’s own examples recommend) previously understated the elapsed time.</li>
+<li>
+<code><a href="../reference/plot_coverage.html">plot_coverage()</a></code> now errors with a clear message instead of crashing when <code>drop_empty = TRUE</code> removes every state (e.g. the chosen event never occurs in the supplied panel/year range).</li>
+<li>
+<code><a href="../reference/cn_cite.html">cn_cite()</a></code> matched keywords by substring, so a short <code>dataset</code> name (e.g. <code>"mm"</code>) could also match an unrelated entry whose keyword merely contained it as a substring (<code>"mmad"</code>). Keyword matching is now exact against the comma-separated keyword list.</li>
+<li>
+<code><a href="../reference/harmonize_conflict_data.html">harmonize_conflict_data()</a></code>: a factor <code>year_col</code> was coerced with <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer()</a></code>, which returns the factor’s internal level codes rather than the printed year. It is now converted to character first. A <code>date_col</code> that fails to parse (e.g. a non-ISO format without a matching <code>date_format</code>) now raises a clear error instead of a generic base-R one.</li>
+</ul></div>
+<div class="section level3">
 <h3 id="bring-your-own-data-0-1-0">Bring your own data<a class="anchor" aria-label="anchor" href="#bring-your-own-data-0-1-0"></a></h3>
 <ul><li>Added <code><a href="../reference/harmonize_conflict_data.html">harmonize_conflict_data()</a></code> to join externally supplied conflict/ event data (GDELT, ICEWS, ACLED, or anything else not bundled with <code>contentiousR</code>) onto a state panel: it maps the caller’s country column to COW/GW codes via <code><a href="https://rdrr.io/pkg/countrycode/man/countrycode.html" class="external-link">countrycode::countrycode()</a></code>, extracts a year from either a pre-parsed <code>year_col</code> or a <code>date_col</code>/<code>date_format</code>, optionally aggregates event-level rows to country-year (<code>&lt;prefix&gt;_onset</code>, <code>&lt;prefix&gt;_n_events</code>), and joins the result in. Unlike <code><a href="../reference/add_conflict.html">add_conflict()</a></code>, it never downloads or bundles data itself, so <code>contentiousR</code> gains no dependency on <code>gdeltr2</code>, <code>icews</code>, or <code>acled.api</code>.</li>
 </ul></div>

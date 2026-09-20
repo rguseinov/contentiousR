@@ -16,9 +16,10 @@ cn_cite(x, column = c("keywords", "bibtexkey"))
 
   A search string. Matched against the `keywords` field by default
   (function names such as `"add_conflict()"` or `"load_gdp_data()"`, and
-  `dataset =` values such as `"archigos"` or `"mec"`), or against BibTeX
-  keys when `column = "bibtexkey"`. The match is a fixed substring
-  match, not a regular expression.
+  `dataset =` values such as `"archigos"` or `"mec"`) as an exact match
+  against one comma-separated keyword, or against BibTeX keys as a fixed
+  substring match when `column = "bibtexkey"`. Neither is a regular
+  expression.
 
 - column:
 

@@ -110,31 +110,31 @@ model <- glm(
 co <- summary(model)$coefficients
 co[!grepl("factor\\(year\\)", rownames(co)), ]
 #>                                        Estimate   Std. Error     z value
-#> (Intercept)                       -5.479410e+00 1.497253e+00 -3.65964194
-#> log(fariss_gdppc_l + 0.1)         -1.603188e-02 1.006870e-01 -0.15922487
-#> wpp_pop_l                          7.679461e-07 5.512076e-07  1.39320670
-#> v2x_polyarchy_l                    4.370538e+00 1.703268e+00  2.56597206
-#> I(v2x_polyarchy_l^2)              -7.623053e+00 2.113901e+00 -3.60615474
-#> v2x_execorr_l                      8.957704e-01 3.729414e-01  2.40190637
-#> leader_tenure_l                    4.145870e-02 3.085531e-02  1.34364884
-#> I(leader_tenure_l^2)              -1.289695e-03 9.785908e-04 -1.31791026
-#> nmc_milex_l                        1.129747e-09 4.255478e-09  0.26548063
-#> splines::bs(beissinger_spell, 3)1 -9.449546e-01 9.012564e-01 -1.04848587
-#> splines::bs(beissinger_spell, 3)2  1.770707e+00 1.147905e+00  1.54255569
-#> splines::bs(beissinger_spell, 3)3 -3.666374e-02 1.383359e+00 -0.02650342
+#> (Intercept)                       -5.482900e+00 1.497199e+00 -3.66210390
+#> log(fariss_gdppc_l + 0.1)         -8.628873e-03 1.002608e-01 -0.08606431
+#> wpp_pop_l                          7.575049e-07 5.515177e-07  1.37349167
+#> v2x_polyarchy_l                    4.364033e+00 1.714333e+00  2.54561586
+#> I(v2x_polyarchy_l^2)              -7.591873e+00 2.130573e+00 -3.56330178
+#> v2x_execorr_l                      8.857624e-01 3.717666e-01  2.38257635
+#> leader_tenure_l                    4.086467e-02 3.080982e-02  1.32635229
+#> I(leader_tenure_l^2)              -1.291432e-03 9.784392e-04 -1.31989015
+#> nmc_milex_l                        1.178253e-09 4.467392e-09  0.26374516
+#> splines::bs(beissinger_spell, 3)1 -1.050117e+00 9.028635e-01 -1.16309592
+#> splines::bs(beissinger_spell, 3)2  2.162076e+00 1.149534e+00  1.88082880
+#> splines::bs(beissinger_spell, 3)3 -9.603299e-01 1.364815e+00 -0.70363383
 #>                                       Pr(>|z|)
-#> (Intercept)                       0.0002525679
-#> log(fariss_gdppc_l + 0.1)         0.8734917070
-#> wpp_pop_l                         0.1635572936
-#> v2x_polyarchy_l                   0.0102887116
-#> I(v2x_polyarchy_l^2)              0.0003107679
-#> v2x_execorr_l                     0.0163098822
-#> leader_tenure_l                   0.1790619673
-#> I(leader_tenure_l^2)              0.1875336897
-#> nmc_milex_l                       0.7906392285
-#> splines::bs(beissinger_spell, 3)1 0.2944148108
-#> splines::bs(beissinger_spell, 3)2 0.1229386164
-#> splines::bs(beissinger_spell, 3)3 0.9788558075
+#> (Intercept)                       0.0002501524
+#> log(fariss_gdppc_l + 0.1)         0.9314152969
+#> wpp_pop_l                         0.1695995501
+#> v2x_polyarchy_l                   0.0109085156
+#> I(v2x_polyarchy_l^2)              0.0003662193
+#> v2x_execorr_l                     0.0171919666
+#> leader_tenure_l                   0.1847230325
+#> I(leader_tenure_l^2)              0.1868716962
+#> nmc_milex_l                       0.7919762910
+#> splines::bs(beissinger_spell, 3)1 0.2447905889
+#> splines::bs(beissinger_spell, 3)2 0.0599952109
+#> splines::bs(beissinger_spell, 3)3 0.4816608407
 ```
 
 Year fixed effects are omitted from the printed table above for

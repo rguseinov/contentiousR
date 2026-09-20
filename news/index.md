@@ -2,6 +2,34 @@
 
 ## contentiousR 0.1.0
 
+### Bug fixes
+
+- `load_vdem_data(coding_system = "cow")` no longer silently drops East
+  Germany (COW 265, 1949-1990); it was previously excluded only in the
+  `"cow"` branch, so V-Dem coverage for Germany differed depending on
+  the chosen coding system with no indication why.
+- [`add_spell_duration()`](https://rguseinov.github.io/contentiousR/reference/add_spell_duration.md)
+  now computes spells from the actual calendar-year difference instead
+  of row position within a state. A gap in the input years (e.g. left by
+  `tidyr::drop_na(event)`, which the package’s own examples recommend)
+  previously understated the elapsed time.
+- [`plot_coverage()`](https://rguseinov.github.io/contentiousR/reference/plot_coverage.md)
+  now errors with a clear message instead of crashing when
+  `drop_empty = TRUE` removes every state (e.g. the chosen event never
+  occurs in the supplied panel/year range).
+- [`cn_cite()`](https://rguseinov.github.io/contentiousR/reference/cn_cite.md)
+  matched keywords by substring, so a short `dataset` name (e.g. `"mm"`)
+  could also match an unrelated entry whose keyword merely contained it
+  as a substring (`"mmad"`). Keyword matching is now exact against the
+  comma-separated keyword list.
+- [`harmonize_conflict_data()`](https://rguseinov.github.io/contentiousR/reference/harmonize_conflict_data.md):
+  a factor `year_col` was coerced with
+  [`as.integer()`](https://rdrr.io/r/base/integer.html), which returns
+  the factor’s internal level codes rather than the printed year. It is
+  now converted to character first. A `date_col` that fails to parse
+  (e.g. a non-ISO format without a matching `date_format`) now raises a
+  clear error instead of a generic base-R one.
+
 ### Bring your own data
 
 - Added
