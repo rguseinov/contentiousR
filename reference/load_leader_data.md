@@ -21,7 +21,8 @@ load_leader_data(
 
 **Archigos:** Goemans, H.E., Gleditsch, K.S., & Chiozza, G. (2009).
 Introducing Archigos: A Dataset of Political Leaders. *Journal of Peace
-Research*, 46(2), 269–283. <https://ksgleditsch.com/archigos.html>
+Research*, 46(2), 269–283.
+<https://web.archive.org/web/20241206095059/http://ksgleditsch.com/archigos.html>
 
 **REIGN:** Bell, C. (2021). REIGN: Rulers, Elections, and Irregular
 Governance Dataset. One Earth Future Foundation.

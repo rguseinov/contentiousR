@@ -17,7 +17,7 @@ limitations.
 | Military expenditure: `"barnum"` | Barnum et al. 2025, latent estimate, 1816–2019 | Country-year | [Dataverse](https://doi.org/10.7910/DVN/RKJAKJ) |
 | `"navco1.3"` | NAVCO 1.3, 1900–2019[^1] | Campaign onset | [Dataverse](https://doi.org/10.7910/DVN/ON9XND) |
 | `"navco2.1"` | NAVCO 2.1, 1945–2013 | Campaign-year | [Dataverse](https://doi.org/10.7910/DVN/MHOXDV) |
-| `"beissinger"` | Revolutionary Episodes Dataset, 1900–2014[^2] | Episode onset | [Mark Beissinger](https://mbeissinger.scholar.princeton.edu/revolutionary-episodes-dataset) |
+| `"beissinger"` | Revolutionary Episodes Dataset, 1900–2014[^2] | Episode onset | [Mark Beissinger](https://web.archive.org/web/20250331220952/https://mbeissinger.scholar.princeton.edu/revolutionary-episodes-dataset) |
 | `"csra"` | CSRA Revolutions Dataset v1.1, 2000–2024 | Episode onset | [HSE University](https://social.hse.ru/en/mr/rev_bd) |
 | `"scad"` | SCAD 3.3, 1990–2017[^3] | Country-year | [Strauss Center](https://www.strausscenter.org/ccaps-research-areas/social-conflict/database/) |
 | `"ucdp_prio"` | UCDP/PRIO 26.1, 1946–2025 | Country-year | [UCDP](https://ucdp.uu.se/downloads/) |
@@ -25,7 +25,7 @@ limitations.
 | `"mm"` | Mass Mobilization, 1990–2020 | Country-year | [Project website](https://massmobilization.github.io) |
 | `"mmad"` | MMAD v5.0, 2003–2022 | Country-year | [MMAD](https://mmadatabase.org/) |
 | `"mec"` | Major Episodes of Contention, 1955–2018 | Episode (global) | [Article](https://doi.org/10.1093/jopres/xjaf008) / [data](https://doi.org/10.7910/DVN/JQWQNW) |
-| `"archigos"` | Archigos 4.1, 1875–2015 | Country-year | [Archigos](https://ksgleditsch.com/archigos.html) |
+| `"archigos"` | Archigos 4.1, 1875–2015 | Country-year | [Archigos](https://web.archive.org/web/20241206095059/http://ksgleditsch.com/archigos.html) |
 | `"reign"` | REIGN, 1921–2021 | Country-year | [REIGN](https://oefdatascience.github.io/REIGN.github.io/) |
 | V-Dem | Installed `vdemdata` release | Country-year | [V-Dem](https://v-dem.net/data/the-v-dem-dataset/) |
 

@@ -292,7 +292,7 @@ latest-starting leader is kept.
 
 | Dataset | Source | Coverage | Key variables |
 |----|----|----|----|
-| `"archigos"` | [Archigos 4.1](http://ksgleditsch.com/archigos.md) | 1875–2015 | `entry`, `exit`, `irregular_entry`, `irregular_exit`, `female_leader`, `yrborn`, `posttenurefate`, `leader_tenure` |
+| `"archigos"` | [Archigos 4.1](https://web.archive.org/web/20241206095059/http://ksgleditsch.com/archigos.html) | 1875–2015 | `entry`, `exit`, `irregular_entry`, `irregular_exit`, `female_leader`, `yrborn`, `posttenurefate`, `leader_tenure` |
 | `"reign"` | [REIGN Leader List](https://oefdatascience.github.io/REIGN.github.io/menu/reign_current.html) | 1921–2021 | `female_leader`, `military_bg`, `birthyear`, `leader_tenure` |
 
 ``` r

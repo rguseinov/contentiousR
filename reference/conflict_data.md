@@ -29,7 +29,7 @@ NAVCO 2.1: [doi:10.7910/DVN/MHOXDV](https://doi.org/10.7910/DVN/MHOXDV)
 .
 
 Beissinger Revolutionary Episodes:
-<https://mbeissinger.scholar.princeton.edu/revolutionary-episodes-dataset>.
+<https://web.archive.org/web/20250331220952/https://mbeissinger.scholar.princeton.edu/revolutionary-episodes-dataset>.
 
 HSE Revolutions Dataset: <https://social.hse.ru/en/mr/rev_bd>.
 
