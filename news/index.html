@@ -45,6 +45,10 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.0" id="contentiousr-010">contentiousR 0.1.0<a class="anchor" aria-label="anchor" href="#contentiousr-010"></a></h2>
 <div class="section level3">
+<h3 id="bring-your-own-data-0-1-0">Bring your own data<a class="anchor" aria-label="anchor" href="#bring-your-own-data-0-1-0"></a></h3>
+<ul><li>Added <code><a href="../reference/harmonize_conflict_data.html">harmonize_conflict_data()</a></code> to join externally supplied conflict/ event data (GDELT, ICEWS, ACLED, or anything else not bundled with <code>contentiousR</code>) onto a state panel: it maps the caller’s country column to COW/GW codes via <code><a href="https://rdrr.io/pkg/countrycode/man/countrycode.html" class="external-link">countrycode::countrycode()</a></code>, extracts a year from either a pre-parsed <code>year_col</code> or a <code>date_col</code>/<code>date_format</code>, optionally aggregates event-level rows to country-year (<code>&lt;prefix&gt;_onset</code>, <code>&lt;prefix&gt;_n_events</code>), and joins the result in. Unlike <code><a href="../reference/add_conflict.html">add_conflict()</a></code>, it never downloads or bundles data itself, so <code>contentiousR</code> gains no dependency on <code>gdeltr2</code>, <code>icews</code>, or <code>acled.api</code>.</li>
+</ul></div>
+<div class="section level3">
 <h3 id="visualization-0-1-0">Visualization<a class="anchor" aria-label="anchor" href="#visualization-0-1-0"></a></h3>
 <ul><li>
 <code><a href="../reference/plot_coverage.html">plot_coverage()</a></code> gained a <code>show_labels</code> argument (default <code>TRUE</code>). Set it to <code>FALSE</code> to drop the per-row country/code labels, which otherwise overlap and become illegible once the panel covers more than a few dozen states.</li>

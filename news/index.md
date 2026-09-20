@@ -2,6 +2,22 @@
 
 ## contentiousR 0.1.0
 
+### Bring your own data
+
+- Added
+  [`harmonize_conflict_data()`](https://rguseinov.github.io/contentiousR/reference/harmonize_conflict_data.md)
+  to join externally supplied conflict/ event data (GDELT, ICEWS, ACLED,
+  or anything else not bundled with `contentiousR`) onto a state panel:
+  it maps the caller’s country column to COW/GW codes via
+  [`countrycode::countrycode()`](https://rdrr.io/pkg/countrycode/man/countrycode.html),
+  extracts a year from either a pre-parsed `year_col` or a
+  `date_col`/`date_format`, optionally aggregates event-level rows to
+  country-year (`<prefix>_onset`, `<prefix>_n_events`), and joins the
+  result in. Unlike
+  [`add_conflict()`](https://rguseinov.github.io/contentiousR/reference/add_conflict.md),
+  it never downloads or bundles data itself, so `contentiousR` gains no
+  dependency on `gdeltr2`, `icews`, or `acled.api`.
+
 ### Visualization
 
 - [`plot_coverage()`](https://rguseinov.github.io/contentiousR/reference/plot_coverage.md)

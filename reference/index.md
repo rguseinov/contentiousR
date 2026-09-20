@@ -42,6 +42,11 @@
 - [`add_from_peacesciencer()`](https://rguseinov.github.io/contentiousR/reference/add_from_peacesciencer.md)
   : Add data from peacesciencer and restore the contentiousR schema
 
+## Bring your own data
+
+- [`harmonize_conflict_data()`](https://rguseinov.github.io/contentiousR/reference/harmonize_conflict_data.md)
+  : Harmonize externally supplied conflict/event data onto a state panel
+
 ## Load source data
 
 - [`conflict_data()`](https://rguseinov.github.io/contentiousR/reference/conflict_data.md)
