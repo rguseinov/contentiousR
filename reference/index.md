@@ -50,7 +50,7 @@
 ## Load source data
 
 - [`conflict_data()`](https://rguseinov.github.io/contentiousR/reference/conflict_data.md)
-  : Load conflict and mobilisation data
+  : Load conflict and mobilization data
 - [`load_gdp_data()`](https://rguseinov.github.io/contentiousR/reference/load_gdp_data.md)
   : Load GDP data
 - [`load_leader_data()`](https://rguseinov.github.io/contentiousR/reference/load_leader_data.md)

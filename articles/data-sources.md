@@ -29,7 +29,7 @@ limitations.
 | `"reign"` | REIGN, 1921–2021 | Country-year | [REIGN](https://oefdatascience.github.io/REIGN.github.io/) |
 | V-Dem | Installed `vdemdata` release | Country-year | [V-Dem](https://v-dem.net/data/the-v-dem-dataset/) |
 
-## Package-related ransformations and explanations
+## Package-related transformations and explanations
 
 SCAD repeats events when they span multiple locations. For country-level
 use, `contentiousR` retains one row per positive event ID before

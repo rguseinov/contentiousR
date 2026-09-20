@@ -1,4 +1,4 @@
-# Load conflict and mobilisation data
+# Load conflict and mobilization data
 
 Loads one of ten conflict, protest, or revolutionary episode datasets
 bundled with the package. `scad`, `ucdp_prio`, `ucdp_vpp`, `mm`, and
