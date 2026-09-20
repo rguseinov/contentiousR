@@ -82,6 +82,16 @@ series also present in those files). Their absolute units are not
 independently verified here; consult Fariss et al. (2022) before using
 them outside of relative/comparative analysis.
 
+## References
+
+Gapminder. (2024). *GDP per capita in constant PPP dollars*.
+<https://www.gapminder.org/gdp-per-capita/>
+
+Fariss, C. J., Anders, T., Markowitz, J. N., & Barnum, M. (2022). New
+estimates of over 500 years of historic GDP and population data.
+*Journal of Conflict Resolution*, 66(3), 553-591.
+[doi:10.1177/00220027211054432](https://doi.org/10.1177/00220027211054432)
+
 ## Examples
 
 ``` r

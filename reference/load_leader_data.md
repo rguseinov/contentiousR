@@ -67,6 +67,15 @@ A country-year data frame. Columns differ by dataset:
 **reign:** `cow`/`gw`, `year`, `leader`, `female_leader`, `military_bg`,
 `birthyear`, `leader_tenure`.
 
+## References
+
+Goemans, H. E., Gleditsch, K. S., & Chiozza, G. (2009). Introducing
+Archigos: A dataset of political leaders. *Journal of Peace Research*,
+46(2), 269-283.
+
+Bell, C., Besaw, C., & Frank, M. (2021). *The Rulers, Elections, and
+Irregular Governance (REIGN) Dataset*.
+
 ## Examples
 
 ``` r

@@ -27,6 +27,16 @@ add_gdp(panel, dataset = c("gapminder", "fariss"))
 
 The input panel with GDP columns added via left join.
 
+## References
+
+Gapminder. (2024). *GDP per capita in constant PPP dollars*.
+<https://www.gapminder.org/gdp-per-capita/>
+
+Fariss, C. J., Anders, T., Markowitz, J. N., & Barnum, M. (2022). New
+estimates of over 500 years of historic GDP and population data.
+*Journal of Conflict Resolution*, 66(3), 553-591.
+[doi:10.1177/00220027211054432](https://doi.org/10.1177/00220027211054432)
+
 ## Examples
 
 ``` r

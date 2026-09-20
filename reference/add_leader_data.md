@@ -30,6 +30,15 @@ add_leader_data(panel, dataset = c("archigos", "reign"))
 
 The input panel with leader columns added via left join.
 
+## References
+
+Goemans, H. E., Gleditsch, K. S., & Chiozza, G. (2009). Introducing
+Archigos: A dataset of political leaders. *Journal of Peace Research*,
+46(2), 269-283.
+
+Bell, C., Besaw, C., & Frank, M. (2021). *The Rulers, Elections, and
+Irregular Governance (REIGN) Dataset*.
+
 ## Examples
 
 ``` r

@@ -31,6 +31,13 @@ add_vdem(panel, vars = NULL)
 
 The input panel with V-Dem columns added via left join.
 
+## References
+
+Coppedge, M., Gerring, J., Knutsen, C. H., Lindberg, S. I., Teorell, J.,
+Altman, D., Bernhard, M., Fish, M. S., Glynn, A., Hicken, A., et al.
+(2025). *V-Dem \[Country-Year/Country-Date\] Dataset v15*. Varieties of
+Democracy.
+
 ## Examples
 
 ``` r

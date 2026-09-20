@@ -150,6 +150,46 @@ record. Fourteen left-censored records have an actual `mec_bdate` before
 maps to GW 678 and COW 817 (South Vietnam) maps to GW 817; Tonga has no
 GW state equivalent and is omitted.
 
+## References
+
+Chenoweth, E., & Shay, C. W. (2020). *List of Campaigns in NAVCO 1.3*.
+Harvard Dataverse.
+[doi:10.7910/DVN/ON9XND/PTMCCV](https://doi.org/10.7910/DVN/ON9XND/PTMCCV)
+
+Chenoweth, E., & Shay, C. W. (2019). *NAVCO 2.1 Dataset*. Harvard
+Dataverse. [doi:10.7910/DVN/MHOXDV](https://doi.org/10.7910/DVN/MHOXDV)
+
+Beissinger, M. (2022). *Revolutionary Episodes Dataset*.
+
+Ustyuzhanin, V., Korotayev, A., & Semichev, D. (2025). *Revolutions
+Dataset*. HSE University, Centre for Stability and Risk Analysis.
+
+Salehyan, I., Hendrix, C. S., Hamner, J., Case, C., Linebarger, C.,
+Stull, E., & Williams, J. (2012). Social conflict in Africa: A new
+database. *International Interactions*, 38(4), 503-511.
+[doi:10.1080/03050629.2012.697426](https://doi.org/10.1080/03050629.2012.697426)
+
+Gleditsch, N. P., Wallensteen, P., Eriksson, M., Sollenberg, M., &
+Strand, H. (2002). Armed conflict 1946-2001: A new dataset. *Journal of
+Peace Research*, 39(5), 615-637.
+[doi:10.1177/0022343302039005007](https://doi.org/10.1177/0022343302039005007)
+
+Svensson, I., Schaftenaar, S., & Allansson, M. (2022). Violent political
+protest: Introducing a new Uppsala Conflict Data Program data set on
+organized violence, 1989-2019. *Journal of Conflict Resolution*, 66(9),
+1703-1730.
+
+Clark, D. H., & Regan, P. M. (2016). *Mass Mobilization Protest Data*.
+Harvard Dataverse.
+[doi:10.7910/DVN/HTTWYL](https://doi.org/10.7910/DVN/HTTWYL)
+
+Weidmann, N. B., & Rød, E. G. (2019). *The Internet and Political
+Protest in Autocracies*. Oxford University Press.
+
+Chenoweth, E., & Kang, S. (2026). The Major Episodes of Contention (MEC)
+Data Project: An introduction. *Journal of Peace Research*.
+[doi:10.1093/jopres/xjaf008](https://doi.org/10.1093/jopres/xjaf008)
+
 ## Examples
 
 ``` r

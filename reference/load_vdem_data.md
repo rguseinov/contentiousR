@@ -59,6 +59,13 @@ For `coding_system = "gw"`, V-Dem COW codes are converted to
 Gleditsch-Ward codes using
 [`countrycode::countrycode()`](https://rdrr.io/pkg/countrycode/man/countrycode.html).
 
+## References
+
+Coppedge, M., Gerring, J., Knutsen, C. H., Lindberg, S. I., Teorell, J.,
+Altman, D., Bernhard, M., Fish, M. S., Glynn, A., Hicken, A., et al.
+(2025). *V-Dem \[Country-Year/Country-Date\] Dataset v15*. Varieties of
+Democracy.
+
 ## Examples
 
 ``` r

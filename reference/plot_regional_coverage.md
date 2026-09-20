@@ -53,6 +53,13 @@ revolutionary events. *Defence and Peace Economics*, 1–31.
 
 A `ggplot` object. Requires the `ggplot2` package.
 
+## References
+
+Guseinov, R., Ustyuzhanin, V., & Korotayev, A. (2026). Talking about the
+\[same\] revolution? A comparative analysis of main datasets of
+revolutionary events. *Defence and Peace Economics*, 1-31.
+[doi:10.1080/10242694.2026.2704178](https://doi.org/10.1080/10242694.2026.2704178)
+
 ## Examples
 
 ``` r
