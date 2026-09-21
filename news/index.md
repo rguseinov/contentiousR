@@ -194,3 +194,17 @@
   revolutionary onset, and a “Comparing revolutionary-event datasets”
   article (see Visualization above).
 - Added a package logo, shown in the README and the pkgdown site navbar.
+- Added formal `References` sections to
+  [`load_gdp_data()`](https://rguseinov.github.io/contentiousR/reference/load_gdp_data.md)/[`add_gdp()`](https://rguseinov.github.io/contentiousR/reference/add_gdp.md),
+  [`load_population_data()`](https://rguseinov.github.io/contentiousR/reference/load_population_data.md)/[`add_population()`](https://rguseinov.github.io/contentiousR/reference/add_population.md),
+  [`load_military_expenditure_data()`](https://rguseinov.github.io/contentiousR/reference/load_military_expenditure_data.md)/[`add_military_expenditure()`](https://rguseinov.github.io/contentiousR/reference/add_military_expenditure.md),
+  [`load_vdem_data()`](https://rguseinov.github.io/contentiousR/reference/load_vdem_data.md)/[`add_vdem()`](https://rguseinov.github.io/contentiousR/reference/add_vdem.md),
+  [`conflict_data()`](https://rguseinov.github.io/contentiousR/reference/conflict_data.md)/[`add_conflict()`](https://rguseinov.github.io/contentiousR/reference/add_conflict.md),
+  [`load_leader_data()`](https://rguseinov.github.io/contentiousR/reference/load_leader_data.md)/[`add_leader_data()`](https://rguseinov.github.io/contentiousR/reference/add_leader_data.md),
+  and
+  [`plot_regional_coverage()`](https://rguseinov.github.io/contentiousR/reference/plot_regional_coverage.md)/[`plot_temporal_coverage()`](https://rguseinov.github.io/contentiousR/reference/plot_temporal_coverage.md),
+  citing the underlying data source(s) for each.
+- Corrected the SCAD citation’s DOI (in `DESCRIPTION` and the bundled
+  bibliography behind
+  [`cn_cite()`](https://rguseinov.github.io/contentiousR/reference/cn_cite.md)):
+  the previous DOI did not resolve.
