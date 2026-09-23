@@ -124,7 +124,7 @@ Prefix: <code>mmad_</code>.</p></dd>
 
 <dt><code>"mec"</code></dt>
 <dd><p>Major Episodes of Contention (1955-2018), with global
-episode-level coverage. Prefix: <code>mec_</code>. Requires the <code>haven</code> package.</p></dd>
+episode-level coverage. Prefix: <code>mec_</code>.</p></dd>
 
 
 </dl></dd>
@@ -188,10 +188,8 @@ Data Project: An introduction. <em>Journal of Peace Research</em>.
 <span class="r-in"><span>  <span class="fu">add_conflict</span><span class="op">(</span>dataset <span class="op">=</span> <span class="st">"navco1.3"</span>, aggregate <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># MEC is episode-level; keep individual episodes with aggregate = FALSE</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"haven"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="va">panel</span> <span class="op">&lt;-</span> <span class="fu"><a href="build_states_panel.html">build_states_panel</a></span><span class="op">(</span><span class="fl">1990</span>, <span class="fl">2010</span>, coding_system <span class="op">=</span> <span class="st">"cow"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>    <span class="fu">add_conflict</span><span class="op">(</span>dataset <span class="op">=</span> <span class="st">"mec"</span>, aggregate <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="va">panel</span> <span class="op">&lt;-</span> <span class="fu"><a href="build_states_panel.html">build_states_panel</a></span><span class="op">(</span><span class="fl">1990</span>, <span class="fl">2010</span>, coding_system <span class="op">=</span> <span class="st">"cow"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu">add_conflict</span><span class="op">(</span>dataset <span class="op">=</span> <span class="st">"mec"</span>, aggregate <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

@@ -104,7 +104,7 @@ data release
   `"mec"`
 
   :   Major Episodes of Contention. Global coverage: 1955-2018. Episode
-      records; prefix: `mec_`. Requires the `haven` package.
+      records; prefix: `mec_`.
 
 - coding_system:
 
@@ -199,7 +199,5 @@ scad  <- conflict_data(1995, 2015, dataset = "scad",      coding_system = "cow")
 
 ucdp  <- conflict_data(1990, 2020, dataset = "ucdp_prio", coding_system = "gw")
 
-if (requireNamespace("haven", quietly = TRUE)) {
-  mec <- conflict_data(1990, 2010, dataset = "mec", coding_system = "cow")
-}
+mec   <- conflict_data(1990, 2010, dataset = "mec",       coding_system = "cow")
 ```

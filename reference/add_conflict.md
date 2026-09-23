@@ -74,8 +74,7 @@ add_conflict(panel, dataset, aggregate = TRUE)
   `"mec"`
 
   :   Major Episodes of Contention (1955-2018), with global
-      episode-level coverage. Prefix: `mec_`. Requires the `haven`
-      package.
+      episode-level coverage. Prefix: `mec_`.
 
 - aggregate:
 
@@ -147,8 +146,6 @@ panel <- build_states_panel(1990, 2010, coding_system = "cow") |>
   add_conflict(dataset = "navco1.3", aggregate = FALSE)
 
 # MEC is episode-level; keep individual episodes with aggregate = FALSE
-if (requireNamespace("haven", quietly = TRUE)) {
-  panel <- build_states_panel(1990, 2010, coding_system = "cow") |>
-    add_conflict(dataset = "mec", aggregate = FALSE)
-}
+panel <- build_states_panel(1990, 2010, coding_system = "cow") |>
+  add_conflict(dataset = "mec", aggregate = FALSE)
 ```
