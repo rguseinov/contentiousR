@@ -115,10 +115,7 @@ for the full lookup interface.
 
 ## Acknowledgments
 
-The package logo was generated with ChatGPT. Claude (Anthropic) was used
-to proofread the documentation and vignettes for grammatical and
-typographical errors and to refine the wording of several passages, and
-to review the package’s R code.
+The package logo was generated with ChatGPT.
 
 # Package index
 
