@@ -138,12 +138,25 @@
 <div class="section level2">
 <h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
 </h2>
-<p>If you use <code>contentiousR</code> in your research, please cite:</p>
+<p>If you use <code>contentiousR</code> in your research, please cite the accompanying paper:</p>
+<blockquote>
+<p>Guseinov, R. (2026, September 22). <em>contentiousR: An R package for contentious politics and civil conflict research</em> [Preprint]. SSRN. <a href="https://doi.org/10.2139/ssrn.7506799" class="external-link uri">https://doi.org/10.2139/ssrn.7506799</a></p>
+</blockquote>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bibtex"><code class="sourceCode bibtex"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="va">@misc</span>{<span class="ot">guseinov2026contentiousr</span>,</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  <span class="dt">author</span>       = {Guseinov, Ruslan},</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="dt">title</span>        = {{contentiousR}: An {R} Package for Contentious Politics and Civil Conflict Research},</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>  <span class="dt">year</span>         = {2026},</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>  <span class="dt">month</span>        = <span class="st">sep</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>  <span class="dt">howpublished</span> = {SSRN preprint},</span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>  <span class="dt">doi</span>          = {10.2139/ssrn.7506799},</span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>  <span class="dt">url</span>          = {https://ssrn.com/abstract=7506799}</span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>}</span></code></pre></div>
+<p>To cite the software itself (e.g. to record the exact version used):</p>
 <blockquote>
 <p>Guseinov, R. (2026). <em>contentiousR: Tools and Data for Contentious Politics and Civil Conflict Research</em>. R package version 0.1.0. <a href="https://github.com/rguseinov/contentiousR" class="external-link uri">https://github.com/rguseinov/contentiousR</a></p>
 </blockquote>
 <p>Please also cite every third-party data source used in an analysis — <code>contentiousR</code> only assembles and reshapes this data, it does not replace citing the original creators. <code><a href="reference/cn_cite.html">cn_cite()</a></code> looks up the bundled citation for a function or <code>dataset =</code> value and prints it as ready-to-paste BibTeX:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/cn_cite.html">cn_cite</a></span><span class="op">(</span><span class="st">"navco2.1"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/cn_cite.html">cn_cite</a></span><span class="op">(</span><span class="st">"add_gdp()"</span><span class="op">)</span></span></code></pre></div>
 <p>See the <a href="https://rguseinov.github.io/contentiousR/articles/data-sources.html">data-source guide</a> for versions, transformations, source links, and licensing notes, and <code><a href="reference/cn_cite.html">?cn_cite</a></code> for the full lookup interface.</p>

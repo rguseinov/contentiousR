@@ -88,7 +88,26 @@ interoperability with `peacesciencer`.
 
 ## Citation
 
-If you use `contentiousR` in your research, please cite:
+If you use `contentiousR` in your research, please cite the accompanying
+paper:
+
+> Guseinov, R. (2026, September 22). *contentiousR: An R package for
+> contentious politics and civil conflict research* \[Preprint\]. SSRN.
+> <https://doi.org/10.2139/ssrn.7506799>
+
+``` bibtex
+@misc{guseinov2026contentiousr,
+  author       = {Guseinov, Ruslan},
+  title        = {{contentiousR}: An {R} Package for Contentious Politics and Civil Conflict Research},
+  year         = {2026},
+  month        = sep,
+  howpublished = {SSRN preprint},
+  doi          = {10.2139/ssrn.7506799},
+  url          = {https://ssrn.com/abstract=7506799}
+}
+```
+
+To cite the software itself (e.g. to record the exact version used):
 
 > Guseinov, R. (2026). *contentiousR: Tools and Data for Contentious
 > Politics and Civil Conflict Research*. R package version 0.1.0.
