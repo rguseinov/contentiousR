@@ -1,0 +1,46 @@
+Package: contentiousR
+Type: Package
+Title: Tools and Data for Contentious Politics and Civil Conflict Research
+Version: 0.1.0
+Authors@R: 
+    person("Ruslan", "Guseinov", email = "rigusseinov@gmail.com", role = c("aut", "cre"), comment = c(ORCID = "0009-0000-1156-9495"))
+Description: Constructs country-year panels for contentious politics and civil conflicts research. Functions create state panels using Correlates of
+    War or Gleditsch-Ward identifiers and join curated socioeconomic,
+    leadership, democracy, conflict, protest, and revolutionary-episode data.
+    Included sources comprise Gapminder, NAVCO 2.1
+    <doi:10.7910/DVN/MHOXDV>, the Social Conflict Analysis Database
+    <doi:10.1080/03050629.2012.697426>, and the UCDP/PRIO Armed Conflict Dataset
+    <doi:10.1177/0022343302039005007>, and Major Episodes of Contention
+    <doi:10.1093/jopres/xjaf008>. V-Dem indicators require the optional
+    'vdemdata' package, which is not on CRAN and can be installed from
+    <https://github.com/vdeminstitute/vdemdata>.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+Depends:
+    R (>= 4.1.0)
+Imports:
+    countrycode,
+    dplyr,
+    readr,
+    states,
+    stats,
+    tidyr
+Suggests:
+    brglm2,
+    ggplot2,
+    haven,
+    knitr,
+    peacesciencer (>= 1.2.0),
+    readxl,
+    rmarkdown,
+    testthat (>= 3.0.0),
+    vdemdata
+Config/testthat/edition: 3
+VignetteBuilder: knitr
+URL: https://rguseinov.github.io/contentiousR/,
+    https://github.com/rguseinov/contentiousR
+BugReports: https://github.com/rguseinov/contentiousR/issues
+Config/Needs/website: r-lib/pkgdown
+LazyData: true
+Config/roxygen2/version: 8.1.0

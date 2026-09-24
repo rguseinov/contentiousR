@@ -1,0 +1,9 @@
+bibentry(
+  bibtype = "Manual",
+  title = "contentiousR: Tools and Data for Contentious Politics and Civil Conflict Research",
+  author = person("Ruslan", "Guseinov"),
+  year = "2026",
+  note = "R package version 0.1.0",
+  url = "https://github.com/rguseinov/contentiousR"
+)
+

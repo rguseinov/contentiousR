@@ -1,0 +1,55 @@
+url: https://rguseinov.github.io/contentiousR/
+
+template:
+  bootstrap: 5
+
+development:
+  mode: auto
+
+reference:
+- title: Build panels
+  contents:
+  - build_states_panel
+- title: Add data to panels
+  contents:
+  - add_gdp
+  - add_population
+  - add_military_expenditure
+  - add_vdem
+  - add_conflict
+  - add_leader_data
+  - add_spell_duration
+  - add_lag
+  - add_regions
+- title: Diagnostics and visualization
+  contents:
+  - plot_coverage
+  - plot_regional_coverage
+  - plot_temporal_coverage
+- title: Interoperate with other packages
+  contents:
+  - as_peacesciencer_panel
+  - add_from_peacesciencer
+- title: Bring your own data
+  contents:
+  - harmonize_conflict_data
+- title: Load source data
+  contents:
+  - conflict_data
+  - starts_with("load_")
+- title: Citation
+  contents:
+  - cn_cite
+  - cn_bib
+
+articles:
+- title: Guides
+  navbar: Guides
+  contents:
+  - contentiousR
+  - data-sources
+- title: Case studies
+  navbar: Case studies
+  contents:
+  - case-study
+  - dataset-comparison

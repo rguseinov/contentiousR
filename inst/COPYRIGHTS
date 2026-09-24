@@ -1,0 +1,54 @@
+The MIT license in LICENSE applies to the contentiousR software and
+documentation written for this package. It does not relicense the third-party
+research data distributed in inst/extdata.
+
+The following data have explicit open licenses at their source:
+
+* gdp_gapminder_v32.csv.xz: Gapminder, Creative Commons Attribution 4.0.
+  https://www.gapminder.org/free-material/
+* UcdpPrioConflict_v26_1.csv.xz and UCDP_VPP_Dataset_v26_1.xlsx: Uppsala
+  Conflict Data Program, Creative Commons Attribution 4.0.
+  https://ucdp.uu.se/downloads/
+* NAVCO_2.1.RData: NAVCO 2.1, CC0 1.0.
+  https://doi.org/10.7910/DVN/MHOXDV
+* MEC.rds: Major Episodes of Contention, CC0 1.0.
+  https://doi.org/10.7910/DVN/JQWQNW
+* un_population.RData: UN World Population Prospects 2024, Creative Commons
+  Attribution 3.0 IGO. https://population.un.org/wpp/
+* mmad_events.csv.xz: Mass Mobilization in Autocracies Database, Creative
+  Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC
+  BY-NC-SA 4.0) -- NOT the MIT terms this package's own code is under.
+  Redistribution requires attribution, is non-commercial only, and any
+  redistributed copy (including as part of this package) must remain under
+  the same CC BY-NC-SA 4.0 terms. https://mmadatabase.org/use/
+
+The remaining third-party data retain the copyrights and terms specified by
+their creators. Their inclusion here does not grant rights beyond those terms:
+
+* NAVCO_1.3.RData: Nonviolent and Violent Campaigns and Outcomes project.
+* SCAD2018Africa_Final.csv.xz and SCAD2018LatinAmerica_Final.csv.xz: Social Conflict
+  Analysis Database, Robert S. Strauss Center for International Security and
+  Law.
+* mmALL_073120.RData: Mass Mobilization Data Project.
+* revolutionary_episodes_beissinger.csv.xz: Mark R. Beissinger, Revolutionary
+  Episodes Dataset.
+* revolutionary_episodes_csra.csv.xz: Laboratory for Comparative Social Research,
+  HSE University, Cross-National Database of Revolutionary Events.
+* archigos_4.1.txt.xz: Henk E. Goemans, Kristian Skrede Gleditsch, and Giacomo
+  Chiozza, Archigos 4.1.
+* reign_leader_list.csv.xz: REIGN Dataset.
+* NMC-70-abridged.dta: Correlates of War Project, National Material
+  Capabilities v7.0.
+* fariss_gdp.rds, fariss_gdppc.rds, and fariss_pop.rds: Fariss, Anders,
+  Markowitz, and Barnum (2022), historic GDP and population estimates.
+* SIPRI-Milex-data-1949-2025_v1.2.xlsx: Stockholm International Peace
+  Research Institute, Military Expenditure Database. Free to use with
+  attribution; commercial use requires separately negotiating a royalty
+  with SIPRI. https://www.sipri.org/about/terms-and-conditions
+* estimates_milburden_20250429.rds and estimates_milex_con_20250429.rds:
+  Barnum, Fariss, Markowitz, and Morales (2025), Global Military Spending
+  Dataset.
+
+See the data-sources vignette for source URLs, versions, and citations. Anyone
+redistributing the package is responsible for verifying that the applicable
+third-party terms permit redistribution.
