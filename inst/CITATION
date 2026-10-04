@@ -1,0 +1,19 @@
+bibentry(
+  bibtype = "Misc",
+  header = "To cite contentiousR in publications, please use:",
+  title = "{contentiousR}: An {R} Package for Contentious Politics and Civil Conflict Research",
+  author = person("Ruslan", "Guseinov"),
+  year = "2026",
+  howpublished = "SSRN preprint",
+  doi = "10.2139/ssrn.7506799"
+)
+
+bibentry(
+  bibtype = "Manual",
+  header = "To cite the software itself (e.g. to record the exact version used):",
+  title = "{contentiousR}: Contentious Politics and Civil Conflict Research",
+  author = person("Ruslan", "Guseinov"),
+  year = "2026",
+  note = "R package version 0.1.0",
+  url = "https://github.com/rguseinov/contentiousR"
+)

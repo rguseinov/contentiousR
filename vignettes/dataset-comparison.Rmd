@@ -1,0 +1,109 @@
+---
+title: "Comparing revolutionary-event datasets"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Comparing revolutionary-event datasets}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+has_ggplot2 <- requireNamespace("ggplot2", quietly = TRUE)
+```
+
+```{r eval = !has_ggplot2, echo = FALSE, results = "asis"}
+cat(
+  "This article needs the `ggplot2` package, which is not installed. ",
+  "Install it and rebuild the vignette to see the full walkthrough.",
+  sep = ""
+)
+```
+
+One can argue that `contentiousR` bundles several campaign/episode datasets that all aim to
+record the same broad phenomenon — mass anti-regime contention — but differ
+in coding rules, sourcing, and scope. Guseinov, Ustyuzhanin, and Korotayev (2026)
+compare such kinds of datasets and find that, while not conceptually
+identical, the major sources are empirically highly convergent in their
+regional and temporal coverage — CNTS being the main exception, since it
+appears to record coups and coup attempts rather than the same underlying
+concept of revolution.
+
+This section follows Guseinov, Ustyuzhanin, and Korotayev (2026) — see the
+[Reference](#reference) below — on the comparison of revolutionary-event
+datasets. `plot_regional_coverage()` and `plot_temporal_coverage()`
+reproduce that paper's core descriptive exercise (its Figures 1-5) for any
+set of `conflict_data()` campaign/episode datasets you choose — not a
+fixed pair, so you can compare two, three, or all five at once.
+
+## Regional coverage
+
+For each dataset, this shows what share of its events falls in each region, so datasets of
+very different total size remain comparable. Pass `metric = "count"`
+instead of the default `"share"` for raw counts.
+
+```{r eval = has_ggplot2, fig.width = 8, fig.height = 5.5}
+library(contentiousR)
+
+plot_regional_coverage(
+  datasets      = c("navco1.3", "navco2.1", "beissinger", "csra", "mec"),
+  start_year    = 1950,
+  end_year      = 2013,
+  coding_system = "cow"
+)
+```
+
+Sub-Saharan Africa and Europe & Central Asia account for a large share of
+events across every dataset here, broadly matching the source article's
+Figure 1.
+
+## Temporal coverage
+
+The same idea over time, binned into (by default) 5-year periods. With
+`by_region = FALSE` (the default) it plots one global panel, as in the
+article's Figure 5:
+
+```{r eval = has_ggplot2, fig.width = 8, fig.height = 5.5}
+plot_temporal_coverage(
+  datasets      = c("navco1.3", "navco2.1", "beissinger", "csra", "mec"),
+  start_year    = 1950,
+  end_year      = 2013,
+  coding_system = "cow"
+)
+```
+
+MEC sits well above the other four here. This is expected: MEC's underlying definition of a contentious episode is
+broader — reformist as well as maximalist claims — than the "revolution"
+concept the other datasets target, so it picks up substantially more
+episodes across every period. (NAVCO 2.1 is compared here at the same
+campaign-onset level as the other datasets).
+
+With `by_region = TRUE`, the same data is faceted by region, as in the
+article's Figure 4:
+
+```{r eval = has_ggplot2, fig.width = 9, fig.height = 6.5}
+plot_temporal_coverage(
+  datasets      = c("navco1.3", "navco2.1", "beissinger", "csra", "mec"),
+  start_year    = 1950,
+  end_year      = 2013,
+  coding_system = "cow",
+  by_region     = TRUE
+)
+```
+
+## Choosing your own comparison
+
+Both functions take any subset of `conflict_data()`'s campaign/episode
+datasets (`"navco1.3"`, `"navco2.1"`, `"beissinger"`, `"csra"`, `"mec"`), so
+a narrower comparison is also possible:
+
+```{r eval = has_ggplot2, fig.width = 8, fig.height = 5.5}
+plot_regional_coverage(c("navco1.3", "navco2.1"), 1950, 2013, metric = "count")
+```
+
+## Reference
+
+Guseinov, R., Ustyuzhanin, V., & Korotayev, A. (2026). Talking about the
+&#91;same&#93; revolution? A comparative analysis of main datasets of
+revolutionary events. *Defence and Peace Economics*, 1–31.
+[doi:10.1080/10242694.2026.2704178](https://doi.org/10.1080/10242694.2026.2704178)
