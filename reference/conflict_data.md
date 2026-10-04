@@ -31,7 +31,7 @@ NAVCO 2.1: [doi:10.7910/DVN/MHOXDV](https://doi.org/10.7910/DVN/MHOXDV)
 Beissinger Revolutionary Episodes:
 <https://web.archive.org/web/20250331220952/https://mbeissinger.scholar.princeton.edu/revolutionary-episodes-dataset>.
 
-HSE Revolutions Dataset: <https://social.hse.ru/en/mr/rev_bd>.
+HSE Revolutionary Database: <https://social.hse.ru/mr/rev_bd>.
 
 SCAD:
 <https://www.strausscenter.org/ccaps-research-areas/social-conflict/database/>.
@@ -154,15 +154,17 @@ GW state equivalent and is omitted.
 
 Chenoweth, E., & Shay, C. W. (2020). *List of Campaigns in NAVCO 1.3*.
 Harvard Dataverse.
-[doi:10.7910/DVN/ON9XND/PTMCCV](https://doi.org/10.7910/DVN/ON9XND/PTMCCV)
+[doi:10.7910/DVN/ON9XND](https://doi.org/10.7910/DVN/ON9XND)
 
 Chenoweth, E., & Shay, C. W. (2019). *NAVCO 2.1 Dataset*. Harvard
 Dataverse. [doi:10.7910/DVN/MHOXDV](https://doi.org/10.7910/DVN/MHOXDV)
 
 Beissinger, M. (2022). *Revolutionary Episodes Dataset*.
 
-Ustyuzhanin, V., Korotayev, A., & Semichev, D. (2025). *Revolutions
-Dataset*. HSE University, Centre for Stability and Risk Analysis.
+Ustyuzhanin, V., Semichev, D., Grinin, L., & Korotaev, A. (2026).
+*Revolutionary Database (2000-2024)*, Version 1.102. HSE University,
+Centre for Stability and Risk Analysis.
+<https://social.hse.ru/mr/rev_bd>
 
 Salehyan, I., Hendrix, C. S., Hamner, J., Case, C., Linebarger, C.,
 Stull, E., & Williams, J. (2012). Social conflict in Africa: A new
@@ -187,7 +189,8 @@ Weidmann, N. B., & Rød, E. G. (2019). *The Internet and Political
 Protest in Autocracies*. Oxford University Press.
 
 Chenoweth, E., & Kang, S. (2026). The Major Episodes of Contention (MEC)
-Data Project: An introduction. *Journal of Peace Research*.
+Data Project: An introduction. *Journal of Peace Research*, 63(4),
+724-734.
 [doi:10.1093/jopres/xjaf008](https://doi.org/10.1093/jopres/xjaf008)
 
 ## Examples

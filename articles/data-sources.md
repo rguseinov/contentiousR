@@ -18,7 +18,7 @@ limitations.
 | `"navco1.3"` | NAVCO 1.3, 1900–2019[^1] | Campaign onset | [Dataverse](https://doi.org/10.7910/DVN/ON9XND) |
 | `"navco2.1"` | NAVCO 2.1, 1945–2013 | Campaign-year | [Dataverse](https://doi.org/10.7910/DVN/MHOXDV) |
 | `"beissinger"` | Revolutionary Episodes Dataset, 1900–2014[^2] | Episode onset | [Mark Beissinger](https://web.archive.org/web/20250331220952/https://mbeissinger.scholar.princeton.edu/revolutionary-episodes-dataset) |
-| `"csra"` | CSRA Revolutions Dataset v1.1, 2000–2024 | Episode onset | [HSE University](https://social.hse.ru/en/mr/rev_bd) |
+| `"csra"` | CSRA Revolutionary Database v1.102, 2000–2024 | Episode onset | [HSE University](https://social.hse.ru/mr/rev_bd) |
 | `"scad"` | SCAD 3.3, 1990–2017[^3] | Country-year | [Strauss Center](https://www.strausscenter.org/ccaps-research-areas/social-conflict/database/) |
 | `"ucdp_prio"` | UCDP/PRIO 26.1, 1946–2025 | Country-year | [UCDP](https://ucdp.uu.se/downloads/) |
 | `"ucdp_vpp"` | UCDP VPP 26.1, 1989–2025 | Country-year | [UCDP](https://ucdp.uu.se/downloads/) |

@@ -52,10 +52,10 @@ cn_cite("archigos")
 cn_cite("add_conflict()")
 #> @Misc{chenowethListCampaignsNAVCO2020,                                                                                                                
 #>   title = {List of {{Campaigns}} in {{NAVCO}} 1.3},                                                                                                   
-#>   author = {Erica Chenoweth and \relax CW Shay},                                                                                                     
+#>   author = {Erica Chenoweth and Christopher Wiley Shay},                                                                                              
 #>   year = {2020},                                                                                                                                      
 #>   publisher = {Harvard Dataverse},                                                                                                                    
-#>   doi = {10.7910/DVN/ON9XND/PTMCCV},                                                                                                                  
+#>   doi = {10.7910/DVN/ON9XND},                                                                                                                         
 #>   keywords = {conflict_data(), add_conflict(), navco1.3},                                                                                             
 #> }                                                                                                                                                     
 #>                                                                                                                                                       
@@ -73,16 +73,17 @@ cn_cite("add_conflict()")
 #>   author = {M Beissinger},                                                                                                                            
 #>   year = {2022},                                                                                                                                      
 #>   urldate = {2025-02-15},                                                                                                                             
-#>   url = {https://mbeissinger.scholar.princeton.edu/revolutionary-episodes-dataset},                                                                   
+#>   url = {https://web.archive.org/web/20250331220952/https://mbeissinger.scholar.princeton.edu/revolutionary-episodes-dataset},                        
 #>   keywords = {conflict_data(), add_conflict(), beissinger},                                                                                           
 #> }                                                                                                                                                     
 #>                                                                                                                                                       
-#> @Misc{ustyuzhaninRevolutionsDataset2025,                                                                                                              
-#>   title = {Revolutions Dataset},                                                                                                                      
-#>   author = {Vadim Ustyuzhanin and Andrey Korotayev and Daniil Semichev},                                                                              
-#>   year = {2025},                                                                                                                                      
+#> @Misc{ustyuzhaninRevolutionaryDatabase2026,                                                                                                           
+#>   title = {Revolutionary Database (2000--2024)},                                                                                                      
+#>   author = {Vadim Ustyuzhanin and Dmitrii Semichev and Leonid Grinin and Andrey Korotaev},                                                            
+#>   year = {2026},                                                                                                                                      
+#>   note = {Version 1.102},                                                                                                                             
 #>   publisher = {HSE University, Centre for Stability and Risk Analysis},                                                                               
-#>   url = {https://social.hse.ru/en/mr/rev_bd/},                                                                                                        
+#>   url = {https://social.hse.ru/mr/rev_bd},                                                                                                            
 #>   keywords = {conflict_data(), add_conflict(), csra},                                                                                                 
 #> }                                                                                                                                                     
 #>                                                                                                                                                       
@@ -95,7 +96,7 @@ cn_cite("add_conflict()")
 #>   number = {4},                                                                                                                                       
 #>   pages = {503--511},                                                                                                                                 
 #>   publisher = {Taylor \& Francis},                                                                                                                   
-#>   doi = {10.1177/0022002711435330},                                                                                                                   
+#>   doi = {10.1080/03050629.2012.697426},                                                                                                               
 #>   keywords = {conflict_data(), add_conflict(), scad},                                                                                                 
 #> }                                                                                                                                                     
 #>                                                                                                                                                       
@@ -137,6 +138,7 @@ cn_cite("add_conflict()")
 #>   author = {Nils B. Weidmann and Espen Geelmuyden Rød},                                                                                               
 #>   year = {2019},                                                                                                                                      
 #>   publisher = {Oxford University Press},                                                                                                              
+#>   doi = {10.1093/oso/9780190918309.001.0001},                                                                                                         
 #>   url = {https://mmadatabase.org/},                                                                                                                   
 #>   keywords = {conflict_data(), add_conflict(), mmad},                                                                                                 
 #> }                                                                                                                                                     
@@ -145,7 +147,11 @@ cn_cite("add_conflict()")
 #>   title = {The {{Major Episodes}} of {{Contention}} ({{MEC}}) Data Project: An Introduction},                                                         
 #>   author = {Erica Chenoweth and Sooyeon Kang},                                                                                                        
 #>   year = {2026},                                                                                                                                      
+#>   month = {jul},                                                                                                                                      
 #>   journal = {Journal of Peace Research},                                                                                                              
+#>   volume = {63},                                                                                                                                      
+#>   number = {4},                                                                                                                                       
+#>   pages = {724--734},                                                                                                                                 
 #>   doi = {10.1093/jopres/xjaf008},                                                                                                                     
 #>   keywords = {conflict_data(), add_conflict(), mec},                                                                                                  
 #> }                                                                                                                                                     
