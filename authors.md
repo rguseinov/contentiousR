@@ -10,12 +10,24 @@
 Source:
 [`inst/CITATION`](https://github.com/rguseinov/contentiousR/blob/main/inst/CITATION)
 
-Guseinov R (2026). *contentiousR: Tools and Data for Contentious
-Politics and Civil Conflict Research*. R package version 0.1.0,
+Guseinov R (2026). “contentiousR: An R Package for Contentious Politics
+and Civil Conflict Research.” SSRN preprint.
+[doi:10.2139/ssrn.7506799](https://doi.org/10.2139/ssrn.7506799).
+
+    @Misc{,
+      title = {{contentiousR}: An {R} Package for Contentious Politics and Civil Conflict Research},
+      author = {Ruslan Guseinov},
+      year = {2026},
+      howpublished = {SSRN preprint},
+      doi = {10.2139/ssrn.7506799},
+    }
+
+Guseinov R (2026). *contentiousR: Contentious Politics and Civil
+Conflict Research*. R package version 0.1.0,
 <https://github.com/rguseinov/contentiousR>.
 
     @Manual{,
-      title = {contentiousR: Tools and Data for Contentious Politics and Civil Conflict Research},
+      title = {{contentiousR}: Contentious Politics and Civil Conflict Research},
       author = {Ruslan Guseinov},
       year = {2026},
       note = {R package version 0.1.0},

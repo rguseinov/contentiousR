@@ -13,3 +13,8 @@ safe_max(x)
 - x:
 
   A vector.
+
+## Value
+
+A length-one vector of the same type as `x`: the maximum of the
+non-missing values, or `NA` if there are none.

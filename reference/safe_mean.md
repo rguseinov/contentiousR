@@ -13,3 +13,8 @@ safe_mean(x)
 - x:
 
   A numeric vector.
+
+## Value
+
+A length-one numeric: the mean of the non-missing values, or `NA_real_`
+if there are none.

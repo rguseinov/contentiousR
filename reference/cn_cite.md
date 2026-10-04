@@ -1,8 +1,9 @@
 # Cite a bundled data source
 
 Looks up the bundled bibliography (`cn_bib`) by keyword or BibTeX key
-and prints the matching entries as BibTeX text, ready to paste into your
-own `.bib` file.
+and returns the matching entries. Printing the result (e.g. at the
+console) shows them as BibTeX text, ready to paste into your own `.bib`
+file.
 
 ## Usage
 
@@ -27,8 +28,11 @@ cn_cite(x, column = c("keywords", "bibtexkey"))
 
 ## Value
 
-Invisibly returns the matching `bibentry` objects. Called for the side
-effect of printing BibTeX text.
+A `bibentry` object (with the additional class `cn_citation`) holding
+the matching entries. Its [`print()`](https://rdrr.io/r/base/print.html)
+method displays them as BibTeX; all other `bibentry` methods, such as
+[`format()`](https://rdrr.io/r/base/format.html) and
+[`toBibtex()`](https://rdrr.io/r/utils/toLatex.html), work as usual.
 
 ## Examples
 

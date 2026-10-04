@@ -17,3 +17,8 @@ check_unique_key(data, keys)
 - keys:
 
   Character vector of key column names.
+
+## Value
+
+Invisibly, `data` unchanged if the keys are unique; otherwise an error
+is raised.

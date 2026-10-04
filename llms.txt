@@ -108,8 +108,8 @@ paper:
 
 To cite the software itself (e.g. to record the exact version used):
 
-> Guseinov, R. (2026). *contentiousR: Tools and Data for Contentious
-> Politics and Civil Conflict Research*. R package version 0.1.0.
+> Guseinov, R. (2026). *contentiousR: Contentious Politics and Civil
+> Conflict Research*. R package version 0.1.0.
 > <https://github.com/rguseinov/contentiousR>
 
 Please also cite every third-party data source used in an analysis —

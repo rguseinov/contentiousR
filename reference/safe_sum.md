@@ -13,3 +13,8 @@ safe_sum(x)
 - x:
 
   A numeric vector.
+
+## Value
+
+A length-one numeric: the sum of the non-missing values, or `NA_real_`
+if there are none.

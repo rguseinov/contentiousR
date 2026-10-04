@@ -45,6 +45,15 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.0" id="contentiousr-010">contentiousR 0.1.0<a class="anchor" aria-label="anchor" href="#contentiousr-010"></a></h2>
 <div class="section level3">
+<h3 id="changes-made-for-cran-0-1-0">Changes made for CRAN<a class="anchor" aria-label="anchor" href="#changes-made-for-cran-0-1-0"></a></h3>
+<ul><li>The package title is now “Contentious Politics and Civil Conflict Research”.</li>
+<li>
+<code><a href="../reference/cn_cite.html">cn_cite()</a></code> now returns its result visibly instead of printing it with <code><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat()</a></code>. The result is a <code>bibentry</code> object with the additional class <code>cn_citation</code>; typing <code>cn_cite("archigos")</code> at the console still shows the BibTeX, and <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> shows it explicitly.</li>
+<li>The bundled data files are smaller (tarball 4.3 MB): they keep only the columns the package reads, and the MEC and NMC Stata files are stored as compressed <code>.rds</code>. Loader output is unchanged. ‘haven’ is no longer used.</li>
+<li>
+<code>citation("contentiousR")</code> now lists the SSRN preprint describing the package, followed by the software citation.</li>
+</ul></div>
+<div class="section level3">
 <h3 id="bug-fixes-0-1-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-1-0"></a></h3>
 <ul><li>
 <code>load_vdem_data(coding_system = "cow")</code> no longer silently drops East Germany (COW 265, 1949-1990); it was previously excluded only in the <code>"cow"</code> branch, so V-Dem coverage for Germany differed depending on the chosen coding system with no indication why.</li>

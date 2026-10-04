@@ -2,6 +2,23 @@
 
 ## contentiousR 0.1.0
 
+### Changes made for CRAN
+
+- The package title is now “Contentious Politics and Civil Conflict
+  Research”.
+- [`cn_cite()`](https://rguseinov.github.io/contentiousR/reference/cn_cite.md)
+  now returns its result visibly instead of printing it with
+  [`cat()`](https://rdrr.io/r/base/cat.html). The result is a `bibentry`
+  object with the additional class `cn_citation`; typing
+  `cn_cite("archigos")` at the console still shows the BibTeX, and
+  [`print()`](https://rdrr.io/r/base/print.html) shows it explicitly.
+- The bundled data files are smaller (tarball 4.3 MB): they keep only
+  the columns the package reads, and the MEC and NMC Stata files are
+  stored as compressed `.rds`. Loader output is unchanged. ‘haven’ is no
+  longer used.
+- `citation("contentiousR")` now lists the SSRN preprint describing the
+  package, followed by the software citation.
+
 ### Bug fixes
 
 - `load_vdem_data(coding_system = "cow")` no longer silently drops East

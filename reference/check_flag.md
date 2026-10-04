@@ -17,3 +17,8 @@ check_flag(value, name)
 - name:
 
   Argument name used in an error message.
+
+## Value
+
+Invisibly `TRUE` if `value` is a single non-missing logical; otherwise
+an error is raised.

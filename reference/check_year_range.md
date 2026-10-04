@@ -25,3 +25,7 @@ check_year_range(start_year, end_year, min_year = NULL, max_year = NULL)
 - max_year:
 
   Optional. If given, `end_year` must be at most this.
+
+## Value
+
+Invisibly `TRUE` if the range is valid; otherwise an error is raised.
