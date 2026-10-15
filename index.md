@@ -8,6 +8,15 @@ Correlates of War (COW) or Gleditsch-Ward (GW) country coding schemes.
 
 ## Installation
 
+Install the released version from CRAN:
+
+``` r
+
+install.packages("contentiousR")
+```
+
+Or the development version from GitHub:
+
 ``` r
 
 # install.packages("remotes")
@@ -110,7 +119,7 @@ To cite the software itself (e.g. to record the exact version used):
 
 > Guseinov, R. (2026). *contentiousR: Contentious Politics and Civil
 > Conflict Research*. R package version 0.1.0.
-> <https://github.com/rguseinov/contentiousR>
+> <https://CRAN.R-project.org/package=contentiousR>
 
 Please also cite every third-party data source used in an analysis —
 `contentiousR` only assembles and reshapes this data, it does not

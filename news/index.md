@@ -2,6 +2,8 @@
 
 ## contentiousR 0.1.0
 
+CRAN release: 2026-10-15
+
 ### Changes made for CRAN
 
 - The package title is now “Contentious Politics and Civil Conflict

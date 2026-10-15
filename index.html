@@ -76,12 +76,16 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
+<p>Install the released version from CRAN:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"contentiousR"</span><span class="op">)</span></span></code></pre></div>
+<p>Or the development version from GitHub:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"rguseinov/contentiousR"</span><span class="op">)</span></span></code></pre></div>
 <blockquote>
 <p><strong>Note:</strong> <code><a href="reference/load_vdem_data.html">load_vdem_data()</a></code> and <code><a href="reference/add_vdem.html">add_vdem()</a></code> require the <code>vdemdata</code> package, which is not on CRAN:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"vdeminstitute/vdemdata"</span><span class="op">)</span></span></code></pre></div>
 </blockquote>
 </div>
@@ -93,7 +97,7 @@
 <h3 id="pipeline-workflow">Pipeline workflow<a class="anchor" aria-label="anchor" href="#pipeline-workflow"></a>
 </h3>
 <p>Build a complete panel in one chain. Functions automatically detect the coding system and year range from the panel:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rguseinov.github.io/contentiousR/">contentiousR</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span></span>
@@ -111,7 +115,7 @@
 <h3 id="standalone-workflow">Standalone workflow<a class="anchor" aria-label="anchor" href="#standalone-workflow"></a>
 </h3>
 <p>Load each dataset independently for inspection or custom merging:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">panel</span>     <span class="op">&lt;-</span> <span class="fu"><a href="reference/build_states_panel.html">build_states_panel</a></span><span class="op">(</span><span class="fl">1990</span>, <span class="fl">2015</span>, coding_system <span class="op">=</span> <span class="st">"cow"</span><span class="op">)</span></span>
 <span><span class="va">gdp_data</span>  <span class="op">&lt;-</span> <span class="fu"><a href="reference/load_gdp_data.html">load_gdp_data</a></span><span class="op">(</span><span class="fl">1990</span>, <span class="fl">2015</span>, coding_system <span class="op">=</span> <span class="st">"cow"</span><span class="op">)</span></span>
 <span><span class="va">vdem_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/load_vdem_data.html">load_vdem_data</a></span><span class="op">(</span></span>
@@ -142,20 +146,20 @@
 <blockquote>
 <p>Guseinov, R. (2026). <em>contentiousR: An R package for contentious politics and civil conflict research</em> [Preprint]. SSRN. <a href="https://doi.org/10.2139/ssrn.7506799" class="external-link uri">https://doi.org/10.2139/ssrn.7506799</a></p>
 </blockquote>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bibtex"><code class="sourceCode bibtex"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="va">@misc</span>{<span class="ot">guseinov2026contentiousr</span>,</span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  <span class="dt">author</span>       = {Guseinov, Ruslan},</span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="dt">title</span>        = {{contentiousR}: An {R} Package for Contentious Politics and Civil Conflict Research},</span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>  <span class="dt">year</span>         = {2026},</span>
-<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>  <span class="dt">howpublished</span> = {SSRN preprint},</span>
-<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>  <span class="dt">doi</span>          = {10.2139/ssrn.7506799},</span>
-<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>  <span class="dt">url</span>          = {https://ssrn.com/abstract=7506799}</span>
-<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bibtex"><code class="sourceCode bibtex"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="va">@misc</span>{<span class="ot">guseinov2026contentiousr</span>,</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  <span class="dt">author</span>       = {Guseinov, Ruslan},</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  <span class="dt">title</span>        = {{contentiousR}: An {R} Package for Contentious Politics and Civil Conflict Research},</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>  <span class="dt">year</span>         = {2026},</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>  <span class="dt">howpublished</span> = {SSRN preprint},</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>  <span class="dt">doi</span>          = {10.2139/ssrn.7506799},</span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>  <span class="dt">url</span>          = {https://ssrn.com/abstract=7506799}</span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>}</span></code></pre></div>
 <p>To cite the software itself (e.g. to record the exact version used):</p>
 <blockquote>
-<p>Guseinov, R. (2026). <em>contentiousR: Contentious Politics and Civil Conflict Research</em>. R package version 0.1.0. <a href="https://github.com/rguseinov/contentiousR" class="external-link uri">https://github.com/rguseinov/contentiousR</a></p>
+<p>Guseinov, R. (2026). <em>contentiousR: Contentious Politics and Civil Conflict Research</em>. R package version 0.1.0. <a href="https://CRAN.R-project.org/package=contentiousR" class="external-link uri">https://CRAN.R-project.org/package=contentiousR</a></p>
 </blockquote>
 <p>Please also cite every third-party data source used in an analysis — <code>contentiousR</code> only assembles and reshapes this data, it does not replace citing the original creators. <code><a href="reference/cn_cite.html">cn_cite()</a></code> looks up the bundled citation for a function or <code>dataset =</code> value and prints it as ready-to-paste BibTeX:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/cn_cite.html">cn_cite</a></span><span class="op">(</span><span class="st">"navco2.1"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/cn_cite.html">cn_cite</a></span><span class="op">(</span><span class="st">"add_gdp()"</span><span class="op">)</span></span></code></pre></div>
 <p>See the <a href="https://rguseinov.github.io/contentiousR/articles/data-sources.html">data-source guide</a> for versions, transformations, source links, and licensing notes, and <code><a href="reference/cn_cite.html">?cn_cite</a></code> for the full lookup interface.</p>
@@ -169,6 +173,7 @@
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
+<li><a href="https://cloud.r-project.org/package=contentiousR" class="external-link">View on CRAN</a></li>
 <li><a href="https://github.com/rguseinov/contentiousR/" class="external-link">Browse source code</a></li>
 <li><a href="https://github.com/rguseinov/contentiousR/issues" class="external-link">Report a bug</a></li>
 </ul>
@@ -203,7 +208,12 @@
 </ul>
 </div>
 
-
+<div class="status">
+<h2 data-toc-skip>Status</h2>
+<ul class="list-unstyled">
+<li><p><a href="https://CRAN.R-project.org/package=contentiousR" class="external-link"><img src="https://www.r-pkg.org/badges/version/contentiousR" alt="CRAN status"></a> <a href="https://CRAN.R-project.org/package=contentiousR" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/contentiousR" alt="CRAN downloads"></a> <a href="https://CRAN.R-project.org/package=contentiousR" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/last-month/contentiousR" alt="Monthly downloads"></a> <a href="https://lifecycle.r-lib.org/articles/stages.html#stable" class="external-link"><img src="https://img.shields.io/badge/lifecycle-stable-brightgreen.svg" alt="Lifecycle: stable"></a> <a href="https://github.com/rguseinov/contentiousR/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/rguseinov/contentiousR/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></p></li>
+</ul>
+</div>
 
   </aside>
 </div>
