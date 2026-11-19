@@ -46,7 +46,7 @@ instead of the default `"share"` for raw counts.
 library(contentiousR)
 
 plot_regional_coverage(
-  datasets      = c("navco1.3", "navco2.1", "beissinger", "csra", "mec"),
+  datasets      = c("navco1.3", "navco2.1", "beissinger", "raqed", "mec"),
   start_year    = 1950,
   end_year      = 2013,
   coding_system = "cow"
@@ -65,7 +65,7 @@ article's Figure 5:
 
 ```{r eval = has_ggplot2, fig.width = 8, fig.height = 5.5}
 plot_temporal_coverage(
-  datasets      = c("navco1.3", "navco2.1", "beissinger", "csra", "mec"),
+  datasets      = c("navco1.3", "navco2.1", "beissinger", "raqed", "mec"),
   start_year    = 1950,
   end_year      = 2013,
   coding_system = "cow"
@@ -83,7 +83,7 @@ article's Figure 4:
 
 ```{r eval = has_ggplot2, fig.width = 9, fig.height = 6.5}
 plot_temporal_coverage(
-  datasets      = c("navco1.3", "navco2.1", "beissinger", "csra", "mec"),
+  datasets      = c("navco1.3", "navco2.1", "beissinger", "raqed", "mec"),
   start_year    = 1950,
   end_year      = 2013,
   coding_system = "cow",
@@ -94,7 +94,8 @@ plot_temporal_coverage(
 ## Choosing your own comparison
 
 Both functions take any subset of `conflict_data()`'s campaign/episode
-datasets (`"navco1.3"`, `"navco2.1"`, `"beissinger"`, `"csra"`, `"mec"`), so
+datasets (`"navco1.3"`, `"navco2.1"`, `"beissinger"`, `"raqed"`, `"mec"`,
+`"omg"`), so
 a narrower comparison is also possible:
 
 ```{r eval = has_ggplot2, fig.width = 8, fig.height = 5.5}

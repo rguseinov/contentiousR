@@ -9,8 +9,13 @@ NAVCO 2.1: \doi{10.7910/DVN/MHOXDV}.
 Beissinger Revolutionary Episodes:
 \url{https://web.archive.org/web/20250331220952/https://mbeissinger.scholar.princeton.edu/revolutionary-episodes-dataset}.
 
-HSE Revolutionary Database:
-\url{https://social.hse.ru/mr/rev_bd}.
+RAQED: \url{https://social.hse.ru/mr/rev_bd}.
+
+OMG: \url{https://www.prio.org/data/39}.
+
+ARC 2.0: \doi{10.7910/DVN/C0PUHP}.
+
+NAVCO 3.0: \doi{10.7910/DVN/INNYEO}.
 
 SCAD: \url{https://www.strausscenter.org/ccaps-research-areas/social-conflict/database/}.
 
@@ -25,9 +30,10 @@ MEC: Chenoweth and Kang (2026), \doi{10.1093/jopres/xjaf008}; data release
 conflict_data(
   start_year = 1945,
   end_year = 2013,
-  dataset = c("navco1.3", "navco2.1", "beissinger", "csra", "scad", "ucdp_prio",
-    "ucdp_vpp", "mm", "mmad", "mec"),
-  coding_system = c("cow", "gw")
+  dataset = c("navco1.3", "navco2.1", "beissinger", "raqed", "scad", "ucdp_prio",
+    "ucdp_vpp", "mm", "mmad", "mec", "omg", "arc", "navco3.0"),
+  coding_system = c("cow", "gw"),
+  unit = c("year", "quarter", "month", "day")
 )
 }
 \arguments{
@@ -40,7 +46,9 @@ conflict_data(
 \item{\code{"navco1.3"}}{NAVCO 1.3 campaign onsets. Coverage: 1900-2019.}
 \item{\code{"navco2.1"}}{NAVCO 2.1 campaign-years. Coverage: 1945-2013.}
 \item{\code{"beissinger"}}{Beissinger revolutionary episode onsets. Coverage: 1900-2014.}
-\item{\code{"csra"}}{HSE CSRA revolutionary episodes. Coverage: 2000-2024.}
+\item{\code{"raqed"}}{Revolutionary and Quasi-revolutionary Episodes
+Dataset (RAQED) v1.4, HSE University. Episode records. Coverage:
+2000-2026. Prefix: \code{raqed_}.}
 \item{\code{"scad"}}{SCAD 2018 social conflict events, Africa and Latin America.
 Recorded event starts: 1989-2017 (the 1989 event continues into the
 source's 1990 coverage period). Prefix: \code{scad_}.}
@@ -54,26 +62,44 @@ Coverage: 1990-2020. Prefix: \code{mm_}.}
 Coverage: 2003-2022. Prefix: \code{mmad_}.}
 \item{\code{"mec"}}{Major Episodes of Contention. Global coverage:
 1955-2018. Episode records; prefix: \code{mec_}.}
+\item{\code{"omg"}}{Opposition Movements and Groups (OMG) v1.
+Campaign-phase records. Coverage: 1789-2019, for the countries
+coded so far. Prefix: \code{omg_}.}
+\item{\code{"arc"}}{Anatomy of Resistance Campaigns (ARC) 2.0: protest
+and armed-conflict events from SCAD and UCDP GED with the formal
+organizations that took part, Africa, Latin America and the
+Caribbean. Coverage: 1990-2018. Prefix: \code{arc_}.}
+\item{\code{"navco3.0"}}{NAVCO 3.0 events on 26 countries (1990-2012):
+actions by anti-government campaigns, states, and others, with
+tactics, goals, and state responses. Prefix: \code{nvc3.0_}.}
 }}
 
 \item{coding_system}{Country coding system: \code{"cow"} or \code{"gw"}.
 \code{ucdp_prio} and \code{ucdp_vpp} use GW codes natively; when
 \code{coding_system = "cow"} they are converted via \code{countrycode} and
 countries without a COW equivalent are dropped.}
+
+\item{unit}{Time unit of the returned data: \code{"year"} (default),
+\code{"quarter"}, \code{"month"}, or \code{"day"}. Event datasets are aggregated to this
+unit, and campaign and episode records are placed in the period of their
+start date. Records whose source date is less precise than \code{unit} (a
+quarter needs a month-precise date) are dropped with a message.
+\code{"navco1.3"}, \code{"navco2.1"}, \code{"ucdp_prio"}, and \code{"ucdp_vpp"} support
+\code{"year"} only.}
 }
 \value{
-A data frame. \code{navco1.3}, \code{beissinger}, \code{csra}, and \code{mec} contain
-one row per campaign or episode record; \code{navco2.1} contains campaign-year
-rows. The other datasets contain one row per country-year.
+A data frame. \code{navco1.3}, \code{beissinger}, \code{raqed}, and
+\code{mec} contain one row per campaign or episode record; \code{omg} contains one
+row per campaign phase; \code{navco2.1} contains campaign-year rows. The other datasets contain one row per country-year.
 }
 \description{
-Loads one of ten conflict, protest, or revolutionary episode datasets
-bundled with the package. \code{scad}, \code{ucdp_prio}, \code{ucdp_vpp}, \code{mm}, and \code{mmad}
-are returned at the country-year level; their event- or conflict-level
+Loads one of thirteen conflict, protest, or revolutionary episode datasets
+bundled with the package. \code{scad}, \code{ucdp_prio}, \code{ucdp_vpp}, \code{mm}, \code{mmad},
+\code{arc}, and \code{navco3.0} are returned at the country-year level; their event- or conflict-level
 source rows are aggregated inside this function.
 
-\code{navco1.3}, \code{beissinger}, \code{csra}, and \code{mec} return campaign or episode
-records; \code{navco2.1} returns campaign-year rows. These sources can contain
+\code{navco1.3}, \code{beissinger}, \code{raqed}, and \code{mec} return campaign or episode
+records, and \code{omg} returns campaign-phase records; \code{navco2.1} returns campaign-year rows. These sources can contain
 multiple rows for one country-year. Use \code{add_conflict(aggregate = TRUE)}
 (the default) to collapse them to country-year.
 }
@@ -97,13 +123,68 @@ The Mass Mobilization source mixes exact participant counts with text such
 as ranges and inequalities. \code{mm_participants} is the maximum among genuinely
 numeric values; \code{mm_participants_reported} preserves the source strings.
 
+\strong{Country codes.} COW codes follow the package's COW panels: the German
+Federal Republic is 255 and Czechoslovakia 316 (see
+\code{\link[=build_states_panel]{build_states_panel()}}), and Yemen is 678 up to 1990 and 679 from 1991.
+GW codes are derived from COW by year: Germany is GW 255 up to 1945 and
+260 after; Serbia is GW 340 up to 1915 and from June 2006, and 345
+(Yugoslavia) in between; Czechoslovakia is GW 315 and the Czech Republic
+316; Yemen is GW 678; Vietnam is 816 in both systems. The Mass
+Mobilization data's non-COW codes (for example 341 for Kosovo and 525 for
+South Sudan) are mapped to COW first.
+
 MEC is kept at its published episode level. Its source \code{byear} becomes
 \code{year}, \code{ccode} becomes \code{cow}, and all other source columns receive the
 \code{mec_} prefix. \code{mec_episode} equals one for every returned episode record.
 Fourteen left-censored records have an actual \code{mec_bdate} before 1955 while
-their source \code{byear} is 1955. With GW coding, COW 679 (Yemen) maps to GW 678
-and COW 817 (South Vietnam) maps to GW 817; Tonga has no GW state equivalent
-and is omitted.
+their source \code{byear} is 1955.
+
+RAQED is kept at its published episode level. \code{year} is the episode's
+\code{start_year}; all other source columns receive the \code{raqed_} prefix.
+\code{raqed_onset} equals one for every episode, and \code{raqed_type_re},
+\code{raqed_type_re_q}, and \code{raqed_type_qre} are dummies for the source \code{type}
+(revolutionary episode, questionable revolutionary episode, and
+quasi-revolutionary episode). Abkhazia, Hong Kong, Palestine, Puerto
+Rico, and Western Sahara have no COW code and are omitted.
+
+OMG is kept at its published campaign-phase level. \code{year} is the phase's
+\code{start_year}. \code{omg_phase_onset} equals one for every phase and \code{omg_onset}
+equals one only for the first phase of a campaign (\code{omg_campaign_id}), so
+later phases of an ongoing campaign are not counted as new onsets. The
+source identifies countries by V-Dem \code{country_id}; these are converted
+with \code{countrycode}. Serbia is mapped to COW 345 / GW 340, Yemen to COW 678
+before 1990 and 679 from 1990 (GW 678), and Piedmont-Sardinia to 325.
+Hong Kong, Palestine, and Western Sahara are omitted. OMG covers only the
+countries coded so far, so a missing country-year is not evidence that no
+campaign occurred.
+
+NAVCO 3.0 records individual actions by anti-government campaigns
+(\code{actor_id} 2), states (1), and international, non-aligned, and local state
+actors. \code{nvc3.0_onset} is one when at least one campaign action occurred
+in the period and zero when only actions by other actors did.
+\code{nvc3.0_n_nonviolent}, \code{nvc3.0_n_violent}, and \code{nvc3.0_n_mixed} count
+campaign actions by \code{tactical_choice}; \code{nvc3.0_n_regime_change} counts
+campaign actions with regime-change goals; \code{nvc3.0_n_concessions}
+(\code{st_posture} 1-3), \code{nvc3.0_n_repression} (5-7), and
+\code{nvc3.0_n_lethal_repression} (7) count state responses. The source records
+fatalities, injuries, and participants as numbers or ranges ("100-300");
+the \verb{_low} and \verb{_high} columns sum (fatalities, injuries) or take the
+maximum (participants in campaign actions) of the range bounds.
+
+Mass Mobilization codes country-years in which no protest occurred as a
+row with \code{protest = 0}; these give \code{mm_onset = 0} and \code{mm_n_protests = 0}.
+They have no date, so they are absent from country-month and country-day
+data.
+
+ARC 2.0 lists one row per event, with the participating ARC organization
+IDs in a comma-separated \code{org_id} (missing when no formal organization was
+identified). Events are assigned to the year in which they start and
+aggregated to country-year: \code{arc_n_events} (split into
+\code{arc_n_events_scad} and \code{arc_n_events_ged}), \code{arc_n_maximalist} and
+\code{arc_n_nonmaximalist} (by the source's \code{maximalist} flag; every GED event
+is maximalist), \code{arc_n_nonviolent_scad}, \code{arc_n_events_org} and
+\code{arc_share_events_org} (events with at least one identified organization),
+and \code{arc_n_orgs} (distinct organizations active in that country-year).
 }
 \examples{
 navco <- conflict_data(1990, 2010, dataset = "navco2.1", coding_system = "cow")
@@ -113,6 +194,15 @@ scad  <- conflict_data(1995, 2015, dataset = "scad",      coding_system = "cow")
 ucdp  <- conflict_data(1990, 2020, dataset = "ucdp_prio", coding_system = "gw")
 
 mec   <- conflict_data(1990, 2010, dataset = "mec",       coding_system = "cow")
+
+raqed <- conflict_data(2000, 2025, dataset = "raqed",     coding_system = "cow")
+
+omg   <- conflict_data(1900, 2019, dataset = "omg",       coding_system = "gw")
+
+arc   <- conflict_data(1990, 2018, dataset = "arc",       coding_system = "cow")
+
+navco3 <- conflict_data(2011, 2012, dataset = "navco3.0", coding_system = "cow",
+                        unit = "month")
 
 }
 \references{
@@ -124,9 +214,15 @@ Dataverse. \doi{10.7910/DVN/MHOXDV}
 
 Beissinger, M. (2022). \emph{Revolutionary Episodes Dataset}.
 
+Ustyuzhanin, V., Semichev, D., Grinin, L., & Korotaev, A. (2026). New
+possibilities for analysing revolution: Introducing a database of
+revolutions of the 21st century. \emph{Russian Sociological Review}, 25(1), 9-61.
+\doi{10.17323/1728-192X-2026-1-9-61}
+
 Ustyuzhanin, V., Semichev, D., Grinin, L., & Korotaev, A. (2026).
-\emph{Revolutionary Database (2000-2024)}, Version 1.102. HSE University,
-Centre for Stability and Risk Analysis. \url{https://social.hse.ru/mr/rev_bd}
+\emph{Revolutionary and Quasi-revolutionary Episodes Dataset (RAQED)
+(2000-2025)}, Version 1.4. HSE University, Centre for Stability and Risk
+Analysis. \url{https://social.hse.ru/mr/rev_bd}
 
 Salehyan, I., Hendrix, C. S., Hamner, J., Case, C., Linebarger, C.,
 Stull, E., & Williams, J. (2012). Social conflict in Africa: A new
@@ -151,4 +247,19 @@ Protest in Autocracies}. Oxford University Press.
 Chenoweth, E., & Kang, S. (2026). The Major Episodes of Contention (MEC)
 Data Project: An introduction. \emph{Journal of Peace Research}, 63(4), 724-734.
 \doi{10.1093/jopres/xjaf008}
+
+Dahl, M., Dahlum, S., Fjelde, H., Gjerløw, H., Knutsen, C. H.,
+Strøm-Sedgwick, C., & Wig, T. (2026). Mass mobilization in the modern
+era: Introducing the Opposition Movements and Groups (OMG) dataset,
+1789-2019. \emph{Comparative Political Studies}, 59(10), 2117-2158.
+\doi{10.1177/00104140251369330}
+
+Vüllers, J., Bakken, I. V., Johansen, T., Dworschak, C., Butcher, C., &
+Braithwaite, J. M. (2026). (Un)organized protest: Introducing the Anatomy
+of Resistance Campaigns 2.0. \emph{Journal of Peace Research}, 63(3), 484-494.
+\doi{10.1093/jopres/xjag013}
+
+Chenoweth, E., Pinckney, J., & Lewis, O. (2018). Days of rage: Introducing
+the NAVCO 3.0 dataset. \emph{Journal of Peace Research}, 55(4), 524-534.
+\doi{10.1177/0022343318759411}
 }

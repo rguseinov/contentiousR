@@ -105,6 +105,33 @@ if (requireNamespace("ggplot2", quietly = TRUE)) {
 }
 ```
 
+## Quarterly, monthly, and daily panels
+
+Set `unit = "quarter"`, `"month"`, or `"day"` to build a panel at a finer
+unit. `add_conflict()` places each event in the period it started, annual
+data such as GDP repeat across the months of a year, and leaders change in
+the month they took office. With `fill_zero = TRUE`, months the dataset
+covers but in which it records nothing get 0 instead of `NA`:
+
+```{r}
+monthly <- build_states_panel(2011, 2011, coding_system = "cow", unit = "month") |>
+  add_gdp() |>
+  add_leader_data() |>
+  add_conflict("navco3.0", fill_zero = TRUE)
+
+monthly |>
+  dplyr::filter(cow == 651) |>
+  dplyr::select(cow, year, month, gdp_pcap, leader, nvc3.0_n_campaign_events) |>
+  head(4)
+```
+
+Only datasets that record exact start dates can be used at these units; see
+the [data-source guide](data-sources.html) for which ones, how records
+with imprecise dates are handled, and how coverage is defined for
+`fill_zero`. `aggregate_panel()` collapses a finer panel back to quarters
+or years, and `list_datasets()` lists every dataset with its coverage and
+supported units.
+
 ## Working with V-Dem data
 
 To work with the V-Dem data, download it from its official repository, then use only the indicators you need:

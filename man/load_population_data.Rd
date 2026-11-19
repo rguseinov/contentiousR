@@ -58,13 +58,36 @@ Loads country-year population data from one of three sources included
 with the package.
 }
 \details{
-The bundled UN WPP extract has three rows for some China country-years:
-a combined mainland+Hong Kong+Macao+Taiwan figure, a mainland-only
-figure, and a Hong Kong-only figure, all of which matched COW code 710
-during country-name conversion upstream. The mainland-only figure is
-consistently the median of the three, so \code{wpp_pop} is computed as the
-median \code{pop} value within each \code{cow}-\code{year} group; for every other
-country-year (a single row) this is a no-op.
+\strong{WPP and historical states.} WPP reports today's countries, with their
+population reconstructed back to 1949 within today's borders.
+\code{load_population_data(dataset = "wpp")} assigns each WPP country to the
+state that governed it in each year, and sums them:
+\itemize{
+\item States that later split are the sum of their parts while they
+existed: the USSR (365, the fifteen republics until 1991, the Baltic
+states from 1940), Yugoslavia and its successor (345: Serbia, Kosovo,
+Montenegro, and the other republics until they became states),
+Czechoslovakia (316, the panels' code; Czechia and Slovakia until
+1992), Ethiopia (with Eritrea, 1952-1992), Pakistan (with Bangladesh
+until 1970), Sudan (with South Sudan until 2010), Indonesia (with
+Timor-Leste, 1976-2001), Malaysia (with Singapore, 1963-1964), and
+Egypt (with Syria, 1959-1960, as the United Arab Republic).
+\item Hong Kong is added to China from 1997 and Macao from 1999.
+\item States formed by unification cannot be split back into their
+parts, so the parts are \code{NA} before unification: West and East
+Germany before 1990 (Germany has data from 1990), North and South
+Yemen before 1990 (Yemen, COW 679, from 1990), North and South Vietnam
+before 1976, and Tanganyika and Zanzibar before 1964.
+}
+In the year a state split, each successor that is a state that year has
+its own value, and the predecessor covers the territory it kept. Only
+the years in which a state is in the COW or GW state system are
+returned.
+Territories WPP lists separately that were not part of a COW state (for
+example Puerto Rico, Greenland, Western Sahara, and French overseas
+departments) are not added to any state. Smaller border changes within
+a state (such as the incorporation of Goa, Sikkim, or Sabah and Sarawak)
+are not adjusted: WPP's figures follow today's borders.
 
 NMC's \code{-9} missing-data sentinel is recoded to \code{NA} in \code{nmc_tpop} and
 \code{nmc_upop}.

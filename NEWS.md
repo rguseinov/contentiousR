@@ -1,3 +1,176 @@
+# contentiousR (development version)
+
+## New data
+
+* `conflict_data()` and `add_conflict()` gain `dataset = "raqed"`: the
+  Revolutionary and Quasi-revolutionary Episodes Dataset (RAQED) v1.4,
+  2000-2026, HSE University. RAQED is the renamed successor of the CSRA
+  Revolutionary Database. Columns use the `raqed_` prefix, and
+  `raqed_type_re`, `raqed_type_re_q`, and `raqed_type_qre` are dummies for
+  the source's episode `type`.
+* `conflict_data()` and `add_conflict()` gain `dataset = "omg"`: the
+  Opposition Movements and Groups (OMG) dataset v1, 1789-2019 (Dahl et al.
+  2026), at the campaign-phase level. `omg_onset` marks a campaign's first
+  phase and `omg_phase_onset` every phase.
+* `conflict_data()` and `add_conflict()` gain `dataset = "arc"`: the
+  Anatomy of Resistance Campaigns (ARC) 2.0 events, 1990-2018 (Vüllers et
+  al. 2026), aggregated to country-year: event counts by source and by
+  maximalist demands, and the number of events with, and distinct
+  organizations taking part in, dissent.
+* `conflict_data()` and `add_conflict()` gain `dataset = "navco3.0"`: the
+  NAVCO 3.0 event data on 26 countries, 1990-2012 (Chenoweth, Pinckney, and
+  Lewis 2018), aggregated to counts of campaign actions by tactic and goal,
+  state concessions and repression, and fatality, injury, and participant
+  ranges.
+* `cn_cite("raqed")`, `cn_cite("omg")`, `cn_cite("arc")`, and
+  `cn_cite("navco3.0")` return the new citations.
+
+## Country-quarter, country-month, and country-day panels
+
+* `build_states_panel()` gains `unit = c("year", "quarter", "month",
+  "day")`. Quarterly panels add a `quarter` column, monthly panels a
+  `month` column, daily panels `month`, `day`, and `date`. Yearly panels
+  are unchanged.
+* `conflict_data()` gains `unit`, and `add_conflict()` detects the panel's
+  unit: event data are aggregated, and campaign and episode records placed,
+  by the month or day of their start date. SCAD, MM, MMAD, ARC, NAVCO 3.0,
+  Beissinger, RAQED, MEC, and OMG support all units; NAVCO 1.3, NAVCO 2.1,
+  UCDP/PRIO, and UCDP VPP record only years and error for a finer unit.
+  Records dated less precisely than the unit are dropped with a message.
+* `add_lag()` and `add_spell_duration()` count months or days in sub-annual
+  panels. `plot_coverage()` shows them by year.
+  `as_peacesciencer_panel()`, `add_from_peacesciencer()`, and
+  `harmonize_conflict_data()` require a country-year panel.
+* `conflict_data(dataset = "beissinger")` gains `beissinger_startdatetxt`, the
+  source's start date text.
+* `load_leader_data()` gains `unit`, and `add_leader_data()` detects the
+  panel's unit. Leaders are placed by their dates in office, so each period
+  gets the leader in power at its end (Mubarak in January 2011, Tantawi from
+  February). Finer units add `leader_tenure_quarters`,
+  `leader_tenure_months`, or `leader_tenure_days`; `leader_tenure` still
+  counts calendar years. REIGN supports up to months.
+* New `aggregate_panel()` collapses a country-day, country-month, or
+  country-quarter panel to a coarser unit: counts are summed, indicators and
+  maxima take the maximum, other columns take the value of the last period,
+  and lags and spell counters are dropped. The rules can be overridden per
+  column.
+
+## Coverage, zero-filling, and episodes in progress
+
+* `add_conflict()` gains `fill_zero = FALSE`. With `fill_zero = TRUE`, event
+  indicators and counts are 0 in periods the dataset covers but records
+  nothing, and stay `NA` outside its coverage. Coverage is defined per
+  dataset: global datasets cover every state, SCAD, ARC, and NAVCO 3.0 the
+  countries they record, MM the country-years it lists, and MMAD each
+  country from its first to its last recorded year.
+* `add_conflict()` adds `<prefix>incidence` and `<prefix>n_active` for
+  NAVCO 1.3, NAVCO 2.1, Beissinger, RAQED, MEC, and OMG: whether, and how
+  many, episodes were in progress in each period, from start to end date.
+  Onset columns are unchanged.
+* `conflict_data(dataset = "navco1.3")` gains `nvc1.3_EYEAR`, the
+  campaign's end year.
+* New `list_datasets()` lists the bundled datasets with their years,
+  countries, record type, supported units, column prefix, and coverage rule.
+
+## Bug fixes
+
+### Country codes
+
+Several states were silently dropped or matched to the wrong country,
+because `countrycode` converts codes without regard to the year and has no
+equivalent for some states. Conversions between COW and Gleditsch-Ward codes
+now go through one year-aware function, used by every loader.
+
+* GW panels from `build_states_panel(coding_system = "gw")` had no Vietnam
+  (GW 816) and, with `exclude_microstates = FALSE`, no Caribbean island
+  states or other microstates: rows were dropped when `countrycode` had no
+  country name for the code. Names now fall back to the `states` package.
+  Abkhazia and South Ossetia are now removed by `exclude_non_un = TRUE`.
+* COW panels code West Germany as 255 and Czechoslovakia as 316, but data
+  using standard COW codes (NMC population and military expenditure,
+  V-Dem, Archigos and REIGN leaders, SIPRI, and the conflict datasets) kept
+  260 and 315, so West Germany (1955-1989) and Czechoslovakia (up to 1992)
+  got no data in COW panels, including NAVCO, MEC, and OMG campaigns such as
+  the Prague Spring. All loaders now use the panels' codes.
+  `as_peacesciencer_panel()` and `add_from_peacesciencer()` give
+  `peacesciencer` the standard COW codes (`ccode` 260 and 315).
+* Yemen: GW-coded sources (UCDP/PRIO, UCDP VPP, Fariss, Barnum) were not
+  matched to COW 679 (Yemen from 1990), e.g. 19 conflict-years of
+  UCDP/PRIO; COW-coded sources lost Yemen from 1990 in GW panels. Sources
+  that code Yemen as one unit throughout now give COW 678 up to 1990.
+* Serbia: GW panels code Yugoslavia as 345 up to 2006 and Serbia as 340
+  after, but conversions used one code for all years, so Serbia's data were
+  lost in one period or the other (e.g. Gapminder, SIPRI, NMC, V-Dem, MEC,
+  MMAD, RAQED). Germany before 1945 (GW 255) and Vietnam were lost in COW
+  panels with GW-coded sources (Fariss, Barnum).
+* Mass Mobilization uses its own codes for several states. Kosovo (MM 341)
+  was matched to Montenegro (COW 341), and Yugoslavia and Serbia and
+  Montenegro (1992-2006), Serbia and Montenegro from 2006, the USSR, South
+  Sudan, Ethiopia from 2016, and Yemen from 2016 were not matched at all.
+* `add_regions()` returned `NA` for Serbia, and in GW panels for Yemen,
+  Czechoslovakia, and Vietnam.
+* `harmonize_conflict_data()` converts country names by year too (Serbia in
+  COW panels and Yemen in GW panels were dropped), and with
+  `aggregate = FALSE` no longer errors when `year_col` is `"year"` or
+  `country_col` is the panel's code column.
+
+### UN World Population Prospects
+
+* The WPP population data are rebuilt reproducibly from the 'wpp2024'
+  package (`data-raw/extdata.R`). The previous extract had been matched to
+  COW codes by country name, which left out Serbia and Yugoslavia entirely,
+  and gave historical states the population of today's country with the
+  same code: e.g. the USSR had Russia's population (139 instead of 267
+  million in 1980), Pakistan before 1971 lacked East Pakistan, and West
+  Germany had the population of unified Germany.
+* `load_population_data(dataset = "wpp")` now assigns each WPP country to
+  the state that governed it in each year: states that later split are the
+  sum of their parts (USSR, Yugoslavia, Czechoslovakia, Ethiopia, Pakistan,
+  Sudan, Indonesia with Timor-Leste, Malaysia with Singapore, the United
+  Arab Republic), Hong Kong and Macao join China from 1997 and 1999, and
+  parts of later unified states that WPP cannot separate are `NA` (the two
+  Germanys and Yemens before 1990, the two Vietnams before 1976, Tanganyika
+  and Zanzibar before 1964). It returns only the years each state exists,
+  and works the same way for GW codes.
+
+### Other bug fixes
+
+* `plot_temporal_coverage()` skipped periods without events instead of
+  plotting 0, so lines ran straight across gaps.
+* `cn_cite("gapminder")` and `cn_cite("vdem")` now return citations, like
+  every other `dataset =` value.
+* Documentation: Barnum et al. coverage is 1816-2023 (military burden to
+  2019); the Gapminder file runs to 2100, and its most recent years are
+  forecasts and projections, not observations.
+* `load_leader_data(dataset = "reign")` dropped leaders still in office when
+  the REIGN data end (no exit date in the source), so every country-year of
+  their tenure was missing (e.g. Russia from 2000 on): 135 of 194 countries
+  had a leader in 2015 and 29 in 2021, against 194 now. They are now kept in office through August 2021, the
+  last month REIGN covers. When two leaders took office in the same month,
+  the later one by day is now kept, as the year-end leader.
+* In a country-month or country-day panel, `add_conflict()` with an episode
+  dataset (Beissinger, RAQED, MEC, OMG) added a `day` column, which made the
+  panel look like a country-day panel to later functions.
+* `conflict_data(dataset = "mm")` counted the source's `protest = 0` rows,
+  which mark country-years without a protest, as protests: 1,906 of 4,877
+  country-years had `mm_onset = 1` and `mm_n_protests = 1` but no protest.
+  They now have `mm_onset = 0` and `mm_n_protests = 0`.
+
+## Package size
+
+* The SIPRI military expenditure data are now stored as a compact `.rds`
+  table built from the two workbook sheets the package uses, instead of the
+  full ten-sheet `.xlsx` workbook (0.9 MB to 0.12 MB).
+  `load_military_expenditure_data(dataset = "sipri")` returns exactly the
+  same data as before and no longer reads the workbook with 'readxl'.
+
+## Breaking changes
+
+* `dataset = "csra"` is removed: the CSRA Revolutionary Database has been
+  renamed RAQED. `conflict_data()` and `add_conflict()` now stop with a
+  message pointing to `dataset = "raqed"` (version 1.4), and the CSRA v1.102
+  file is no longer bundled.
+
 # contentiousR 0.1.0
 
 ## Changes made for CRAN

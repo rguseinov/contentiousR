@@ -16,12 +16,14 @@ See \code{load_leader_data()} for details.}
 The input panel with leader columns added via left join.
 }
 \description{
-Joins country-year leader data onto an existing state panel. The coding
-system and year range are detected automatically from the panel.
+Joins leader data onto an existing state panel. The coding system, time
+unit, and year range are detected automatically from the panel.
 
-Each country-year is assigned the leader who held power at the end of that
-year (i.e., the leader with the latest start date when multiple leaders
-served in the same year).
+Each period is assigned the leader who held power at the end of it (the
+leader with the latest start date when several leaders served in the
+same period). In a country-quarter, country-month, or country-day panel,
+leaders are placed by their exact dates in office, so a transition in
+February 2011 shows up in February 2011, not for the whole year.
 }
 \examples{
 panel <- build_states_panel(1990, 2010, coding_system = "cow") |>
@@ -29,6 +31,10 @@ panel <- build_states_panel(1990, 2010, coding_system = "cow") |>
 
 panel <- build_states_panel(1990, 2010, coding_system = "cow") |>
   add_leader_data(dataset = "reign")
+
+# Leader by month
+monthly <- build_states_panel(2011, 2011, coding_system = "cow", unit = "month") |>
+  add_leader_data()
 
 }
 \references{

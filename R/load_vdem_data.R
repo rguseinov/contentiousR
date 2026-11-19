@@ -129,35 +129,14 @@ load_vdem_data <- function(
     )
   }
 
-  if (coding_system == "cow") {
-    vdem_dataset <- vdem |>
-      dplyr::rename(cow = "COWcode") |>
-      tidyr::drop_na("cow") |>
-      dplyr::select("cow", "year", dplyr::all_of(vars)) |>
-      dplyr::arrange(.data$cow, .data$year) |>
-      dplyr::filter(.data$year >= start_year & .data$year <= end_year)
+  vdem_dataset <- vdem |>
+    dplyr::rename(cow = "COWcode") |>
+    tidyr::drop_na("cow") |>
+    dplyr::select("cow", "year", dplyr::all_of(vars)) |>
+    dplyr::filter(.data$year >= start_year & .data$year <= end_year)
+  vdem_dataset <- convert_code_column(vdem_dataset, "cow", "cow", coding_system)
 
-    check_unique_key(vdem_dataset, c("cow", "year"))
+  check_unique_key(vdem_dataset, c(coding_system, "year"))
 
-    return(vdem_dataset)
-  }
-
-  if (coding_system == "gw") {
-    vdem_dataset <- vdem |>
-      dplyr::mutate(
-        gw = suppressWarnings(countrycode::countrycode(
-          .data$COWcode,
-          origin = "cown",
-          destination = "gwn"
-        ))
-      ) |>
-      tidyr::drop_na("gw") |>
-      dplyr::select("gw", "year", dplyr::all_of(vars)) |>
-      dplyr::arrange(.data$gw, .data$year) |>
-      dplyr::filter(.data$year >= start_year & .data$year <= end_year)
-
-    check_unique_key(vdem_dataset, c("gw", "year"))
-
-    return(vdem_dataset)
-  }
+  return(vdem_dataset)
 }

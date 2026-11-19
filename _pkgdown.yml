@@ -23,6 +23,7 @@ reference:
 - title: Build panels
   contents:
   - build_states_panel
+  - aggregate_panel
 - title: Add data to panels
   contents:
   - add_gdp
@@ -48,6 +49,7 @@ reference:
   - harmonize_conflict_data
 - title: Load source data
   contents:
+  - list_datasets
   - conflict_data
   - starts_with("load_")
 - title: Citation

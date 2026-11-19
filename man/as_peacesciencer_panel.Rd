@@ -12,7 +12,7 @@ and a \code{year} column.}
 }
 \value{
 The input data frame with an additional \code{ccode} (COW) or \code{gwcode}
-(Gleditsch-Ward) alias and the attributes \code{ps_system} and
+(Gleditsch-Ward) key and the attributes \code{ps_system} and
 \code{ps_data_type = "state_year"}. Rows and analytical variables are not
 changed.
 }
@@ -26,6 +26,12 @@ the result remains compatible with all \code{contentiousR} functions.
 by \code{peacesciencer::create_stateyears()}. It also expects its own key names:
 \code{ccode} for COW panels and \code{gwcode} for Gleditsch-Ward panels. This adapter
 supplies that interface without replacing contentiousR's \code{cow} or \code{gw} key.
+
+contentiousR's COW panels code the German Federal Republic as 255 and
+Czechoslovakia as 316, so that each state keeps one code over time.
+\code{ccode} uses the standard COW codes that \code{peacesciencer} expects: 260 for
+West Germany (1955-1989) and 315 for Czechoslovakia (up to 1992). \code{gwcode}
+equals \code{gw}.
 
 Place the adapter immediately before the first \code{peacesciencer} function, or
 earlier in the pipeline. Dplyr joins used by contentiousR preserve these

@@ -10,7 +10,8 @@ build_states_panel(
   coding_system = c("cow", "gw"),
   exclude_microstates = TRUE,
   exclude_non_un = TRUE,
-  exclude_islands = FALSE
+  exclude_islands = FALSE,
+  unit = c("year", "quarter", "month", "day")
 )
 }
 \arguments{
@@ -25,15 +26,43 @@ microstates by \code{\link[states:state_panel]{states::state_panel()}}.}
 
 \item{exclude_non_un}{Logical. Exclude the package's fixed set of non-UN
 entities (Kosovo, Taiwan, Hong Kong, the European Union, and South Vietnam
-for COW; Kosovo, Taiwan, and South Vietnam for GW).}
+for COW; Kosovo, Abkhazia, South Ossetia, Taiwan, and South Vietnam for
+GW).}
 
 \item{exclude_islands}{Logical. Exclude six small Caribbean island states:
 Dominica, Grenada, Saint Lucia, Saint Vincent and the Grenadines, Antigua
 and Barbuda, and Saint Kitts and Nevis.}
+
+\item{unit}{Time unit of the panel: \code{"year"} (default), \code{"quarter"},
+\code{"month"}, or \code{"day"}. A state is included in a period if it was a
+member of the state system for any part of that period.}
 }
 \value{
-A data frame with state-year observations.
+A data frame with one row per state and period. A country-year
+panel has the country code, \code{year}, and \code{country}; a country-quarter
+panel adds \code{quarter} (1-4); a country-month panel adds \code{month} (1-12); a
+country-day panel adds \code{month}, \code{day}, and \code{date}.
 }
 \description{
 Build a state panel
+}
+\details{
+Annual data (\code{add_gdp()}, \code{add_population()}, \code{add_military_expenditure()},
+\code{add_vdem()}) are joined to a country-quarter, country-month, or
+country-day panel by country and year, so every period of a year takes
+that year's value. \code{add_leader_data()} uses the leaders' exact dates in
+office, and \code{add_conflict()} aggregates event data to the panel's own
+unit, for the datasets that record exact event dates. \code{add_lag()} and
+\code{add_spell_duration()} count periods in the panel's unit. Use
+\code{\link[=aggregate_panel]{aggregate_panel()}} to collapse a finer panel to a coarser unit.
+
+A country-day panel is large (about 70,000 rows per year of data), so
+restrict it to the years you need.
+}
+\examples{
+yearly  <- build_states_panel(1990, 2000, coding_system = "cow")
+quarterly <- build_states_panel(2010, 2012, coding_system = "cow", unit = "quarter")
+monthly <- build_states_panel(2010, 2012, coding_system = "gw", unit = "month")
+daily   <- build_states_panel(2011, 2011, coding_system = "cow", unit = "day")
+
 }

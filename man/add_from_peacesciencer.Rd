@@ -28,8 +28,10 @@ attributes are removed. The original \code{cow} or \code{gw} key is retained.
 }
 \details{
 This helper is intended for \code{peacesciencer} functions that support
-state-year data. It does not alter country codes: \code{ccode} is simply
-\code{peacesciencer}'s name for the COW code stored as \code{cow} by contentiousR.
+state-year data. \code{ccode} is the standard COW code (see
+\code{\link[=as_peacesciencer_panel]{as_peacesciencer_panel()}}): West Germany and Czechoslovakia get their
+own COW codes, 260 and 315, while \code{peacesciencer} adds its data, and the
+panel keeps contentiousR's \code{cow} codes afterwards.
 
 Use \code{\link[=as_peacesciencer_panel]{as_peacesciencer_panel()}} instead when several \code{peacesciencer}
 functions will be applied in one uninterrupted pipeline and retaining the

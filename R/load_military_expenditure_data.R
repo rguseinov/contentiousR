@@ -1,41 +1,3 @@
-#' Parse one wide SIPRI military expenditure sheet into long format
-#'
-#' @param path Path to the SIPRI xlsx file.
-#' @param sheet Sheet name.
-#'
-#' @return A data frame with `country`, `year`, `value`.
-#'
-#' @keywords internal
-read_sipri_sheet <- function(path, sheet) {
-  # suppressMessages: readxl renames the untitled header columns (...1, ...2, ...)
-  raw <- suppressMessages(readxl::read_xlsx(path, sheet = sheet, col_names = FALSE))
-
-  header_row <- which(vapply(seq_len(nrow(raw)), function(i) {
-    any(as.character(unlist(raw[i, ])) == "Country", na.rm = TRUE)
-  }, logical(1)))[1]
-
-  header      <- as.character(unlist(raw[header_row, ]))
-  country_col <- which(header == "Country")
-  year_cols   <- which(grepl("^(19|20)[0-9]{2}$", header))
-  years       <- as.integer(header[year_cols])
-
-  body <- raw[(header_row + 1):nrow(raw), ]
-
-  long <- lapply(seq_along(year_cols), function(i) {
-    data.frame(
-      country = as.character(unlist(body[, country_col])),
-      year    = years[i],
-      value   = suppressWarnings(as.numeric(unlist(body[, year_cols[i]]))),
-      stringsAsFactors = FALSE
-    )
-  })
-
-  dplyr::bind_rows(long) |>
-    tidyr::drop_na("country") |>
-    dplyr::filter(!is.na(.data$value))
-}
-
-
 #' Load military expenditure data
 #'
 #' @description
@@ -57,7 +19,7 @@ read_sipri_sheet <- function(path, sheet) {
 #'       Markowitz & Morales 2025): military burden (`barnum_milburden`, a
 #'       fraction of GDP) plus latent-model expenditure estimates on two
 #'       unit bases (`barnum_sipri`, `barnum_nmc`; see Details). Coverage:
-#'       1816-2019.}
+#'       1816-2023 (`barnum_milburden` to 2019).}
 #'   }
 #' @param coding_system Character. Country coding system: `"cow"` or `"gw"`.
 #'
@@ -147,54 +109,29 @@ load_military_expenditure_data <- function(
   coding_system <- match.arg(coding_system)
 
   if (dataset == "sipri") {
-    path <- system.file(
-      "extdata", "SIPRI-Milex-data-1949-2025_v1.2.xlsx", package = "contentiousR"
-    )
+    path <- system.file("extdata", "sipri_milex_v1.2.rds", package = "contentiousR")
     if (path == "") {
-      stop("Could not find the SIPRI Milex xlsx file in package extdata.", call. = FALSE)
+      stop("Could not find `sipri_milex_v1.2.rds` in package extdata.", call. = FALSE)
     }
 
-    milex <- read_sipri_sheet(path, "Constant (2024) US$") |>
-      dplyr::rename(sipri_milex = "value")
+    # Built by data-raw/extdata.R from the "Constant (2024) US$" and
+    # "Share of GDP" sheets of SIPRI-Milex-data-1949-2025_v1.2.xlsx.
+    joined <- readRDS(path)
 
-    milburden <- read_sipri_sheet(path, "Share of GDP") |>
-      dplyr::rename(sipri_milburden = "value")
-
-    joined <- dplyr::full_join(milex, milburden, by = c("country", "year"))
-
-    if (coding_system == "cow") {
-      data <- joined |>
-        dplyr::mutate(
-          cow = suppressWarnings(countrycode::countrycode(
-            .data$country,
-            origin = "country.name",
-            destination = "cown"
-          )),
-          cow = dplyr::case_when(
-            .data$country == "Serbia" ~ 345,
-            TRUE ~ .data$cow
-          )
-        ) |>
-        tidyr::drop_na("cow") |>
-        dplyr::select(-"country") |>
-        dplyr::select("cow", "year", dplyr::everything())
-    } else {
-      data <- joined |>
-        dplyr::mutate(
-          gw = suppressWarnings(countrycode::countrycode(
-            .data$country,
-            origin = "country.name",
-            destination = "gwn"
-          )),
-          gw = dplyr::case_when(
-            .data$country == "Serbia" ~ 340,
-            TRUE ~ .data$gw
-          )
-        ) |>
-        tidyr::drop_na("gw") |>
-        dplyr::select(-"country") |>
-        dplyr::select("gw", "year", dplyr::everything())
-    }
+    data <- joined |>
+      dplyr::mutate(
+        cow = suppressWarnings(as.integer(countrycode::countrycode(
+          .data$country,
+          origin = "country.name",
+          destination = "cown"
+        ))),
+        cow = dplyr::case_when(
+          .data$country == "Serbia" ~ 345L,
+          TRUE ~ .data$cow
+        )
+      ) |>
+      dplyr::select(-"country")
+    data <- convert_code_column(data, "cow", "cow", coding_system)
   }
 
   if (dataset == "nmc") {
@@ -210,15 +147,7 @@ load_military_expenditure_data <- function(
       ) |>
       dplyr::select("cow", "year", "nmc_milex")
 
-    if (coding_system == "gw") {
-      data <- data |>
-        dplyr::mutate(
-          gw = suppressWarnings(countrycode::countrycode(.data$cow, "cown", "gwn"))
-        ) |>
-        tidyr::drop_na("gw") |>
-        dplyr::select(-"cow") |>
-        dplyr::select("gw", "year", dplyr::everything())
-    }
+    data <- convert_code_column(data, "cow", "cow", coding_system)
   }
 
   if (dataset == "barnum") {
@@ -249,19 +178,7 @@ load_military_expenditure_data <- function(
       dplyr::full_join(barnum_sipri, by = c("gwno", "year")) |>
       dplyr::full_join(barnum_nmc, by = c("gwno", "year"))
 
-    if (coding_system == "cow") {
-      data <- data |>
-        dplyr::mutate(
-          cow = suppressWarnings(countrycode::countrycode(.data$gwno, "gwn", "cown"))
-        ) |>
-        tidyr::drop_na("cow") |>
-        dplyr::select(-"gwno") |>
-        dplyr::select("cow", "year", dplyr::everything())
-    } else {
-      data <- data |>
-        dplyr::rename(gw = "gwno") |>
-        dplyr::select("gw", "year", dplyr::everything())
-    }
+    data <- convert_code_column(data, "gwno", "gw", coding_system)
   }
 
   data <- data |>

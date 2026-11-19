@@ -199,18 +199,25 @@ add_vdem <- function(panel, vars = NULL) {
 #'
 #' @description
 #' Joins a conflict, protest, or revolutionary episode dataset onto an existing
-#' state panel at the country-year level.
+#' state panel. The panel's coding system and time unit (year, month, or day;
+#' see [build_states_panel()]) are detected automatically, and the data are
+#' aggregated to that unit.
 #'
-#' **Country-year datasets** (`"scad"`, `"ucdp_prio"`, `"ucdp_vpp"`, `"mm"`,
-#' `"mmad"`) are already at the country-year level when loaded, so the
-#' `aggregate` argument has no effect for them.
+#' **Event and conflict-year datasets** (`"scad"`, `"ucdp_prio"`,
+#' `"ucdp_vpp"`, `"mm"`, `"mmad"`, `"arc"`, `"navco3.0"`) are already
+#' aggregated to the panel's unit when loaded, so the `aggregate` argument
+#' has no effect for them.
 #'
 #' **Campaign and episode datasets** (`"navco1.3"`, `"navco2.1"`,
-#' `"beissinger"`, `"csra"`, `"mec"`) can have multiple rows per country-year.
-#' With `aggregate = TRUE` (the default) these are collapsed to country-year
-#' by taking the maximum of all numeric columns, and an `n_campaigns` count
+#' `"beissinger"`, `"raqed"`, `"mec"`, and `"omg"`)
+#' can have multiple rows per country-period.
+#' With `aggregate = TRUE` (the default) these are collapsed to the panel's
+#' unit by taking the maximum of all numeric columns, and an `n_campaigns` count
 #' column is added. Set `aggregate = FALSE` to keep campaign-level rows (may
-#' produce duplicates).
+#' produce duplicates). Onset columns mark the period in which an episode
+#' started; for all of these datasets, `<prefix>incidence`
+#' and `<prefix>n_active` also mark every period in which an episode was in
+#' progress, from its start to its end date (see Details).
 #'
 #' @param panel A data frame produced by `build_states_panel()`.
 #' @param dataset Dataset to load. One of:
@@ -218,7 +225,8 @@ add_vdem <- function(panel, vars = NULL) {
 #'     \item{`"navco1.3"`}{NAVCO 1.3 campaign onsets (1900-2019).}
 #'     \item{`"navco2.1"`}{NAVCO 2.1 campaign-years (1945-2013).}
 #'     \item{`"beissinger"`}{Beissinger revolutionary episode onsets (1900-2014).}
-#'     \item{`"csra"`}{HSE CSRA revolutionary episodes (2000-2024).}
+#'     \item{`"raqed"`}{RAQED v1.4 revolutionary and quasi-revolutionary
+#'       episodes (2000-2026). Prefix: `raqed_`.}
 #'     \item{`"scad"`}{SCAD 2018 social conflict events, Africa and Latin America
 #'       (recorded starts 1989-2017). Prefix: `scad_`.}
 #'     \item{`"ucdp_prio"`}{UCDP/PRIO Armed Conflict Dataset v26.1 (1946-2025).
@@ -230,14 +238,28 @@ add_vdem <- function(panel, vars = NULL) {
 #'       Prefix: `mmad_`.}
 #'     \item{`"mec"`}{Major Episodes of Contention (1955-2018), with global
 #'       episode-level coverage. Prefix: `mec_`.}
+#'     \item{`"omg"`}{Opposition Movements and Groups v1, campaign phases
+#'       (1789-2019). `omg_onset` marks a campaign's first phase. Prefix:
+#'       `omg_`.}
+#'     \item{`"arc"`}{Anatomy of Resistance Campaigns 2.0 events with
+#'       participating organizations, Africa, Latin America and the Caribbean
+#'       (1990-2018). Prefix: `arc_`.}
+#'     \item{`"navco3.0"`}{NAVCO 3.0 events on 26 countries (1990-2012):
+#'       actions by anti-government campaigns, states, and others, with
+#'       tactics, goals, and state responses. Prefix: `nvc3.0_`.}
 #'   }
-#' @param aggregate Logical. If `TRUE` (default), aggregates to country-year
+#' @param aggregate Logical. If `TRUE` (default), aggregates to the panel's unit
 #'   before joining (relevant for campaign and episode datasets only). If
 #'   `FALSE`, performs a raw left join.
+#' @param fill_zero Logical. If `FALSE` (default), periods without a record
+#'   are `NA`. If `TRUE`, event indicators and counts (onset, incidence,
+#'   and count columns) are set to 0 in periods the dataset covers but in
+#'   which it records nothing, and stay `NA` outside its coverage. See
+#'   Details and [list_datasets()] for how coverage is defined.
 #'
 #' @return The input panel with conflict/protest columns added via left join.
-#'   Unmatched country-years remain `NA`; the function does not assume that an
-#'   unobserved event indicator is zero.
+#'   With `fill_zero = FALSE`, unmatched periods remain `NA`; the function
+#'   does not assume that an unobserved event indicator is zero.
 #'
 #' @references
 #' Chenoweth, E., & Shay, C. W. (2020). *List of Campaigns in NAVCO 1.3*.
@@ -248,9 +270,15 @@ add_vdem <- function(panel, vars = NULL) {
 #'
 #' Beissinger, M. (2022). *Revolutionary Episodes Dataset*.
 #'
+#' Ustyuzhanin, V., Semichev, D., Grinin, L., & Korotaev, A. (2026). New
+#' possibilities for analysing revolution: Introducing a database of
+#' revolutions of the 21st century. *Russian Sociological Review*, 25(1), 9-61.
+#' \doi{10.17323/1728-192X-2026-1-9-61}
+#'
 #' Ustyuzhanin, V., Semichev, D., Grinin, L., & Korotaev, A. (2026).
-#' *Revolutionary Database (2000-2024)*, Version 1.102. HSE University,
-#' Centre for Stability and Risk Analysis. \url{https://social.hse.ru/mr/rev_bd}
+#' *Revolutionary and Quasi-revolutionary Episodes Dataset (RAQED)
+#' (2000-2025)*, Version 1.4. HSE University, Centre for Stability and Risk
+#' Analysis. \url{https://social.hse.ru/mr/rev_bd}
 #'
 #' Salehyan, I., Hendrix, C. S., Hamner, J., Case, C., Linebarger, C.,
 #' Stull, E., & Williams, J. (2012). Social conflict in Africa: A new
@@ -276,7 +304,79 @@ add_vdem <- function(panel, vars = NULL) {
 #' Data Project: An introduction. *Journal of Peace Research*, 63(4), 724-734.
 #' \doi{10.1093/jopres/xjaf008}
 #'
+#' Dahl, M., Dahlum, S., Fjelde, H., Gjerløw, H., Knutsen, C. H.,
+#' Strøm-Sedgwick, C., & Wig, T. (2026). Mass mobilization in the modern
+#' era: Introducing the Opposition Movements and Groups (OMG) dataset,
+#' 1789-2019. *Comparative Political Studies*, 59(10), 2117-2158.
+#' \doi{10.1177/00104140251369330}
+#'
+#' Vüllers, J., Bakken, I. V., Johansen, T., Dworschak, C., Butcher, C., &
+#' Braithwaite, J. M. (2026). (Un)organized protest: Introducing the Anatomy
+#' of Resistance Campaigns 2.0. *Journal of Peace Research*, 63(3), 484-494.
+#' \doi{10.1093/jopres/xjag013}
+#'
+#' Chenoweth, E., Pinckney, J., & Lewis, O. (2018). Days of rage: Introducing
+#' the NAVCO 3.0 dataset. *Journal of Peace Research*, 55(4), 524-534.
+#' \doi{10.1177/0022343318759411}
+#'
+#' @details
+#' **Coverage and `fill_zero`.** A missing record can mean that nothing
+#' happened or that the source does not cover that country and year. With
+#' `fill_zero = TRUE`, a country-year counts as covered by these rules:
+#' \itemize{
+#'   \item Global datasets (`"navco1.3"`, `"navco2.1"`, `"beissinger"`,
+#'     `"raqed"`, `"mec"`, `"omg"`, `"ucdp_prio"`, `"ucdp_vpp"`):
+#'     every state in the panel, within the dataset's years.
+#'   \item Regional datasets (`"scad"`, `"arc"`, `"navco3.0"`): the
+#'     countries with at least one record, within the dataset's years.
+#'   \item `"mm"`: the country-years the source lists, including those it
+#'     codes as having no protest.
+#'   \item `"mmad"`: MMAD covers autocracies, and the package does not
+#'     ship its list of autocratic country-years; a country counts as covered
+#'     from the first to the last year in which MMAD records an event there.
+#'     A 0 inside that span can therefore still be a period the source did
+#'     not code (for example, MMAD has no events in Egypt from July to
+#'     December 2012).
+#' }
+#' Only indicators and counts are filled (columns ending in `_onset`,
+#' `_incidence`, `_episode`, `_n_*`, or `_total`, `n_campaigns`, the UCDP
+#' conflict-type indicators, and NAVCO 3.0 fatalities and injuries).
+#' Maxima, means, and descriptive columns stay `NA` in periods without
+#' records. Coverage is decided by year, so in finer panels every period of
+#' a covered year is covered.
+#'
+#' **Active episodes.** `<prefix>incidence` is 1 in every period in which at
+#' least one episode was in progress and `<prefix>n_active` counts them. An
+#' episode is in progress from its start to its end date. Start dates less
+#' precise than the panel's unit drop the episode, as for onsets. An end
+#' date less precise than the unit is taken to be the last day of the period
+#' the source gives: an OMG phase that ended "in 2005" is active through
+#' December 2005. Beissinger episodes end at the start date plus the
+#' source's duration (in days, or in calendar months for month-precise
+#' starts). Episodes the source codes as ongoing run to the end of its
+#' coverage. For `"navco2.1"`, every campaign-year counts as active.
+#'
+#' **Dates.** In a country-quarter, country-month, or country-day panel,
+#' each event or episode onset is placed in the period of its start date. Records whose source date is less precise
+#' than the panel's unit (for example, an OMG phase dated only to a year in a
+#' country-month panel) are dropped with a message. `"navco1.3"`,
+#' `"navco2.1"`, `"ucdp_prio"`, and `"ucdp_vpp"` record only years
+#' and are available for country-year panels only.
+#'
 #' @examples
+#' # Country-month panel of protest events
+#' monthly <- build_states_panel(2010, 2012, coding_system = "cow", unit = "month") |>
+#'   add_conflict(dataset = "mmad")
+#'
+#' # 0 instead of NA where the dataset covers the country but records nothing
+#' monthly <- build_states_panel(2010, 2012, coding_system = "cow", unit = "month") |>
+#'   add_conflict(dataset = "navco3.0", fill_zero = TRUE)
+#'
+#' # Episodes in progress, not only their onsets
+#' panel <- build_states_panel(2000, 2020, coding_system = "cow") |>
+#'   add_conflict(dataset = "raqed")
+#' panel[panel$cow == 652, c("year", "raqed_onset", "raqed_incidence")]
+#'
 #' panel <- build_states_panel(1990, 2010, coding_system = "cow") |>
 #'   add_conflict(dataset = "navco2.1")
 #'
@@ -295,41 +395,43 @@ add_vdem <- function(panel, vars = NULL) {
 #'   add_conflict(dataset = "mec", aggregate = FALSE)
 #'
 #' @export
-add_conflict <- function(panel, dataset, aggregate = TRUE) {
+add_conflict <- function(panel, dataset, aggregate = TRUE, fill_zero = FALSE) {
   check_flag(aggregate, "aggregate")
+  check_flag(fill_zero, "fill_zero")
   coding_system <- detect_coding_system(panel)
+  unit <- detect_panel_unit(panel)
+  keys <- c(coding_system, time_keys(unit))
   yr <- range(panel$year, na.rm = TRUE)
 
   conflicts <- conflict_data(
     start_year    = yr[1],
     end_year      = yr[2],
     dataset       = dataset,
-    coding_system = coding_system
+    coding_system = coding_system,
+    unit          = unit
   )
 
-  id_col <- coding_system
-
   campaign_dataset <- dataset %in% c(
-    "navco1.3", "navco2.1", "beissinger", "csra", "mec"
+    "navco1.3", "navco2.1", "beissinger", "raqed", "mec", "omg"
   )
 
   if (aggregate && campaign_dataset) {
     has_dupes <- conflicts |>
-      dplyr::count(.data[[id_col]], .data$year) |>
+      dplyr::count(dplyr::across(dplyr::all_of(keys))) |>
       dplyr::filter(.data$n > 1) |>
       nrow() > 0
 
     if (has_dupes) {
       message(
-        "Multiple campaigns or episodes per country-year detected in '",
+        "Multiple campaigns or episodes per country-", unit, " detected in '",
         dataset, "'. ",
-        "Aggregating to country-year using max() for numeric columns. ",
+        "Aggregating to country-", unit, " using max() for numeric columns. ",
         "Use `aggregate = FALSE` or `conflict_data()` for record-level data."
       )
     }
 
     conflicts <- conflicts |>
-      dplyr::group_by(.data[[id_col]], .data$year) |>
+      dplyr::group_by(dplyr::across(dplyr::all_of(keys))) |>
       dplyr::mutate(n_campaigns = dplyr::n()) |>
       dplyr::summarise(
         dplyr::across(dplyr::where(is.numeric), safe_max),
@@ -337,19 +439,37 @@ add_conflict <- function(panel, dataset, aggregate = TRUE) {
       )
   }
 
-  dplyr::left_join(panel, conflicts, by = c(id_col, "year"))
+  out <- dplyr::left_join(panel, conflicts, by = keys)
+
+  if (dataset %in% spell_datasets) {
+    active <- episode_incidence(dataset, coding_system, yr[1], yr[2], unit)
+    out <- dplyr::left_join(out, active, by = keys)
+  }
+
+  if (fill_zero) {
+    fill <- zero_fill_columns(setdiff(names(out), names(panel)))
+    covered <- dataset_covers(dataset, coding_system, out[c(coding_system, "year")])
+    for (col in fill) {
+      zero <- covered & is.na(out[[col]])
+      out[[col]][zero] <- 0L
+    }
+  }
+
+  out
 }
 
 
 #' Add leader data to a state panel
 #'
 #' @description
-#' Joins country-year leader data onto an existing state panel. The coding
-#' system and year range are detected automatically from the panel.
+#' Joins leader data onto an existing state panel. The coding system, time
+#' unit, and year range are detected automatically from the panel.
 #'
-#' Each country-year is assigned the leader who held power at the end of that
-#' year (i.e., the leader with the latest start date when multiple leaders
-#' served in the same year).
+#' Each period is assigned the leader who held power at the end of it (the
+#' leader with the latest start date when several leaders served in the
+#' same period). In a country-quarter, country-month, or country-day panel,
+#' leaders are placed by their exact dates in office, so a transition in
+#' February 2011 shows up in February 2011, not for the whole year.
 #'
 #' @param panel A data frame produced by `build_states_panel()`.
 #' @param dataset Dataset to use: `"archigos"` (default) or `"reign"`.
@@ -372,18 +492,24 @@ add_conflict <- function(panel, dataset, aggregate = TRUE) {
 #' panel <- build_states_panel(1990, 2010, coding_system = "cow") |>
 #'   add_leader_data(dataset = "reign")
 #'
+#' # Leader by month
+#' monthly <- build_states_panel(2011, 2011, coding_system = "cow", unit = "month") |>
+#'   add_leader_data()
+#'
 #' @export
 add_leader_data <- function(panel, dataset = c("archigos", "reign")) {
   dataset       <- match.arg(dataset)
   coding_system <- detect_coding_system(panel)
+  unit          <- detect_panel_unit(panel)
   yr            <- range(panel$year, na.rm = TRUE)
 
   leaders <- load_leader_data(
     start_year    = yr[1],
     end_year      = yr[2],
     dataset       = dataset,
-    coding_system = coding_system
+    coding_system = coding_system,
+    unit          = unit
   )
 
-  dplyr::left_join(panel, leaders, by = c(coding_system, "year"))
+  dplyr::left_join(panel, leaders, by = c(coding_system, time_keys(unit)))
 }

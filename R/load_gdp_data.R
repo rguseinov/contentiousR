@@ -10,7 +10,10 @@
 #' @param dataset Character. Dataset to load:
 #'   \describe{
 #'     \item{`"gapminder"`}{Gapminder GDP per capita (v32). Coverage:
-#'       1945-2019 by default (full source coverage is wider).}
+#'       1800-2100. The source file extends past the latest observed year
+#'       with Gapminder's forecasts and projections, so values (and
+#'       `gdp_growth`) for the most recent years are not observations; see
+#'       the Gapminder documentation before using them.}
 #'     \item{`"fariss"`}{Latent GDP and GDP per capita estimates (Fariss,
 #'       Anders, Markowitz & Barnum 2022), combined from their `fariss_gdp`
 #'       and `fariss_gdppc` replication files. Coverage: 1500-2019.}
@@ -93,19 +96,7 @@ load_gdp_data <- function(
 
     gdp_data <- dplyr::inner_join(gdp_level, gdp_pcap, by = c("gwno", "year"))
 
-    if (coding_system == "cow") {
-      gdp_data <- gdp_data |>
-        dplyr::mutate(
-          cow = suppressWarnings(countrycode::countrycode(.data$gwno, "gwn", "cown"))
-        ) |>
-        tidyr::drop_na("cow") |>
-        dplyr::select(-"gwno") |>
-        dplyr::select("cow", "year", dplyr::everything())
-    } else {
-      gdp_data <- gdp_data |>
-        dplyr::rename(gw = "gwno") |>
-        dplyr::select("gw", "year", dplyr::everything())
-    }
+    gdp_data <- convert_code_column(gdp_data, "gwno", "gw", coding_system)
 
     gdp_data <- gdp_data |>
       dplyr::filter(.data$year >= start_year & .data$year <= end_year) |>
@@ -131,63 +122,34 @@ load_gdp_data <- function(
 
   gdp_source <- readr::read_csv(path, show_col_types = FALSE)
 
-  if (coding_system == "cow") {
-    gdp_data <- gdp_source |>
-      dplyr::mutate(
-        cow = suppressWarnings(countrycode::countrycode(
-          .data$name,
-          origin = "country.name",
-          destination = "cown"
-        )),
-        cow = dplyr::case_when(
-          .data$name == "Serbia" ~ 345,
-          .data$name == "China" ~ 710,
-          TRUE ~ .data$cow
-        )
-      ) |>
-      tidyr::drop_na("cow") |>
-      dplyr::arrange(.data$cow, .data$year) |>
-      dplyr::group_by(.data$cow) |>
-      dplyr::mutate(
-        gdp_pcap_l1 = lag_with_year_gap_check(.data$gdp_pcap, .data$year, 1),
-        gdp_growth  = (.data$gdp_pcap - .data$gdp_pcap_l1) / .data$gdp_pcap_l1 * 100,
-        log_gdp_pcap = log(.data$gdp_pcap)
-      ) |>
-      dplyr::ungroup() |>
-      dplyr::filter(.data$year >= start_year & .data$year <= end_year) |>
-      dplyr::select(
-        "cow", "year", "gdp_pcap", "log_gdp_pcap", "gdp_growth"
+  gdp_data <- gdp_source |>
+    dplyr::mutate(
+      cow = suppressWarnings(as.integer(countrycode::countrycode(
+        .data$name,
+        origin = "country.name",
+        destination = "cown"
+      ))),
+      cow = dplyr::case_when(
+        .data$name == "Serbia" ~ 345L,
+        .data$name == "China" ~ 710L,
+        TRUE ~ .data$cow
       )
-  }
-
-  if (coding_system == "gw") {
-    gdp_data <- gdp_source |>
-      dplyr::mutate(
-        gw = suppressWarnings(countrycode::countrycode(
-          .data$name,
-          origin = "country.name",
-          destination = "gwn"
-        )),
-        gw = dplyr::case_when(
-          .data$name == "Serbia" ~ 340,
-          .data$name == "China" ~ 710,
-          TRUE ~ .data$gw
-        )
-      ) |>
-      tidyr::drop_na("gw") |>
-      dplyr::arrange(.data$gw, .data$year) |>
-      dplyr::group_by(.data$gw) |>
-      dplyr::mutate(
-        gdp_pcap_l1 = lag_with_year_gap_check(.data$gdp_pcap, .data$year, 1),
-        gdp_growth  = (.data$gdp_pcap - .data$gdp_pcap_l1) / .data$gdp_pcap_l1 * 100,
-        log_gdp_pcap = log(.data$gdp_pcap)
-      ) |>
-      dplyr::ungroup() |>
-      dplyr::filter(.data$year >= start_year & .data$year <= end_year) |>
-      dplyr::select(
-        "gw", "year", "gdp_pcap", "log_gdp_pcap", "gdp_growth"
-      )
-  }
+    ) |>
+    dplyr::select("cow", "year", "gdp_pcap")
+  gdp_data <- convert_code_column(gdp_data, "cow", "cow", coding_system)
+  gdp_data <- gdp_data |>
+    dplyr::group_by(.data[[coding_system]]) |>
+    dplyr::mutate(
+      gdp_pcap_l1 = lag_with_year_gap_check(.data$gdp_pcap, .data$year, 1),
+      gdp_growth  = (.data$gdp_pcap - .data$gdp_pcap_l1) / .data$gdp_pcap_l1 * 100,
+      log_gdp_pcap = log(.data$gdp_pcap)
+    ) |>
+    dplyr::ungroup() |>
+    dplyr::filter(.data$year >= start_year & .data$year <= end_year) |>
+    dplyr::select(
+      dplyr::all_of(coding_system), "year", "gdp_pcap", "log_gdp_pcap",
+      "gdp_growth"
+    )
 
   check_unique_key(gdp_data, c(coding_system, "year"))
 

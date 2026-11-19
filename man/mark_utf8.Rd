@@ -17,7 +17,7 @@ every character column.
 Mark every character column of a data frame as UTF-8
 }
 \details{
-Several bundled sources (NAVCO 1.3/2.1, Beissinger, CSRA) contain
+Several bundled sources (NAVCO 1.3/2.1, Beissinger, RAQED, OMG) contain
 genuinely UTF-8-encoded text (e.g. curly apostrophes in campaign names
 like "Student's Anti-Chun Protest") that R leaves tagged as
 \code{Encoding() == "unknown"} after loading, whether from an \code{.RData} file

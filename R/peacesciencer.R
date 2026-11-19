@@ -8,7 +8,7 @@
 #'   and a `year` column.
 #'
 #' @return The input data frame with an additional `ccode` (COW) or `gwcode`
-#'   (Gleditsch-Ward) alias and the attributes `ps_system` and
+#'   (Gleditsch-Ward) key and the attributes `ps_system` and
 #'   `ps_data_type = "state_year"`. Rows and analytical variables are not
 #'   changed.
 #'
@@ -17,6 +17,12 @@
 #' by `peacesciencer::create_stateyears()`. It also expects its own key names:
 #' `ccode` for COW panels and `gwcode` for Gleditsch-Ward panels. This adapter
 #' supplies that interface without replacing contentiousR's `cow` or `gw` key.
+#'
+#' contentiousR's COW panels code the German Federal Republic as 255 and
+#' Czechoslovakia as 316, so that each state keeps one code over time.
+#' `ccode` uses the standard COW codes that `peacesciencer` expects: 260 for
+#' West Germany (1955-1989) and 315 for Czechoslovakia (up to 1992). `gwcode`
+#' equals `gw`.
 #'
 #' Place the adapter immediately before the first `peacesciencer` function, or
 #' earlier in the pipeline. Dplyr joins used by contentiousR preserve these
@@ -34,15 +40,13 @@
 #' @export
 as_peacesciencer_panel <- function(panel) {
   coding_system <- detect_coding_system(panel)
+  check_yearly_panel(panel, "as_peacesciencer_panel")
   ps_key <- if (coding_system == "cow") "ccode" else "gwcode"
 
+  expected <- peacesciencer_code(panel, coding_system)
   if (
     ps_key %in% names(panel) &&
-      !isTRUE(all.equal(
-        panel[[ps_key]],
-        panel[[coding_system]],
-        check.attributes = FALSE
-      ))
+      !isTRUE(all.equal(panel[[ps_key]], expected, check.attributes = FALSE))
   ) {
     stop(
       "Existing `", ps_key, "` values do not match `", coding_system, "`.",
@@ -50,7 +54,7 @@ as_peacesciencer_panel <- function(panel) {
     )
   }
 
-  panel[[ps_key]] <- panel[[coding_system]]
+  panel[[ps_key]] <- expected
   attr(panel, "ps_system") <- coding_system
   attr(panel, "ps_data_type") <- "state_year"
 
@@ -77,8 +81,10 @@ as_peacesciencer_panel <- function(panel) {
 #'
 #' @details
 #' This helper is intended for `peacesciencer` functions that support
-#' state-year data. It does not alter country codes: `ccode` is simply
-#' `peacesciencer`'s name for the COW code stored as `cow` by contentiousR.
+#' state-year data. `ccode` is the standard COW code (see
+#' [as_peacesciencer_panel()]): West Germany and Czechoslovakia get their
+#' own COW codes, 260 and 315, while `peacesciencer` adds its data, and the
+#' panel keeps contentiousR's `cow` codes afterwards.
 #'
 #' Use [as_peacesciencer_panel()] instead when several `peacesciencer`
 #' functions will be applied in one uninterrupted pipeline and retaining the
@@ -102,6 +108,7 @@ add_from_peacesciencer <- function(panel, .fun, ...) {
   }
 
   coding_system <- detect_coding_system(panel)
+  check_yearly_panel(panel, "add_from_peacesciencer")
   ps_key <- if (coding_system == "cow") "ccode" else "gwcode"
   original_attributes <- attributes(panel)
   had_ps_key <- ps_key %in% names(panel)
@@ -123,14 +130,18 @@ add_from_peacesciencer <- function(panel, .fun, ...) {
         call. = FALSE
       )
     }
-    result[[coding_system]] <- result[[ps_key]]
+    result[[coding_system]] <- if (coding_system == "cow") {
+      standardize_cow(result[[ps_key]])
+    } else {
+      result[[ps_key]]
+    }
   }
 
   if (
     ps_key %in% names(result) &&
       !isTRUE(all.equal(
         result[[ps_key]],
-        result[[coding_system]],
+        peacesciencer_code(result, coding_system),
         check.attributes = FALSE
       ))
   ) {
@@ -158,4 +169,23 @@ add_from_peacesciencer <- function(panel, .fun, ...) {
   }
 
   result
+}
+
+#' peacesciencer's country code for a contentiousR panel
+#'
+#' @param panel A country-year panel.
+#' @param coding_system `"cow"` or `"gw"`.
+#'
+#' @return The `ccode` (standard COW: 260 for West Germany in 1955-1989, 315
+#'   for Czechoslovakia up to 1992) or `gwcode` (equal to `gw`) values.
+#'
+#' @keywords internal
+peacesciencer_code <- function(panel, coding_system) {
+  code <- as.integer(panel[[coding_system]])
+  if (coding_system == "cow") {
+    year <- panel$year
+    code[code %in% 255L & year >= 1955L & year <= 1989L] <- 260L
+    code[code %in% 316L & year <= 1992L] <- 315L
+  }
+  code
 }

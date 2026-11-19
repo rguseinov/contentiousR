@@ -18,7 +18,8 @@ load_leader_data(
   start_year = 1945,
   end_year = 2015,
   dataset = c("archigos", "reign"),
-  coding_system = c("cow", "gw")
+  coding_system = c("cow", "gw"),
+  unit = c("year", "quarter", "month", "day")
 )
 }
 \arguments{
@@ -35,9 +36,14 @@ military background coding. Coverage: 1921–2021.}
 }}
 
 \item{coding_system}{Character. Country coding system: \code{"cow"} or \code{"gw"}.}
+
+\item{unit}{Time unit: \code{"year"} (default), \code{"quarter"}, \code{"month"}, or
+\code{"day"}. \code{"reign"} supports up to \code{"month"}, as it does not record the
+day a leader left office.}
 }
 \value{
-A country-year data frame. Columns differ by dataset:
+A data frame with one row per country and period. Columns differ
+by dataset:
 
 \strong{archigos:} \code{cow}/\code{gw}, \code{year}, \code{leader}, \code{entry}, \code{exit},
 \code{irregular_entry}, \code{irregular_exit}, \code{female_leader}, \code{yrborn},
@@ -45,18 +51,36 @@ A country-year data frame. Columns differ by dataset:
 
 \strong{reign:} \code{cow}/\code{gw}, \code{year}, \code{leader}, \code{female_leader},
 \code{military_bg}, \code{birthyear}, \code{leader_tenure}.
+
+\code{leader_tenure} counts the calendar years in office, including the
+current one, at every unit. Finer units add the time keys (\code{quarter},
+or \code{month} and \code{day}) and \code{leader_tenure_quarters},
+\code{leader_tenure_months}, or \code{leader_tenure_days}: the periods in office,
+including the current one.
 }
 \description{
-Loads country-year leader data from one of two datasets included with
-the package. Each row in the output represents one country-year, with the
-leader who held power at the end of the year. When multiple leaders served
-in the same year (i.e., a leadership transition occurred), the leader with
-the latest start date is retained.
+Loads leader data from one of two datasets included with the package, by
+country-year or, with \code{unit}, by country-quarter, country-month, or
+country-day. Each row holds the leader in power at the end of the period:
+when several leaders served in the same period (a leadership transition),
+the one who took office last is kept. Periods are assigned from the
+leaders' dates of entry and exit, so a leader who left office in February
+is no longer listed from March on.
+}
+\details{
+REIGN gives the year and month (not the day) a leader left office; a
+REIGN spell is taken to run to the last day of its exit month. Leaders
+still in office when the REIGN data end (August 2021) have no exit date
+in the source and are kept in office through that month.
 }
 \examples{
 arch <- load_leader_data(1990, 2010, dataset = "archigos", coding_system = "cow")
 
 reign <- load_leader_data(1990, 2010, dataset = "reign", coding_system = "gw")
+
+# Leaders by month: Egypt, 2011
+monthly <- load_leader_data(2011, 2011, coding_system = "cow", unit = "month")
+monthly[monthly$cow == 651, c("year", "month", "leader")]
 
 }
 \references{

@@ -22,6 +22,11 @@
 #'   to `FALSE` to drop these labels, which otherwise overlap and become
 #'   illegible once `panel` covers more than a few dozen states.
 #'
+#' @details
+#' A country-month or country-day panel (see [build_states_panel()]) is
+#' plotted by year: a year is shown as an event year if `var` is 1 in any of
+#' its months or days.
+#'
 #' @return A `ggplot` object (one tile per country-year, filled by
 #'   `"Event"` / `"No event"`, with unobserved country-years left blank).
 #'   States are ordered top-to-bottom by their number of events, most first.
@@ -74,7 +79,17 @@ plot_coverage <- function(panel, var, drop_empty = TRUE, show_labels = TRUE) {
         TRUE ~ NA_character_
       )
     ) |>
-    dplyr::distinct()
+    # A country-month or country-day panel is shown by year: a year is an
+    # event year if any period in it has an event.
+    dplyr::group_by(.data$label, .data$year) |>
+    dplyr::summarise(
+      status = dplyr::case_when(
+        any(.data$status == "Event", na.rm = TRUE) ~ "Event",
+        any(.data$status == "No event", na.rm = TRUE) ~ "No event",
+        TRUE ~ NA_character_
+      ),
+      .groups = "drop"
+    )
 
   events_by_label <- existing |>
     dplyr::group_by(.data$label) |>

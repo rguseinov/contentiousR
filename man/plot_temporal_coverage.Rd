@@ -21,7 +21,7 @@ plot_temporal_coverage(
 }
 \arguments{
 \item{datasets}{Character vector of \code{conflict_data()} dataset keys to
-compare, e.g. \code{c("navco1.3", "beissinger", "csra")}.}
+compare, e.g. \code{c("navco1.3", "beissinger", "raqed")}.}
 
 \item{start_year, end_year}{Integer. Year range to compare (applied to
 every dataset).}
@@ -49,7 +49,7 @@ the others miss.
 \examples{
 if (requireNamespace("ggplot2", quietly = TRUE)) {
   plot_temporal_coverage(
-    c("navco1.3", "navco2.1", "beissinger", "csra"),
+    c("navco1.3", "navco2.1", "beissinger", "mec"),
     start_year = 1950, end_year = 2013
   )
 }

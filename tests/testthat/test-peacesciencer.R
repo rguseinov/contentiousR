@@ -6,7 +6,10 @@ test_that("adapter adds peacesciencer metadata without changing rows", {
   gw_compatible <- as_peacesciencer_panel(gw)
 
   expect_equal(nrow(cow_compatible), nrow(cow))
-  expect_equal(cow_compatible$ccode, cow_compatible$cow)
+  # Standard COW codes for peacesciencer: Czechoslovakia is 315, not 316.
+  expect_equal(cow_compatible$ccode[cow_compatible$cow != 316L],
+               cow_compatible$cow[cow_compatible$cow != 316L])
+  expect_true(all(cow_compatible$ccode[cow_compatible$cow == 316L] == 315L))
   expect_equal(attr(cow_compatible, "ps_system"), "cow")
   expect_equal(attr(cow_compatible, "ps_data_type"), "state_year")
 
@@ -51,7 +54,7 @@ test_that("wrapper hides temporary peacesciencer keys and metadata", {
 
 test_that("wrapper preserves compatibility fields that existed on input", {
   panel <- build_states_panel(1990, 1991, "cow")
-  panel$ccode <- panel$cow
+  panel$ccode <- contentiousR:::peacesciencer_code(panel, "cow")
   attr(panel, "ps_system") <- "existing-system"
   attr(panel, "ps_data_type") <- "existing-type"
 

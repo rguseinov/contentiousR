@@ -41,6 +41,9 @@
 #' cannot be computed across a gap of unknown conflict status. Filter or
 #' otherwise resolve these `NA`s before calling `add_spell_duration()`.
 #'
+#' In a country-month or country-day panel (see [build_states_panel()]), the
+#' spell counts months or days instead of years.
+#'
 #' @examples
 #' panel <- build_states_panel(1990, 2010, coding_system = "gw") |>
 #'   add_conflict(dataset = "ucdp_prio") |>
@@ -102,7 +105,7 @@ add_spell_duration <- function(panel, event = NULL, ongoing = NULL) {
 
   panel[[spell_col]] <- compute_spells(
     unit    = panel[[coding_system]],
-    year    = panel$year,
+    year    = period_index(panel),
     event   = panel[[event]],
     ongoing = ongoing
   )

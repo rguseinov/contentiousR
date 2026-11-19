@@ -38,6 +38,11 @@ state does not appear in \code{panel} at all (e.g. before independence) or
 events (e.g. conflict onsets) actually occurred, as opposed to just
 where a source has any data.
 }
+\details{
+A country-month or country-day panel (see \code{\link[=build_states_panel]{build_states_panel()}}) is
+plotted by year: a year is shown as an event year if \code{var} is 1 in any of
+its months or days.
+}
 \examples{
 if (requireNamespace("ggplot2", quietly = TRUE)) {
   build_states_panel(1990, 2015, coding_system = "cow") |>

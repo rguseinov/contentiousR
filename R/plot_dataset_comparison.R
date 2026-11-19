@@ -9,8 +9,8 @@
 #'   `countrycode::countrycode()`).
 #'
 #' @details
-#' `"navco1.3"`, `"beissinger"`, `"csra"`, and `"mec"` are already one row
-#' per campaign/episode. `"navco2.1"` is not: `conflict_data()` returns one
+#' `"navco1.3"`, `"beissinger"`, `"raqed"`, and `"mec"` are already one
+#' row per campaign/episode. `"navco2.1"` is not: `conflict_data()` returns one
 #' row per campaign-*year*, so a single long-running campaign contributes
 #' many rows. Comparing that directly against onset-coded datasets would
 #' overstate NAVCO 2.1's event counts by roughly the average campaign
@@ -21,7 +21,9 @@
 #' e.g. three distinct "Myanmar Regime Change Campaign" entries share that
 #' name). That flag is computed over the dataset's full native coverage
 #' before `start_year`/`end_year` filtering, so campaigns already under way
-#' at `start_year` are not mistaken for new onsets.
+#' at `start_year` are not mistaken for new onsets. `"omg"` returns one row
+#' per campaign *phase* and is likewise filtered to `omg_onset == 1`, the
+#' first phase of each campaign.
 #'
 #' `countrycode::countrycode()`'s `"region"` destination is not a clean
 #' 7-category classification: a handful of pre-1990 historical entities
@@ -46,6 +48,9 @@ fetch_campaign_events <- function(datasets, start_year, end_year, coding_system)
     )
     if (d == "navco2.1") {
       x <- x[x$nvc2.1_ONSET == 1L, ]
+    }
+    if (d == "omg") {
+      x <- x[x$omg_onset == 1L, ]
     }
     data.frame(
       dataset = d,
@@ -77,7 +82,7 @@ fetch_campaign_events <- function(datasets, start_year, end_year, coding_system)
 #' over/under-represents a region relative to the others.
 #'
 #' @param datasets Character vector of `conflict_data()` dataset keys to
-#'   compare, e.g. `c("navco1.3", "beissinger", "csra")`.
+#'   compare, e.g. `c("navco1.3", "beissinger", "raqed")`.
 #' @param start_year,end_year Integer. Year range to compare (applied to
 #'   every dataset).
 #' @param coding_system `"cow"` or `"gw"`.
@@ -102,7 +107,7 @@ fetch_campaign_events <- function(datasets, start_year, end_year, coding_system)
 #' @examples
 #' if (requireNamespace("ggplot2", quietly = TRUE)) {
 #'   plot_regional_coverage(
-#'     c("navco1.3", "navco2.1", "beissinger", "csra"),
+#'     c("navco1.3", "navco2.1", "beissinger", "mec"),
 #'     start_year = 1950, end_year = 2013
 #'   )
 #' }
@@ -182,7 +187,7 @@ wrap_labels <- function(labels, width = 12) {
 #' the others miss.
 #'
 #' @param datasets Character vector of `conflict_data()` dataset keys to
-#'   compare, e.g. `c("navco1.3", "beissinger", "csra")`.
+#'   compare, e.g. `c("navco1.3", "beissinger", "raqed")`.
 #' @param start_year,end_year Integer. Year range to compare (applied to
 #'   every dataset).
 #' @param coding_system `"cow"` or `"gw"`.
@@ -209,7 +214,7 @@ wrap_labels <- function(labels, width = 12) {
 #' @examples
 #' if (requireNamespace("ggplot2", quietly = TRUE)) {
 #'   plot_temporal_coverage(
-#'     c("navco1.3", "navco2.1", "beissinger", "csra"),
+#'     c("navco1.3", "navco2.1", "beissinger", "mec"),
 #'     start_year = 1950, end_year = 2013
 #'   )
 #' }
@@ -254,8 +259,20 @@ plot_temporal_coverage <- function(
   } else {
     c("dataset", "period")
   }
+  # Every period of the requested range, so periods without events are
+  # plotted as 0 rather than skipped.
+  all_starts <- seq(start_year, end_year, by = period_length)
+  all_periods <- paste(all_starts, pmin(all_starts + period_length - 1L, end_year),
+                       sep = "-")
   counts <- events |>
+    dplyr::mutate(period = as.character(.data$period)) |>
     dplyr::count(dplyr::across(dplyr::all_of(group_vars)), name = "n")
+  grid <- dplyr::distinct(events[setdiff(group_vars, "period")])
+  grid <- grid[rep(seq_len(nrow(grid)), each = length(all_periods)), , drop = FALSE]
+  grid$period <- rep(all_periods, length.out = nrow(grid))
+  counts <- dplyr::left_join(grid, counts, by = group_vars)
+  counts$n[is.na(counts$n)] <- 0L
+  counts$period <- factor(counts$period, levels = all_periods)
 
   p <- ggplot2::ggplot(
     counts,

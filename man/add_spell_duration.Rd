@@ -50,6 +50,9 @@ column rather than a fixed set of bundled column names. Named
 absence from a source is not evidence of zero events), and a spell count
 cannot be computed across a gap of unknown conflict status. Filter or
 otherwise resolve these \code{NA}s before calling \code{add_spell_duration()}.
+
+In a country-month or country-day panel (see \code{\link[=build_states_panel]{build_states_panel()}}), the
+spell counts months or days instead of years.
 }
 \examples{
 panel <- build_states_panel(1990, 2010, coding_system = "gw") |>

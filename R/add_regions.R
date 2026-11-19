@@ -56,10 +56,27 @@ add_regions <- function(panel, region = "region") {
 
   lookup <- data.frame(unit = units)
   names(lookup) <- coding_system
+  # States countrycode does not code in this system, matched through their
+  # ISO code: Serbia (COW 345; GW 340 and 345), Kosovo (347), Yemen (GW
+  # 678), the Czech Republic and Czechoslovakia (GW 315, 316), Vietnam (GW
+  # 816), and Germany.
+  iso_fallback <- if (coding_system == "cow") {
+    c("345" = "SRB", "347" = "XKX", "255" = "DEU")
+  } else {
+    c("340" = "SRB", "345" = "SRB", "347" = "XKX", "678" = "YEM",
+      "315" = "CZE", "316" = "CZE", "816" = "VNM", "255" = "DEU",
+      "260" = "DEU")
+  }
+  iso <- unname(iso_fallback[as.character(units)])
   for (r in region) {
-    lookup[[r]] <- suppressWarnings(
+    values <- suppressWarnings(
       countrycode::countrycode(units, origin, r)
     )
+    missing <- is.na(values) & !is.na(iso)
+    values[missing] <- suppressWarnings(
+      countrycode::countrycode(iso[missing], "iso3c", r)
+    )
+    lookup[[r]] <- values
   }
 
   dplyr::left_join(panel, lookup, by = coding_system)

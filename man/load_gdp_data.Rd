@@ -28,7 +28,10 @@ load_gdp_data(
 \item{dataset}{Character. Dataset to load:
 \describe{
 \item{\code{"gapminder"}}{Gapminder GDP per capita (v32). Coverage:
-1945-2019 by default (full source coverage is wider).}
+1800-2100. The source file extends past the latest observed year
+with Gapminder's forecasts and projections, so values (and
+\code{gdp_growth}) for the most recent years are not observations; see
+the Gapminder documentation before using them.}
 \item{\code{"fariss"}}{Latent GDP and GDP per capita estimates (Fariss,
 Anders, Markowitz & Barnum 2022), combined from their \code{fariss_gdp}
 and \code{fariss_gdppc} replication files. Coverage: 1500-2019.}

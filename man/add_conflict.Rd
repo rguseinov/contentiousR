@@ -4,7 +4,7 @@
 \alias{add_conflict}
 \title{Add conflict or protest data to a state panel}
 \usage{
-add_conflict(panel, dataset, aggregate = TRUE)
+add_conflict(panel, dataset, aggregate = TRUE, fill_zero = FALSE)
 }
 \arguments{
 \item{panel}{A data frame produced by \code{build_states_panel()}.}
@@ -14,7 +14,8 @@ add_conflict(panel, dataset, aggregate = TRUE)
 \item{\code{"navco1.3"}}{NAVCO 1.3 campaign onsets (1900-2019).}
 \item{\code{"navco2.1"}}{NAVCO 2.1 campaign-years (1945-2013).}
 \item{\code{"beissinger"}}{Beissinger revolutionary episode onsets (1900-2014).}
-\item{\code{"csra"}}{HSE CSRA revolutionary episodes (2000-2024).}
+\item{\code{"raqed"}}{RAQED v1.4 revolutionary and quasi-revolutionary
+episodes (2000-2026). Prefix: \code{raqed_}.}
 \item{\code{"scad"}}{SCAD 2018 social conflict events, Africa and Latin America
 (recorded starts 1989-2017). Prefix: \code{scad_}.}
 \item{\code{"ucdp_prio"}}{UCDP/PRIO Armed Conflict Dataset v26.1 (1946-2025).
@@ -26,33 +27,112 @@ Prefix: \code{ucdp_vpp_}. Requires the \code{readxl} package.}
 Prefix: \code{mmad_}.}
 \item{\code{"mec"}}{Major Episodes of Contention (1955-2018), with global
 episode-level coverage. Prefix: \code{mec_}.}
+\item{\code{"omg"}}{Opposition Movements and Groups v1, campaign phases
+(1789-2019). \code{omg_onset} marks a campaign's first phase. Prefix:
+\code{omg_}.}
+\item{\code{"arc"}}{Anatomy of Resistance Campaigns 2.0 events with
+participating organizations, Africa, Latin America and the Caribbean
+(1990-2018). Prefix: \code{arc_}.}
+\item{\code{"navco3.0"}}{NAVCO 3.0 events on 26 countries (1990-2012):
+actions by anti-government campaigns, states, and others, with
+tactics, goals, and state responses. Prefix: \code{nvc3.0_}.}
 }}
 
-\item{aggregate}{Logical. If \code{TRUE} (default), aggregates to country-year
+\item{aggregate}{Logical. If \code{TRUE} (default), aggregates to the panel's unit
 before joining (relevant for campaign and episode datasets only). If
 \code{FALSE}, performs a raw left join.}
+
+\item{fill_zero}{Logical. If \code{FALSE} (default), periods without a record
+are \code{NA}. If \code{TRUE}, event indicators and counts (onset, incidence,
+and count columns) are set to 0 in periods the dataset covers but in
+which it records nothing, and stay \code{NA} outside its coverage. See
+Details and \code{\link[=list_datasets]{list_datasets()}} for how coverage is defined.}
 }
 \value{
 The input panel with conflict/protest columns added via left join.
-Unmatched country-years remain \code{NA}; the function does not assume that an
-unobserved event indicator is zero.
+With \code{fill_zero = FALSE}, unmatched periods remain \code{NA}; the function
+does not assume that an unobserved event indicator is zero.
 }
 \description{
 Joins a conflict, protest, or revolutionary episode dataset onto an existing
-state panel at the country-year level.
+state panel. The panel's coding system and time unit (year, month, or day;
+see \code{\link[=build_states_panel]{build_states_panel()}}) are detected automatically, and the data are
+aggregated to that unit.
 
-\strong{Country-year datasets} (\code{"scad"}, \code{"ucdp_prio"}, \code{"ucdp_vpp"}, \code{"mm"},
-\code{"mmad"}) are already at the country-year level when loaded, so the
-\code{aggregate} argument has no effect for them.
+\strong{Event and conflict-year datasets} (\code{"scad"}, \code{"ucdp_prio"},
+\code{"ucdp_vpp"}, \code{"mm"}, \code{"mmad"}, \code{"arc"}, \code{"navco3.0"}) are already
+aggregated to the panel's unit when loaded, so the \code{aggregate} argument
+has no effect for them.
 
 \strong{Campaign and episode datasets} (\code{"navco1.3"}, \code{"navco2.1"},
-\code{"beissinger"}, \code{"csra"}, \code{"mec"}) can have multiple rows per country-year.
-With \code{aggregate = TRUE} (the default) these are collapsed to country-year
-by taking the maximum of all numeric columns, and an \code{n_campaigns} count
+\code{"beissinger"}, \code{"raqed"}, \code{"mec"}, and \code{"omg"})
+can have multiple rows per country-period.
+With \code{aggregate = TRUE} (the default) these are collapsed to the panel's
+unit by taking the maximum of all numeric columns, and an \code{n_campaigns} count
 column is added. Set \code{aggregate = FALSE} to keep campaign-level rows (may
-produce duplicates).
+produce duplicates). Onset columns mark the period in which an episode
+started; for all of these datasets, \verb{<prefix>incidence}
+and \verb{<prefix>n_active} also mark every period in which an episode was in
+progress, from its start to its end date (see Details).
+}
+\details{
+\strong{Coverage and \code{fill_zero}.} A missing record can mean that nothing
+happened or that the source does not cover that country and year. With
+\code{fill_zero = TRUE}, a country-year counts as covered by these rules:
+\itemize{
+\item Global datasets (\code{"navco1.3"}, \code{"navco2.1"}, \code{"beissinger"},
+\code{"raqed"}, \code{"mec"}, \code{"omg"}, \code{"ucdp_prio"}, \code{"ucdp_vpp"}):
+every state in the panel, within the dataset's years.
+\item Regional datasets (\code{"scad"}, \code{"arc"}, \code{"navco3.0"}): the
+countries with at least one record, within the dataset's years.
+\item \code{"mm"}: the country-years the source lists, including those it
+codes as having no protest.
+\item \code{"mmad"}: MMAD covers autocracies, and the package does not
+ship its list of autocratic country-years; a country counts as covered
+from the first to the last year in which MMAD records an event there.
+A 0 inside that span can therefore still be a period the source did
+not code (for example, MMAD has no events in Egypt from July to
+December 2012).
+}
+Only indicators and counts are filled (columns ending in \verb{_onset},
+\verb{_incidence}, \verb{_episode}, \verb{_n_*}, or \verb{_total}, \code{n_campaigns}, the UCDP
+conflict-type indicators, and NAVCO 3.0 fatalities and injuries).
+Maxima, means, and descriptive columns stay \code{NA} in periods without
+records. Coverage is decided by year, so in finer panels every period of
+a covered year is covered.
+
+\strong{Active episodes.} \verb{<prefix>incidence} is 1 in every period in which at
+least one episode was in progress and \verb{<prefix>n_active} counts them. An
+episode is in progress from its start to its end date. Start dates less
+precise than the panel's unit drop the episode, as for onsets. An end
+date less precise than the unit is taken to be the last day of the period
+the source gives: an OMG phase that ended "in 2005" is active through
+December 2005. Beissinger episodes end at the start date plus the
+source's duration (in days, or in calendar months for month-precise
+starts). Episodes the source codes as ongoing run to the end of its
+coverage. For \code{"navco2.1"}, every campaign-year counts as active.
+
+\strong{Dates.} In a country-quarter, country-month, or country-day panel,
+each event or episode onset is placed in the period of its start date. Records whose source date is less precise
+than the panel's unit (for example, an OMG phase dated only to a year in a
+country-month panel) are dropped with a message. \code{"navco1.3"},
+\code{"navco2.1"}, \code{"ucdp_prio"}, and \code{"ucdp_vpp"} record only years
+and are available for country-year panels only.
 }
 \examples{
+# Country-month panel of protest events
+monthly <- build_states_panel(2010, 2012, coding_system = "cow", unit = "month") |>
+  add_conflict(dataset = "mmad")
+
+# 0 instead of NA where the dataset covers the country but records nothing
+monthly <- build_states_panel(2010, 2012, coding_system = "cow", unit = "month") |>
+  add_conflict(dataset = "navco3.0", fill_zero = TRUE)
+
+# Episodes in progress, not only their onsets
+panel <- build_states_panel(2000, 2020, coding_system = "cow") |>
+  add_conflict(dataset = "raqed")
+panel[panel$cow == 652, c("year", "raqed_onset", "raqed_incidence")]
+
 panel <- build_states_panel(1990, 2010, coding_system = "cow") |>
   add_conflict(dataset = "navco2.1")
 
@@ -80,9 +160,15 @@ Dataverse. \doi{10.7910/DVN/MHOXDV}
 
 Beissinger, M. (2022). \emph{Revolutionary Episodes Dataset}.
 
+Ustyuzhanin, V., Semichev, D., Grinin, L., & Korotaev, A. (2026). New
+possibilities for analysing revolution: Introducing a database of
+revolutions of the 21st century. \emph{Russian Sociological Review}, 25(1), 9-61.
+\doi{10.17323/1728-192X-2026-1-9-61}
+
 Ustyuzhanin, V., Semichev, D., Grinin, L., & Korotaev, A. (2026).
-\emph{Revolutionary Database (2000-2024)}, Version 1.102. HSE University,
-Centre for Stability and Risk Analysis. \url{https://social.hse.ru/mr/rev_bd}
+\emph{Revolutionary and Quasi-revolutionary Episodes Dataset (RAQED)
+(2000-2025)}, Version 1.4. HSE University, Centre for Stability and Risk
+Analysis. \url{https://social.hse.ru/mr/rev_bd}
 
 Salehyan, I., Hendrix, C. S., Hamner, J., Case, C., Linebarger, C.,
 Stull, E., & Williams, J. (2012). Social conflict in Africa: A new
@@ -107,4 +193,19 @@ Protest in Autocracies}. Oxford University Press.
 Chenoweth, E., & Kang, S. (2026). The Major Episodes of Contention (MEC)
 Data Project: An introduction. \emph{Journal of Peace Research}, 63(4), 724-734.
 \doi{10.1093/jopres/xjaf008}
+
+Dahl, M., Dahlum, S., Fjelde, H., Gjerløw, H., Knutsen, C. H.,
+Strøm-Sedgwick, C., & Wig, T. (2026). Mass mobilization in the modern
+era: Introducing the Opposition Movements and Groups (OMG) dataset,
+1789-2019. \emph{Comparative Political Studies}, 59(10), 2117-2158.
+\doi{10.1177/00104140251369330}
+
+Vüllers, J., Bakken, I. V., Johansen, T., Dworschak, C., Butcher, C., &
+Braithwaite, J. M. (2026). (Un)organized protest: Introducing the Anatomy
+of Resistance Campaigns 2.0. \emph{Journal of Peace Research}, 63(3), 484-494.
+\doi{10.1093/jopres/xjag013}
+
+Chenoweth, E., Pinckney, J., & Lewis, O. (2018). Days of rage: Introducing
+the NAVCO 3.0 dataset. \emph{Journal of Peace Research}, 55(4), 524-534.
+\doi{10.1177/0022343318759411}
 }

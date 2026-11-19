@@ -11,10 +11,19 @@ The following data have explicit open licenses at their source:
   https://ucdp.uu.se/downloads/
 * NAVCO_2.1.RData: NAVCO 2.1, CC0 1.0.
   https://doi.org/10.7910/DVN/MHOXDV
+* navco3.0_events.rds: NAVCO 3.0, CC0 1.0.
+  https://doi.org/10.7910/DVN/INNYEO
 * MEC.rds: Major Episodes of Contention, CC0 1.0.
   https://doi.org/10.7910/DVN/JQWQNW
-* un_population.RData: UN World Population Prospects 2024, Creative Commons
-  Attribution 3.0 IGO. https://population.un.org/wpp/
+* ARC_2_0_Events.rds: Anatomy of Resistance Campaigns (ARC) 2.0, CC0 1.0.
+  https://doi.org/10.7910/DVN/C0PUHP
+* omg.rds: Opposition Movements and Groups (OMG), Dahl, Dahlum, Fjelde,
+  Gjerlow, Knutsen, Strom-Sedgwick, and Wig, Open Data Commons Attribution
+  License (ODC-BY). https://www.prio.org/data/39
+* wpp2024_pop.rds: UN World Population Prospects 2024, total population
+  estimates 1949-2023 for countries and areas, from the 'wpp2024' R package
+  (UN Population Division). Creative Commons Attribution 3.0 IGO.
+  https://population.un.org/wpp/
 * mmad_events.csv.xz: Mass Mobilization in Autocracies Database, Creative
   Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC
   BY-NC-SA 4.0) -- NOT the MIT terms this package's own code is under.
@@ -32,9 +41,9 @@ their creators. Their inclusion here does not grant rights beyond those terms:
 * mmALL_073120.RData: Mass Mobilization Data Project.
 * revolutionary_episodes_beissinger.csv.xz: Mark R. Beissinger, Revolutionary
   Episodes Dataset.
-* revolutionary_episodes_csra.csv.xz: Ustyuzhanin, Semichev, Grinin, and
-  Korotaev, Revolutionary Database (2000-2024), V1.102, Centre for Stability
-  and Risk Analysis, HSE University.
+* raqed_v1.4.csv.xz: Ustyuzhanin, Semichev, Grinin, and Korotaev,
+  Revolutionary and Quasi-revolutionary Episodes Dataset (RAQED)
+  (2000-2025), V1.4, Centre for Stability and Risk Analysis, HSE University.
 * archigos_4.1.txt.xz: Henk E. Goemans, Kristian Skrede Gleditsch, and Giacomo
   Chiozza, Archigos 4.1.
 * reign_leader_list.csv.xz: REIGN Dataset.
@@ -42,8 +51,8 @@ their creators. Their inclusion here does not grant rights beyond those terms:
   Capabilities v7.0.
 * fariss_gdp.rds, fariss_gdppc.rds, and fariss_pop.rds: Fariss, Anders,
   Markowitz, and Barnum (2022), historic GDP and population estimates.
-* SIPRI-Milex-data-1949-2025_v1.2.xlsx: Stockholm International Peace
-  Research Institute, Military Expenditure Database. Free to use with
+* sipri_milex_v1.2.rds: Stockholm International Peace Research Institute,
+  Military Expenditure Database v1.2 (1949-2025). Free to use with
   attribution; commercial use requires separately negotiating a royalty
   with SIPRI. https://www.sipri.org/about/terms-and-conditions
 * estimates_milburden_20250429.rds and estimates_milex_con_20250429.rds:
@@ -51,9 +60,15 @@ their creators. Their inclusion here does not grant rights beyond those terms:
   Dataset.
 
 To keep the package small, some files are stored recompressed or in a
-different file format (e.g. Stata .dta saved as .rds), and the Mass
-Mobilization, SCAD, and Gapminder files contain only the columns the package
-reads; no values have been altered.
+different file format (e.g. Stata .dta saved as .rds), and some contain only
+the parts the package reads: the Mass Mobilization, SCAD, and Gapminder files
+keep only the columns used; SIPRI keeps only the "Constant (2024) US$" and
+"Share of GDP" sheets of its workbook, in long format; RAQED keeps only the
+"Event table" sheet of its workbook; OMG omits its free-text note, source,
+and coder columns; the ARC 2.0 events file omits its country name and
+abbreviation columns; and NAVCO 3.0 keeps only the columns the package reads
+(the event descriptions, source titles, actor names, and coder notes are
+omitted). No values have been altered.
 
 See the data-sources vignette for source URLs, versions, and citations. Anyone
 redistributing the package is responsible for verifying that the applicable

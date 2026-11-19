@@ -46,10 +46,12 @@
 #'   `data` doesn't cover that country-year.
 #'
 #' @details
-#' Country matching uses `countrycode::countrycode()`, so any row whose
-#' `country_col` value it cannot map to the panel's coding system (an
-#' unrecognized name, a sub-national/organizational entry, etc.) is
-#' dropped, with a message reporting how many rows were dropped.
+#' Country matching uses `countrycode::countrycode()` to find the COW code
+#' and then converts it to the panel's coding system by year, so that, for
+#' example, Serbia is GW 345 (Yugoslavia) before June 2006 and 340 after,
+#' and Yemen is COW 679 from 1991. Any row whose `country_col` value cannot
+#' be mapped (an unrecognized name, a sub-national/organizational entry,
+#' etc.) is dropped, with a message reporting how many rows were dropped.
 #'
 #' `contentiousR` deliberately does not depend on `gdeltr2`, `icews`, or
 #' `acled.api` -- this function is a generic bridge instead, so the
@@ -107,6 +109,7 @@ harmonize_conflict_data <- function(
     aggregate   = TRUE
 ) {
   coding_system <- detect_coding_system(panel)
+  check_yearly_panel(panel, "harmonize_conflict_data")
   check_flag(aggregate, "aggregate")
 
   if (!is.data.frame(data)) {
@@ -119,7 +122,7 @@ harmonize_conflict_data <- function(
     stop("`country_col` ('", country_col, "') not found in `data`.", call. = FALSE)
   }
   if (is.null(year_col) == is.null(date_col)) {
-    stop("Supply exactly one of `year_col` or `date_col`, not both.", call. = FALSE)
+    stop("Supply exactly one of `year_col` or `date_col`.", call. = FALSE)
   }
   if (!is.null(year_col) && !year_col %in% names(data)) {
     stop("`year_col` ('", year_col, "') not found in `data`.", call. = FALSE)
@@ -127,11 +130,6 @@ harmonize_conflict_data <- function(
   if (!is.null(date_col) && !date_col %in% names(data)) {
     stop("`date_col` ('", date_col, "') not found in `data`.", call. = FALSE)
   }
-
-  origin_dest <- if (coding_system == "cow") "cown" else "gwn"
-  unit <- suppressWarnings(
-    countrycode::countrycode(data[[country_col]], origin_code, origin_dest)
-  )
 
   year <- if (!is.null(year_col)) {
     year_values <- data[[year_col]]
@@ -161,6 +159,23 @@ harmonize_conflict_data <- function(
       }
     )
     as.integer(format(parsed, "%Y"))
+  }
+
+
+  # Country codes by year: through COW, then to the panel's system.
+  if (origin_code %in% c("cown", "gwn")) {
+    unit <- convert_state_code(data[[country_col]], year,
+                               if (origin_code == "cown") "cow" else "gw",
+                               coding_system)
+  } else {
+    cow <- suppressWarnings(as.integer(
+      countrycode::countrycode(data[[country_col]], origin_code, "cown")
+    ))
+    if (origin_code == "country.name") {
+      # countrycode has no COW code for Serbia (COW 345).
+      cow[grepl("^serbia$", trimws(tolower(data[[country_col]])))] <- 345L
+    }
+    unit <- convert_state_code(cow, year, "cow", coding_system)
   }
 
   harmonized <- data
@@ -195,7 +210,10 @@ harmonize_conflict_data <- function(
   } else {
     check_unique_key(harmonized, c(coding_system, "year"))
 
-    keep_cols <- setdiff(names(harmonized), c(country_col, year_col, date_col))
+    keep_cols <- setdiff(
+      names(harmonized),
+      setdiff(c(country_col, year_col, date_col), c(coding_system, "year"))
+    )
     joined <- harmonized[, keep_cols, drop = FALSE]
     rename_cols <- setdiff(keep_cols, c(coding_system, "year"))
     new_names <- paste0(prefix, "_", rename_cols)

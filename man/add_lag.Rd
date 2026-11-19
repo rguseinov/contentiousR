@@ -27,6 +27,9 @@ panel data. Unlike a plain \code{dplyr::lag()}, the lag is \code{NA} wherever th
 preceding row is not exactly \code{n} years earlier, so gaps in the year
 sequence (e.g. after filtering with \code{tidyr::drop_na()}) do not silently
 produce a lag from the wrong year.
+
+In a country-month or country-day panel (see \code{\link[=build_states_panel]{build_states_panel()}}), the
+lag is \code{n} months or \code{n} days rather than years.
 }
 \examples{
 panel <- build_states_panel(1990, 2000, coding_system = "cow") |>

@@ -72,10 +72,12 @@ whatever data frame the caller already has in R, in whatever raw column
 names and country/date encodings that source happens to use.
 }
 \details{
-Country matching uses \code{countrycode::countrycode()}, so any row whose
-\code{country_col} value it cannot map to the panel's coding system (an
-unrecognized name, a sub-national/organizational entry, etc.) is
-dropped, with a message reporting how many rows were dropped.
+Country matching uses \code{countrycode::countrycode()} to find the COW code
+and then converts it to the panel's coding system by year, so that, for
+example, Serbia is GW 345 (Yugoslavia) before June 2006 and 340 after,
+and Yemen is COW 679 from 1991. Any row whose \code{country_col} value cannot
+be mapped (an unrecognized name, a sub-national/organizational entry,
+etc.) is dropped, with a message reporting how many rows were dropped.
 
 \code{contentiousR} deliberately does not depend on \code{gdeltr2}, \code{icews}, or
 \code{acled.api} -- this function is a generic bridge instead, so the

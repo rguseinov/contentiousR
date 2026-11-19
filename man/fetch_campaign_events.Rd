@@ -22,8 +22,8 @@ A data frame with \code{dataset}, \code{unit} (the coding-system code),
 Fetch one row per campaign/episode onset from several conflict datasets
 }
 \details{
-\code{"navco1.3"}, \code{"beissinger"}, \code{"csra"}, and \code{"mec"} are already one row
-per campaign/episode. \code{"navco2.1"} is not: \code{conflict_data()} returns one
+\code{"navco1.3"}, \code{"beissinger"}, \code{"raqed"}, and \code{"mec"} are already one
+row per campaign/episode. \code{"navco2.1"} is not: \code{conflict_data()} returns one
 row per campaign-\emph{year}, so a single long-running campaign contributes
 many rows. Comparing that directly against onset-coded datasets would
 overstate NAVCO 2.1's event counts by roughly the average campaign
@@ -34,7 +34,9 @@ campaign \code{id}, not the free-text campaign name, which is not unique --
 e.g. three distinct "Myanmar Regime Change Campaign" entries share that
 name). That flag is computed over the dataset's full native coverage
 before \code{start_year}/\code{end_year} filtering, so campaigns already under way
-at \code{start_year} are not mistaken for new onsets.
+at \code{start_year} are not mistaken for new onsets. \code{"omg"} returns one row
+per campaign \emph{phase} and is likewise filtered to \code{omg_onset == 1}, the
+first phase of each campaign.
 
 \code{countrycode::countrycode()}'s \code{"region"} destination is not a clean
 7-category classification: a handful of pre-1990 historical entities

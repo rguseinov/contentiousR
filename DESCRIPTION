@@ -1,7 +1,7 @@
 Package: contentiousR
 Type: Package
 Title: Contentious Politics and Civil Conflict Research
-Version: 0.1.0
+Version: 0.1.0.9000
 Authors@R: 
     person("Ruslan", "Guseinov", email = "rigusseinov@gmail.com", role = c("aut", "cre"), comment = c(ORCID = "0009-0000-1156-9495"))
 Description: Constructs reproducible country-year panels for research on
@@ -16,11 +16,13 @@ Description: Constructs reproducible country-year panels for research on
     Analysis Database, Salehyan et al. (2012)
     <doi:10.1080/03050629.2012.697426>; the Uppsala Conflict Data Program
     and Peace Research Institute Oslo (UCDP/PRIO) Armed Conflict Dataset,
-    Gleditsch et al. (2002) <doi:10.1177/0022343302039005007>; and the Major
+    Gleditsch et al. (2002) <doi:10.1177/0022343302039005007>; the Major
     Episodes of Contention data, Chenoweth and Kang (2026)
-    <doi:10.1093/jopres/xjaf008>. Varieties of Democracy (V-Dem) indicators
-    require the optional 'vdemdata' package, which is not on CRAN and can be
-    installed from <https://github.com/vdeminstitute/vdemdata>.
+    <doi:10.1093/jopres/xjaf008>; and the Opposition Movements and Groups
+    data, Dahl et al. (2026) <doi:10.1177/00104140251369330>. Varieties of
+    Democracy (V-Dem) indicators require the optional 'vdemdata' package,
+    which is not on CRAN and can be installed from
+    <https://github.com/vdeminstitute/vdemdata>.
 License: MIT + file LICENSE
 Copyright: See file COPYRIGHTS for the third-party data bundled in
     inst/extdata.

@@ -43,7 +43,7 @@ Coverage: 1949-2025.}
 Markowitz & Morales 2025): military burden (\code{barnum_milburden}, a
 fraction of GDP) plus latent-model expenditure estimates on two
 unit bases (\code{barnum_sipri}, \code{barnum_nmc}; see Details). Coverage:
-1816-2019.}
+1816-2023 (\code{barnum_milburden} to 2019).}
 }}
 
 \item{coding_system}{Character. Country coding system: \code{"cow"} or \code{"gw"}.}

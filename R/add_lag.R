@@ -30,6 +30,9 @@ lag_with_year_gap_check <- function(x, year, n) {
 #' sequence (e.g. after filtering with `tidyr::drop_na()`) do not silently
 #' produce a lag from the wrong year.
 #'
+#' In a country-month or country-day panel (see [build_states_panel()]), the
+#' lag is `n` months or `n` days rather than years.
+#'
 #' @param panel A data frame produced by `build_states_panel()`, containing
 #'   a `cow` or `gw` column and a `year` column.
 #' @param vars Character vector of column names in `panel` to lag.
@@ -70,15 +73,19 @@ add_lag <- function(panel, vars, n = 1) {
     )
   }
 
-  panel |>
-    dplyr::arrange(.data[[coding_system]], .data$year) |>
+  panel$.period <- period_index(panel)
+
+  panel <- panel |>
+    dplyr::arrange(.data[[coding_system]], .data$.period) |>
     dplyr::group_by(.data[[coding_system]]) |>
     dplyr::mutate(
       dplyr::across(
         dplyr::all_of(vars),
-        ~ lag_with_year_gap_check(.x, .data$year, n),
+        ~ lag_with_year_gap_check(.x, .data$.period, n),
         .names = "{.col}_l"
       )
     ) |>
     dplyr::ungroup()
+  panel$.period <- NULL
+  panel
 }
