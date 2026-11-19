@@ -1,14 +1,14 @@
 # Get started with contentiousR
 
 `contentiousR` creates reproducible country-year panels for contentious
-politics and civil conflicts research, offers diagnostics and
+politics and civil conflict research, offers diagnostics and
 visualization tools, and allows interoperation with `peacesciencer`.
-Every public loader supports Correlates of War (`"cow"`) and
-Gleditsch-Ward (`"gw"`) country codes.
 
-## Build and enrich a panel
+## Build a panel and add data
 
-Construct a state panel, then add data.
+First, load a package. Then, create a state panel with the selected
+temporal coverage and coutnry coding system. Use a pipeline workflow to
+add data, such as economic and conflict vaiables.
 
 ``` r
 
@@ -35,12 +35,13 @@ analysis_data[1:4, c(
 #> 4        Canada 2000 48531.95                  NA  Chretien
 ```
 
-An unmatched row remains `NA`, as a source may not cover a country-year.
+If there is an unmatched row, R returns `NA`
 
-## Load data separately
+## Standalone workflow
 
-Standalone loaders are useful when you want to inspect or aggregate data
-before joining them.
+If you want to inspect data before proceeding to further steps,
+standalone workflow can be helpful, as it loads data and saves it
+withint R environment.
 
 ``` r
 
@@ -67,22 +68,17 @@ head(conflicts)
 #> #   ucdp_prio_incompatibility_max <int>, ucdp_prio_ep_end <int>
 ```
 
-UCDP/PRIO distinguishes active conflict-years (`ucdp_prio_incidence`)
-from the first year of an episode (`ucdp_prio_onset`). See
+See
 [`vignette("data-sources", package = "contentiousR")`](https://rguseinov.github.io/contentiousR/articles/data-sources.md)
 before interpreting any source-specific variable.
 
 ## Conflict spells (peace-years)
 
 [`add_spell_duration()`](https://rguseinov.github.io/contentiousR/reference/add_spell_duration.md)
-turns a binary conflict column into a duration counter — years since the
-last event for that state, restarting after each new one. This is the
-same construct as
-[`peacesciencer::add_spells()`](https://rdrr.io/pkg/peacesciencer/man/add_spells.html)
-(named differently here to avoid colliding with it when both packages
-are attached), useful as a control for temporal dependence in
-event-history models (e.g. with cubic splines). It needs a column
-without `NA`, so filter first:
+helps one add peace spells, i.e. years since the last event for that
+state. This tool can be useful as a control for temporal dependence
+(e.g. with cubic splines). It needs a column without `NA`, so filter
+first:
 
 ``` r
 
@@ -100,25 +96,19 @@ spell_data[spell_data$gw == 2, c("gw", "year", "ucdp_prio_onset", "ucdp_prio_spe
 #> 5  2 2005               0               1
 ```
 
-If `event` is omitted,
+To work, the function needs an `event`; if it is omitted,
 [`add_spell_duration()`](https://rguseinov.github.io/contentiousR/reference/add_spell_duration.md)
 looks for exactly one column ending in `_onset`, `_incidence`, or
-`_ongoing` and uses that; it errors if none or several are found.
-`_onset`-style columns treat every `1` as an independent event by
-default; `_incidence`/`_ongoing`-style columns collapse a run of
-consecutive `1`s into one event, leaving the continuation years `NA` in
-the output (override this with the `ongoing` argument).
+`_ongoing` and uses that; but it errors if none or several are found.
 
 ## Lagged variables
 
 [`add_lag()`](https://rguseinov.github.io/contentiousR/reference/add_lag.md)
 adds a lagged version of one or more columns, computed within each state
 after sorting by year and grouping by state before lagging. Unlike a
-plain
-[`dplyr::lag()`](https://dplyr.tidyverse.org/reference/lead-lag.html),
-it checks that the preceding row is genuinely `n` years earlier, so a
-gap in the year sequence produces `NA` rather than silently reaching
-further back than intended:
+plain dplyr::lag(), it also checks that the previous row really is the
+previous year. If a year is missing, say a country has data for 2002 and
+2005 but nothing in between, the lag for 2005 is set to `NA`.
 
 ``` r
 
@@ -138,20 +128,14 @@ build_states_panel(1990, 1995, coding_system = "cow") |>
 #> 6     2  1995   48326.     47696.         2.60
 ```
 
-Each requested variable gets one new column named `<var>_l`. Call
-[`add_lag()`](https://rguseinov.github.io/contentiousR/reference/add_lag.md)
-again (optionally with a different `n`) for additional lags.
+Each requested variable gets one new column named `<var>_l`.
 
 ## Visualizing onsets
 
-[`plot_coverage()`](https://rguseinov.github.io/contentiousR/reference/plot_coverage.md)
-draws a state-by-year heatmap of a binary (0/1) event column: `1` years
-are shaded as an event, `0` years as no event, and years where the
-source has no data — either `var` is `NA`, or the state does not appear
-in the panel that year at all, e.g. before independence — are left
-blank. States that never have the event are dropped by default
-(`drop_empty = TRUE`), since an all-blank/grey row adds clutter without
-showing where events actually happened.
+Use `plot_coverage` to visualize the treatment status across the panel
+data. `1`s are shaded as an event, `0`s as no event, and years where the
+source has no data — are left blank. States that never have the event
+are dropped by default (`drop_empty = TRUE`)
 
 ``` r
 
@@ -164,10 +148,10 @@ if (requireNamespace("ggplot2", quietly = TRUE)) {
 
 ![](contentiousR_files/figure-html/unnamed-chunk-5-1.png)
 
-## Optional V-Dem data
+## Working with V-Dem data
 
-V-Dem is not bundled and its R data package is not on CRAN. Install it
-from its official repository, then request only the indicators you need:
+To work with the V-Dem data, download it from its official repository,
+then use only the indicators you need:
 
 ``` r
 
@@ -177,31 +161,21 @@ panel |>
   add_vdem(c("v2x_polyarchy", "v2x_libdem"))
 ```
 
-## `build_states_panel()`
-
-Creates a state-year panel with optional filters:
-
-``` r
-
-panel <- build_states_panel(
-  start_year        = 1946,
-  end_year          = 2019,
-  coding_system     = "cow",   # or "gw"
-  exclude_microstates = TRUE,
-  exclude_non_un    = TRUE,
-  exclude_islands   = FALSE
-)
-```
+To get started, I will provide a detailed description on two functions:
+[`load_gdp_data()`](https://rguseinov.github.io/contentiousR/reference/load_gdp_data.md)
+/
+[`add_gdp()`](https://rguseinov.github.io/contentiousR/reference/add_gdp.md)
+and
+[`load_population_data()`](https://rguseinov.github.io/contentiousR/reference/load_population_data.md)
+/
+[`add_population()`](https://rguseinov.github.io/contentiousR/reference/add_population.md).
 
 ## `load_gdp_data()` / `add_gdp()`
 
-Two GDP sources are available via `dataset`. `"gapminder"` (default)
-returns `gdp_pcap`, `log_gdp_pcap`, and `gdp_growth`. `"fariss"` returns
-the latent GDP and GDP per capita estimates from Fariss, Anders,
-Markowitz, and Barnum (2022) as `fariss_gdp` and `fariss_gdppc`, with
-much wider coverage (1500–2019) but units that are not independently
-verified in this package — see
-[`vignette("data-sources", package = "contentiousR")`](https://rguseinov.github.io/contentiousR/articles/data-sources.md).
+Two GDP sources are curently supported and maintained: `"gapminder"` and
+`"fariss"`. `"gapminder"` (default) returns `gdp_pcap`, `log_gdp_pcap`,
+and `gdp_growth`. `"fariss"` returns the latent GDP and GDP per capita
+estimates from Fariss, Anders, Markowitz, and Barnum (2022)
 
 ``` r
 
@@ -235,77 +209,6 @@ panel |> add_population()
 panel |> add_population(dataset = "nmc")
 ```
 
-## `load_military_expenditure_data()` / `add_military_expenditure()`
-
-Three military expenditure sources are available via `dataset`.
-
-| Dataset | Source | Coverage | Returned columns |
-|----|----|----|----|
-| `"sipri"` (default) | [SIPRI Military Expenditure Database](https://doi.org/10.55163/CQGC9685) | 1949–2025 | `sipri_milex`, `sipri_milburden` |
-| `"nmc"` | [National Material Capabilities v7.0](https://correlatesofwar.org/data-sets/national-material-capabilities/) | 1816–2022 | `nmc_milex` |
-| `"barnum"` | Barnum et al. (2025) latent estimate | 1816–2019 | `barnum_milburden`, `barnum_sipri`, `barnum_nmc` |
-
-``` r
-
-# Standalone
-milex_sipri <- load_military_expenditure_data(1990, 2015, dataset = "sipri", coding_system = "cow")
-milex_barnum <- load_military_expenditure_data(1900, 2015, dataset = "barnum", coding_system = "cow")
-
-# Pipeline
-panel |> add_military_expenditure()
-panel |> add_military_expenditure(dataset = "barnum")
-```
-
-Unlike the Fariss GDP/population estimates, Barnum et al.’s underlying
-model does not publish a single combined military expenditure value on a
-real monetary scale, so `barnum_sipri` and `barnum_nmc` are the model’s
-posterior estimate of two specific indicators rather than one “latent”
-series. See
-[`vignette("data-sources", package = "contentiousR")`](https://rguseinov.github.io/contentiousR/articles/data-sources.md)
-for what each represents and why they are not directly comparable to
-`sipri_milex` / `nmc_milex`.
-
-## `load_vdem_data()` / `add_vdem()`
-
-V-Dem indicators. A default set of democracy, civil society, civil
-liberties, and rule-of-law variables is loaded when `vars = NULL`.
-
-``` r
-
-# Standalone
-vdem <- load_vdem_data(
-  vars          = c("v2x_polyarchy", "v2x_libdem"),
-  start_year    = 1990,
-  end_year      = 2015,
-  coding_system = "cow"
-)
-
-# Pipeline
-panel |> add_vdem(vars = c("v2x_polyarchy", "v2x_libdem"))
-```
-
-## `load_leader_data()` / `add_leader_data()`
-
-Country-year leader data from two sources. Each row contains the leader
-who held power at the end of the year; in transition years the
-latest-starting leader is kept.
-
-| Dataset | Source | Coverage | Key variables |
-|----|----|----|----|
-| `"archigos"` | [Archigos 4.1](https://web.archive.org/web/20241206095059/http://ksgleditsch.com/archigos.html) | 1875–2015 | `entry`, `exit`, `irregular_entry`, `irregular_exit`, `female_leader`, `yrborn`, `posttenurefate`, `leader_tenure` |
-| `"reign"` | [REIGN Leader List](https://oefdatascience.github.io/REIGN.github.io/menu/reign_current.html) | 1921–2021 | `female_leader`, `military_bg`, `birthyear`, `leader_tenure` |
-
-``` r
-
-# Standalone
-arch  <- load_leader_data(1990, 2015, dataset = "archigos", coding_system = "cow")
-reign <- load_leader_data(1990, 2015, dataset = "reign",    coding_system = "gw")
-
-# Pipeline
-panel |> add_leader_data(dataset = "archigos")
-panel |> add_leader_data(dataset = "reign")
-```
-
 ## Interoperate with `peacesciencer`
 
 `contentiousR` supports `peacesciencer` (see Miller 2022). It means you
@@ -317,8 +220,7 @@ Functions such as
 expect `ccode`/`gwcode` keys plus attributes that describe the state
 system and unit of analysis. Use
 [`add_from_peacesciencer()`](https://rguseinov.github.io/contentiousR/reference/add_from_peacesciencer.md)
-to supply these temporarily and return a panel with only contentiousR’s
-original country-code key:
+to return a panel with only contentiousR’s original country-code key:
 
 ``` r
 
@@ -328,10 +230,9 @@ analysis_data |>
   add_from_peacesciencer(peacesciencer::add_archigos)
 ```
 
-For multiple consecutive additions, call
+For multiple additions, call
 [`as_peacesciencer_panel()`](https://rguseinov.github.io/contentiousR/reference/as_peacesciencer_panel.md)
-once and then apply the `peacesciencer` functions directly. Neither
-helper changes country codes, rows, or substantive variables.
+once and then apply the `peacesciencer` functions directly.
 
 ## References
 
