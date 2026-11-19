@@ -220,13 +220,15 @@ repository, then use only the indicators you need:</p>
 <span>  <span class="fu"><a href="../reference/add_vdem.html">add_vdem</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"v2x_polyarchy"</span>, <span class="st">"v2x_libdem"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>To get started, I will provide a detailed description on two
 functions: <code><a href="../reference/load_gdp_data.html">load_gdp_data()</a></code> / <code><a href="../reference/add_gdp.html">add_gdp()</a></code> and
-<code><a href="../reference/load_population_data.html">load_population_data()</a></code> / <code><a href="../reference/add_population.html">add_population()</a></code>.</p>
+<code><a href="../reference/load_population_data.html">load_population_data()</a></code> / <code><a href="../reference/add_population.html">add_population()</a></code>. For
+all other functions, see the <a href="https://rguseinov.github.io/contentiousR/reference/index.html">Reference</a>
+page, which documents every function in the package.</p>
 </div>
 <div class="section level2">
 <h2 id="load_gdp_data-add_gdp">
 <code>load_gdp_data()</code> / <code>add_gdp()</code><a class="anchor" aria-label="anchor" href="#load_gdp_data-add_gdp"></a>
 </h2>
-<p>Two GDP sources are curently supported and maintained:
+<p>Two GDP sources are currently supported and maintained:
 <code>"gapminder"</code> and <code>"fariss"</code>.
 <code>"gapminder"</code> (default) returns <code>gdp_pcap</code>,
 <code>log_gdp_pcap</code>, and <code>gdp_growth</code>.
@@ -271,8 +273,9 @@ Prospects 2024</a></td>
 </tr>
 <tr class="even">
 <td><code>"nmc"</code></td>
-<td><a href="https://correlatesofwar.org/data-sets/national-material-capabilities/" class="external-link">Correlates
-of War NMC v7.0</a></td>
+<td>
+<a href="https://correlatesofwar.org/data-sets/national-material-capabilities/" class="external-link">Correlates
+of War NMC v7.0</a> (Singer et al. 1972; Singer 1988)</td>
 <td>1816–2022</td>
 <td>
 <code>nmc_tpop</code>, <code>nmc_upop</code>
@@ -318,22 +321,18 @@ directly.</p>
 <div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<p>Barnum, M., Fariss, C. J., Markowitz, J. N., &amp; Morales, G.
-(2025). Measuring arms: Introducing the global military spending
-dataset. Journal of Conflict Resolution, 69(2-3), 540-567. <a href="https://doi.org/10.1177/00220027241232964" class="external-link">https://doi.org/10.1177/00220027241232964</a></p>
 <p>Fariss, C. J., Anders, T., Markowitz, J. N., &amp; Barnum, M. (2022).
 New estimates of over 500 years of historic GDP and population data.
 Journal of Conflict Resolution, 66(3), 553-591. <a href="https://doi.org/10.1177/00220027211054432" class="external-link">https://doi.org/10.1177/00220027211054432</a></p>
 <p>Miller, S. V. (2022). {peacesciencer}: An R package for quantitative
 peace science research. Conflict Management and Peace Science, 39(6),
 755-779. <a href="https://doi.org/10.1177/07388942221077926" class="external-link">https://doi.org/10.1177/07388942221077926</a></p>
-<p>Singer, J. David. (1988). Reconstructing the Correlates of War
-Dataset on Material Capabilities of States, 1816-1985. International
-Interactions, 14: 115-32.</p>
-<p>Singer, J. David, Stuart Bremer, and John Stuckey. (1972).
-“Capability Distribution, Uncertainty, and Major Power War, 1820-1965.”
-in Bruce Russett (ed) Peace, War, and Numbers, Beverly Hills: Sage,
-19-48.</p>
+<p>Singer, J. D. (1988). Reconstructing the Correlates of War dataset on
+material capabilities of states, 1816-1985. International Interactions,
+14(2), 115-132. <a href="https://doi.org/10.1080/03050628808434695" class="external-link">https://doi.org/10.1080/03050628808434695</a></p>
+<p>Singer, J. D., Bremer, S., &amp; Stuckey, J. (1972). Capability
+distribution, uncertainty, and major power war, 1820-1965. In B. Russett
+(Ed.), Peace, war, and numbers (pp. 19-48). Sage.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
