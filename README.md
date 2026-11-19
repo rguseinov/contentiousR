@@ -10,7 +10,7 @@
 [![pkgdown](https://github.com/rguseinov/contentiousR/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/rguseinov/contentiousR/actions/workflows/pkgdown.yaml)
 <!-- badges: end -->
 
-`contentiousR` is an R package that provides tools and datasets for contentious politics and civil conflicts research. It provides a flexible workflow for creating state panels and enriching them with socioeconomic, political, and conflict indicators — using either Correlates of War (COW) or Gleditsch-Ward (GW) country coding schemes.
+`contentiousR` is an R package that provides tools and datasets for contentious politics and civil conflicts research. It provides a flexible workflow for creating state panels and enriching them with socioeconomic, political, and conflict indicators.
 
 ## Installation
 
@@ -32,13 +32,13 @@ remotes::install_github("rguseinov/contentiousR")
 > remotes::install_github("vdeminstitute/vdemdata")
 > ```
 
-## Two workflows, your choice
+## Package supports two workflows
 
-`contentiousR` supports two ways of working - use them separately or together.
+`contentiousR` supports two ways of working, which can be used separately or together.
 
 ### Pipeline workflow
 
-Build a complete panel in one chain. Functions automatically detect the coding system and year range from the panel:
+This workflow allows building a complete panel in one chain. This workflow is similar to the one used in `peacesciencer` R package. Functions automatically detect the coding system and year range from the panel:
 
 ```r
 library(contentiousR)
@@ -57,7 +57,7 @@ panel <- build_states_panel(
 
 ### Standalone workflow
 
-Load each dataset independently for inspection or custom merging:
+One can also load each dataset independently. Then, one can inspect the dataset, or use custom merging tools:
 
 ```r
 panel     <- build_states_panel(1990, 2015, coding_system = "cow")
@@ -84,7 +84,7 @@ panel <- panel |>
 
 See the [Get started](https://rguseinov.github.io/contentiousR/articles/contentiousR.html)
 and [Data sources and interpretation](https://rguseinov.github.io/contentiousR/articles/data-sources.html)
-articles for the full function walkthrough, dataset coverage tables, and
+articles for the full tutorial, including information on what datasets are included, and how the package supports
 interoperability with `peacesciencer`.
 
 ## Citation
@@ -94,6 +94,7 @@ paper:
 
 > Guseinov, R. (2026). *contentiousR: An R package for contentious politics and civil conflict research* [Preprint]. SSRN. https://doi.org/10.2139/ssrn.7506799
 
+For LaTeX users, the BibTeX entry is below; citation("contentiousR") returns the same.
 ```bibtex
 @misc{guseinov2026contentiousr,
   author       = {Guseinov, Ruslan},
@@ -105,14 +106,12 @@ paper:
 }
 ```
 
-To cite the software itself (e.g. to record the exact version used):
+To cite the software itself:
 
 > Guseinov, R. (2026). *contentiousR: Contentious Politics and Civil Conflict Research*. R package version 0.1.0. https://CRAN.R-project.org/package=contentiousR
 
 Please also cite every third-party data source used in an analysis —
-`contentiousR` only assembles and reshapes this data, it does not replace
-citing the original creators. `cn_cite()` looks up the bundled citation for
-a function or `dataset =` value and prints it as ready-to-paste BibTeX:
+`contentiousR` only assembles and reshapes this data. For this, you can use `cn_cite()`, which prints the citation as ready-to-paste BibTeX:
 
 ```r
 cn_cite("navco2.1")
@@ -120,8 +119,7 @@ cn_cite("add_gdp()")
 ```
 
 See the [data-source guide](https://rguseinov.github.io/contentiousR/articles/data-sources.html)
-for versions, transformations, source links, and licensing notes, and
-`?cn_cite` for the full lookup interface.
+for dataset versions, source links, and licensing notes.
 
 ## Acknowledgments
 
