@@ -45,19 +45,19 @@ data. *Journal of Conflict Resolution*, 66(3), 553-591.
 
   `"wpp"`
 
-  :   UN World Population Prospects, total population in thousands.
-      Coverage: 1949-2023.
+  : UN World Population Prospects, total population in thousands.
+    Coverage: 1949-2023.
 
   `"nmc"`
 
-  :   Correlates of War National Material Capabilities v7.0 (abridged):
-      total population (`nmc_tpop`) and urban population (`nmc_upop`),
-      both in thousands. Coverage: 1816-2022.
+  : Correlates of War National Material Capabilities v7.0 (abridged):
+    total population (`nmc_tpop`) and urban population (`nmc_upop`),
+    both in thousands. Coverage: 1816-2022.
 
   `"fariss"`
 
-  :   Latent population estimates (Fariss, Anders, Markowitz & Barnum
-      2022). Coverage: 1500-2019.
+  : Latent population estimates (Fariss, Anders, Markowitz & Barnum
+    2022). Coverage: 1500-2019.
 
 - coding_system:
 

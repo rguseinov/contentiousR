@@ -1,4 +1,4 @@
 # License
 
-    YEAR: 2026
-    COPYRIGHT HOLDER: Ruslan Guseinov
+YEAR: 2026\
+COPYRIGHT HOLDER: Ruslan Guseinov\

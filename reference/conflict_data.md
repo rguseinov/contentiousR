@@ -61,50 +61,50 @@ data release
 
   `"navco1.3"`
 
-  :   NAVCO 1.3 campaign onsets. Coverage: 1900-2019.
+  : NAVCO 1.3 campaign onsets. Coverage: 1900-2019.
 
   `"navco2.1"`
 
-  :   NAVCO 2.1 campaign-years. Coverage: 1945-2013.
+  : NAVCO 2.1 campaign-years. Coverage: 1945-2013.
 
   `"beissinger"`
 
-  :   Beissinger revolutionary episode onsets. Coverage: 1900-2014.
+  : Beissinger revolutionary episode onsets. Coverage: 1900-2014.
 
   `"csra"`
 
-  :   HSE CSRA revolutionary episodes. Coverage: 2000-2024.
+  : HSE CSRA revolutionary episodes. Coverage: 2000-2024.
 
   `"scad"`
 
-  :   SCAD 2018 social conflict events, Africa and Latin America.
-      Recorded event starts: 1989-2017 (the 1989 event continues into
-      the source's 1990 coverage period). Prefix: `scad_`.
+  : SCAD 2018 social conflict events, Africa and Latin America. Recorded
+    event starts: 1989-2017 (the 1989 event continues into the source's
+    1990 coverage period). Prefix: `scad_`.
 
   `"ucdp_prio"`
 
-  :   UCDP/PRIO Armed Conflict Dataset v26.1. Coverage: 1946-2025.
-      Prefix: `ucdp_prio_`.
+  : UCDP/PRIO Armed Conflict Dataset v26.1. Coverage: 1946-2025. Prefix:
+    `ucdp_prio_`.
 
   `"ucdp_vpp"`
 
-  :   UCDP Violent Political Protest Dataset v26.1. Coverage: 1989-2025.
-      Prefix: `ucdp_vpp_`. Requires the `readxl` package.
+  : UCDP Violent Political Protest Dataset v26.1. Coverage: 1989-2025.
+    Prefix: `ucdp_vpp_`. Requires the `readxl` package.
 
   `"mm"`
 
-  :   Mass Mobilization Project v4 (Clark and Regan). Coverage:
-      1990-2020. Prefix: `mm_`.
+  : Mass Mobilization Project v4 (Clark and Regan). Coverage: 1990-2020.
+    Prefix: `mm_`.
 
   `"mmad"`
 
-  :   Mass Mobilization in Autocracies Database. Coverage: 2003-2022.
-      Prefix: `mmad_`.
+  : Mass Mobilization in Autocracies Database. Coverage: 2003-2022.
+    Prefix: `mmad_`.
 
   `"mec"`
 
-  :   Major Episodes of Contention. Global coverage: 1955-2018. Episode
-      records; prefix: `mec_`.
+  : Major Episodes of Contention. Global coverage: 1955-2018. Episode
+    records; prefix: `mec_`.
 
 - coding_system:
 

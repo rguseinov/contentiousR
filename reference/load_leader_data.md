@@ -44,13 +44,13 @@ Governance Dataset. One Earth Future Foundation.
 
   `"archigos"`
 
-  :   Archigos 4.1 (Goemans, Gleditsch & Chiozza). Leader spells with
-      entry/exit mode coding. Coverage: 1875–2015.
+  : Archigos 4.1 (Goemans, Gleditsch & Chiozza). Leader spells with
+    entry/exit mode coding. Coverage: 1875–2015.
 
   `"reign"`
 
-  :   REIGN Leader List (Bell 2021). Leader spells with military
-      background coding. Coverage: 1921–2021.
+  : REIGN Leader List (Bell 2021). Leader spells with military
+    background coding. Coverage: 1921–2021.
 
 - coding_system:
 

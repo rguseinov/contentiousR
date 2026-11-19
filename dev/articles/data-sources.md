@@ -1,0 +1,293 @@
+# Data sources and interpretation
+
+`contentiousR` standardizes country and year keys; it does not make the
+underlying research designs interchangeable. Cite each source used in an
+analysis and consult its codebook for definitions, scope, and
+limitations.
+
+How each bundled file was prepared from its official release
+(compression, format conversion, dropped columns) is documented in
+[`data-raw/PREPROCESSING.md`](https://github.com/rguseinov/contentiousR/blob/main/data-raw/PREPROCESSING.md).
+
+| Argument | Bundled version and coverage | Unit returned | Source |
+|----|----|----|----|
+| GDP: `"gapminder"` | Gapminder v32 | Country-year | [Gapminder](https://www.gapminder.org/data/documentation/gd001/) |
+| GDP: `"fariss"` | Fariss et al. 2022, latent estimate, 1500–2019 | Country-year | [Dataverse](https://doi.org/10.7910/DVN/DC0ING) |
+| Population: `"wpp"` | UN World Population Prospects 2024, 1949–2023 | Country-year | [UN Population Division](https://population.un.org/wpp/) |
+| Population: `"nmc"` | National Material Capabilities v7.0, 1816–2022 | Country-year | [Correlates of War](https://correlatesofwar.org/data-sets/national-material-capabilities/) |
+| Population: `"fariss"` | Fariss et al. 2022, latent estimate, 1500–2019 | Country-year | [Dataverse](https://doi.org/10.7910/DVN/DC0ING) |
+| Military expenditure: `"sipri"` | SIPRI Military Expenditure Database v1.2, 1949–2025 | Country-year | [SIPRI](https://www.sipri.org/databases/milex) |
+| Military expenditure: `"nmc"` | National Material Capabilities v7.0, 1816–2022 | Country-year | [Correlates of War](https://correlatesofwar.org/data-sets/national-material-capabilities/) |
+| Military expenditure: `"barnum"` | Barnum et al. 2025, latent estimate, 1816–2019 | Country-year | [Dataverse](https://doi.org/10.7910/DVN/RKJAKJ) |
+| `"navco1.3"` | NAVCO 1.3, 1900–2019[^1] | Campaign onset | [Dataverse](https://doi.org/10.7910/DVN/ON9XND) |
+| `"navco2.1"` | NAVCO 2.1, 1945–2013 | Campaign-year | [Dataverse](https://doi.org/10.7910/DVN/MHOXDV) |
+| `"beissinger"` | Revolutionary Episodes Dataset, 1900–2014[^2] | Episode onset | [Mark Beissinger](https://web.archive.org/web/20250331220952/https://mbeissinger.scholar.princeton.edu/revolutionary-episodes-dataset) |
+| `"raqed"` | RAQED v1.4, 2000–2026 | Episode onset | [HSE University](https://social.hse.ru/mr/rev_bd) |
+| `"scad"` | SCAD 3.3, 1990–2017[^3] | Country-year | [Strauss Center](https://www.strausscenter.org/ccaps-research-areas/social-conflict/database/) |
+| `"ucdp_prio"` | UCDP/PRIO 26.1, 1946–2025 | Country-year | [UCDP](https://ucdp.uu.se/downloads/) |
+| `"ucdp_vpp"` | UCDP VPP 26.1, 1989–2025 | Country-year | [UCDP](https://ucdp.uu.se/downloads/) |
+| `"mm"` | Mass Mobilization, 1990–2020 | Country-year | [Project website](https://massmobilization.github.io) |
+| `"mmad"` | MMAD v5.0, 2003–2022 | Country-year | [MMAD](https://mmadatabase.org/) |
+| `"mec"` | Major Episodes of Contention, 1955–2018 | Episode (global) | [Article](https://doi.org/10.1093/jopres/xjaf008) / [data](https://doi.org/10.7910/DVN/JQWQNW) |
+| `"arc"` | Anatomy of Resistance Campaigns 2.0, 1990–2018 | Country-year | [Article](https://doi.org/10.1093/jopres/xjag013) / [data](https://doi.org/10.7910/DVN/C0PUHP) |
+| `"navco3.0"` | NAVCO 3.0, 26 countries, 1990–2012 | Country-period (events) | [Article](https://doi.org/10.1177/0022343318759411) / [data](https://doi.org/10.7910/DVN/INNYEO) |
+| `"omg"` | Opposition Movements and Groups v1, 1789–2019[^4] | Campaign phase | [Article](https://doi.org/10.1177/00104140251369330) / [PRIO](https://www.prio.org/data/39) |
+| `"archigos"` | Archigos 4.1, 1875–2015 | Country-year | [Archigos](https://web.archive.org/web/20241206095059/http://ksgleditsch.com/archigos.html) |
+| `"reign"` | REIGN, 1921–2021 | Country-year | [REIGN](https://oefdatascience.github.io/REIGN.github.io/) |
+| V-Dem | Installed `vdemdata` release | Country-year | [V-Dem](https://v-dem.net/data/the-v-dem-dataset/) |
+
+`"csra"` (CSRA Revolutionary Database v1.102) was removed in version
+0.2.0: the database has been renamed RAQED, so use `"raqed"`.
+
+## Package-related transformations and explanations
+
+SCAD repeats events when they span multiple locations. For country-level
+use, `contentiousR` retains one row per positive event ID before
+aggregating. Its documented `-99`, `-88`, and `-77` death-count values
+are represented as missing rather than as negative deaths.
+
+UCDP/PRIO expands conflicts with multiple location codes before
+aggregation. `ucdp_prio_incidence` marks any active conflict in a
+country-year, while `ucdp_prio_onset` is one only when `start_date2`
+falls in that year. The VPP file has no equivalent episode-start field;
+`ucdp_vpp_onset` is retained only as a backwards-compatible alias of
+`ucdp_vpp_incidence`.
+
+Mass Mobilization reports participant size through a mixture of exact
+numbers, ranges, inequalities, and qualitative strings.
+`mm_participants` contains the maximum of exact numeric reports.
+`mm_participants_reported` preserves all reported strings so users can
+apply a substantively appropriate recoding.
+
+Legacy campaign and episode sources can contain several rows for one
+country-year. `add_conflict(aggregate = TRUE)` reports their count and
+takes a missing-safe maximum of numeric fields. Use `aggregate = FALSE`
+or call
+[`conflict_data()`](https://rguseinov.github.io/contentiousR/dev/reference/conflict_data.md)
+directly when campaign-level observations are required.
+
+Unmatched panel rows remain `NA`, because absence from a source is not
+always evidence of zero events.
+
+MEC contains 2,734 reformist and maximalist contentious episodes
+worldwide. `contentiousR` preserves its episode-level rows and all
+published variables, using the source’s `byear` (beginning year) as
+`year`. Fourteen left-censored episodes have a `mec_bdate` before 1955
+but a source `byear` of 1955. With `add_conflict(aggregate = TRUE)`, MEC
+follows the same explicit aggregation policy as the other campaign and
+episode sources; use `aggregate = FALSE` to retain individual episodes.
+
+RAQED (the Revolutionary and Quasi-revolutionary Episodes Dataset, the
+successor of the CSRA Revolutionary Database) is kept at its episode
+level, with the episode’s `start_year` as `year`. Its `type` column
+distinguishes revolutionary episodes (`RE`), questionable revolutionary
+episodes (`RE?`), and quasi-revolutionary episodes (`QRE`);
+`raqed_type_re`, `raqed_type_re_q`, and `raqed_type_qre` are the
+matching dummies, so that
+[`add_conflict()`](https://rguseinov.github.io/contentiousR/dev/reference/add_conflict.md)
+can aggregate them. Abkhazia, Hong Kong, Palestine, Puerto Rico, and
+Western Sahara have no COW or Gleditsch-Ward code and are dropped.
+
+OMG is coded by campaign *phase*: a campaign that pauses and resumes has
+one row per phase. `contentiousR` keeps the phase rows with the phase’s
+`start_year` as `year`. `omg_phase_onset` is one for every phase, while
+`omg_onset` is one only for a campaign’s first phase, so a resumed
+campaign is not counted as a new onset. OMG identifies countries by
+V-Dem `country_id`; Serbia is mapped to COW 345 / GW 340, Yemen to COW
+678 before 1990 and 679 afterwards (GW 678), and Piedmont-Sardinia to
+325 (Italy). Hong Kong, Palestine, and Western Sahara are dropped. OMG
+has coded only a subset of countries so far, so a missing country-year
+means “not coded or no campaign”, not “no campaign”. The bundled file
+omits the source’s free-text notes, source lists, and coder names.
+
+ARC 2.0 records the formal organizations that took part in 28,683
+protest and armed-conflict events in Africa, Latin America, and the
+Caribbean. The events themselves come from SCAD and the UCDP
+Georeferenced Event Dataset (GED), so `"arc"` overlaps with `"scad"`;
+what it adds is organizational participation and the
+maximalist/non-maximalist coding of demands. Events are counted in the
+year they start. `arc_n_events_org` and `arc_share_events_org` count
+events with at least one identified organization, and `arc_n_orgs`
+counts distinct organizations active in a country-year. Every GED event
+is coded as maximalist in the source.
+
+NAVCO 3.0 records individual actions in 26 countries, coded by actor:
+anti-government campaigns (`actor_id` 2), the state (1), and
+international, non-aligned, and local state actors. `nvc3.0_onset` is
+one when at least one campaign action occurred in the period and zero
+when the period has only actions by other actors, so it is not
+comparable with the campaign onsets of NAVCO 1.3 and 2.1. Tactics
+(`nvc3.0_n_nonviolent`, `nvc3.0_n_violent`, `nvc3.0_n_mixed`) and
+regime-change goals are counted for campaign actions only; state
+responses are counted from `st_posture` (concessions 1–3, repression
+5–7, lethal repression 7). The source records fatalities, injuries, and
+participant numbers either as a number or as a range such as “100-300”;
+`contentiousR` keeps both bounds, as `_low` and `_high` columns.
+
+Mass Mobilization includes rows with `protest = 0` for country-years in
+which no protest was recorded. These give `mm_onset = 0` and
+`mm_n_protests = 0`. Versions up to 0.1.0 counted them as protests.
+
+## Country-quarter, country-month, and country-day panels
+
+`build_states_panel(unit = "quarter")`, `unit = "month"`, and
+`unit = "day"` build panels at a finer unit.
+[`add_conflict()`](https://rguseinov.github.io/contentiousR/dev/reference/add_conflict.md)
+then places every event or episode in the quarter, month, or day of its
+start date. This needs a date at least as precise as the unit (a quarter
+needs the month), so:
+
+| Dataset | Quarter, month | Day | Records dropped at a finer unit |
+|----|----|----|----|
+| `"scad"`, `"mmad"`, `"arc"`, `"navco3.0"`, `"raqed"`, `"mec"` | Yes | Yes | None |
+| `"mm"` | Yes | Yes | Country-years without protest (no date) |
+| `"beissinger"` | Yes | Yes | 5 dated by year only (quarter, month); 56 dated by month only (day) |
+| `"omg"` | Yes | Yes | Phases dated by year only (quarter, month) or by month only (day) |
+| `"navco1.3"`, `"navco2.1"`, `"ucdp_prio"`, `"ucdp_vpp"` | No | No | — |
+
+[`add_conflict()`](https://rguseinov.github.io/contentiousR/dev/reference/add_conflict.md)
+reports how many records it drops. Annual data (GDP, population,
+military expenditure, V-Dem) are joined by year, so all periods of a
+year share that year’s value.
+[`add_leader_data()`](https://rguseinov.github.io/contentiousR/dev/reference/add_leader_data.md)
+uses the leaders’ dates in office instead: each period gets the leader
+in power at its end, so Egypt has Mubarak in January 2011 and Tantawi
+from February. REIGN records the month, not the day, a leader left
+office, so it supports quarters and months but not days.
+[`add_lag()`](https://rguseinov.github.io/contentiousR/dev/reference/add_lag.md)
+and
+[`add_spell_duration()`](https://rguseinov.github.io/contentiousR/dev/reference/add_spell_duration.md)
+count periods in the panel’s unit.
+
+[`aggregate_panel()`](https://rguseinov.github.io/contentiousR/dev/reference/aggregate_panel.md)
+collapses a finer panel to a coarser unit: counts are summed, indicators
+and maxima take the maximum, and annual data and leaders take the value
+of the last period. Lags and spell counters are dropped, as they need to
+be recomputed at the new unit. A monthly panel aggregated to years gives
+the same event counts as a yearly panel.
+
+[`list_datasets()`](https://rguseinov.github.io/contentiousR/dev/reference/list_datasets.md)
+lists every dataset with its years, countries, record type, the units it
+supports, and its column prefix.
+
+## Missing records: `NA` or 0?
+
+A period without a record can mean that nothing happened, or that the
+source does not cover that country and year. By default
+[`add_conflict()`](https://rguseinov.github.io/contentiousR/dev/reference/add_conflict.md)
+leaves both as `NA`. With `fill_zero = TRUE`, it sets event indicators
+and counts to 0 where the dataset covers the country-year and keeps `NA`
+elsewhere. Coverage is defined per dataset (the `zero_fill` column of
+[`list_datasets()`](https://rguseinov.github.io/contentiousR/dev/reference/list_datasets.md)):
+
+| Datasets | A country-year is covered if |
+|----|----|
+| `"navco1.3"`, `"navco2.1"`, `"beissinger"`, `"raqed"`, `"mec"`, `"omg"`, `"ucdp_prio"`, `"ucdp_vpp"` | it is in the dataset’s years (global coverage) |
+| `"scad"`, `"arc"`, `"navco3.0"` | the country has at least one record, and the year is in the dataset’s years |
+| `"mm"` | the source lists it, including country-years it codes as having no protest |
+| `"mmad"` | it lies between the country’s first and last year with a record |
+
+MMAD covers autocracies, but the package does not ship MMAD’s list of
+autocratic country-years, so the last rule is an approximation. A 0
+inside a country’s span can still be a period MMAD did not code: MMAD
+has no events in Egypt from July to December 2012, and
+`fill_zero = TRUE` gives 0 there. Maxima, means, and descriptive columns
+are never filled.
+
+## Episodes in progress
+
+Onset columns mark the period in which an episode started. For NAVCO
+1.3, NAVCO 2.1, Beissinger, RAQED, MEC, and OMG,
+[`add_conflict()`](https://rguseinov.github.io/contentiousR/dev/reference/add_conflict.md)
+also adds `<prefix>incidence` (1 if an episode was in progress) and
+`<prefix>n_active` (how many), from each episode’s start to its end
+date. Where the end date is less precise than the panel’s unit, the
+episode runs to the end of the period the source gives: an OMG phase
+that ended “in 2005” is active through December 2005. Beissinger gives
+durations rather than end dates; an episode ends at its start date plus
+the duration in days (or in calendar months, if the start is known only
+to the month). Episodes the source codes as ongoing run to the end of
+its coverage.
+
+UN WPP reports today’s countries, with population reconstructed back to
+1949 within today’s borders, while the panels follow the states of each
+year. `load_population_data(dataset = "wpp")` therefore assigns every
+WPP country to the state that governed it in each year:
+
+- States that later split are the sum of their parts while they existed:
+  the USSR (the fifteen republics until 1991), Yugoslavia and Serbia and
+  Montenegro (Serbia, Kosovo, Montenegro, and the other republics until
+  they became states), Czechoslovakia, Ethiopia with Eritrea
+  (1952-1992), Pakistan with Bangladesh (to 1970), Sudan with South
+  Sudan (to 2010), Indonesia with Timor-Leste (1976-2001), Malaysia with
+  Singapore (1963-1964), and Egypt with Syria (1959-1960). Hong Kong is
+  part of China from 1997 and Macao from 1999.
+- States formed by unification cannot be split back into their parts, so
+  those parts are `NA` before unification: West and East Germany before
+  1990, North and South Yemen before 1990, North and South Vietnam
+  before 1976, and Tanganyika and Zanzibar before 1964. For the same
+  reason Abkhazia and South Ossetia (included in Georgia) and Tibet in
+  1949-1950 (included in China) have no WPP data.
+- Territories that were not part of any state, such as colonies before
+  independence, Puerto Rico, or Greenland, are not added to any state.
+  Smaller border changes within a state (for example Goa or Sabah and
+  Sarawak) follow WPP’s current borders.
+
+NMC’s documented `-9` missing-data sentinel is recoded to `NA` in
+`nmc_tpop` and `nmc_upop`.
+
+Fariss, Anders, Markowitz, and Barnum’s replication files contain one
+row per country-year for each underlying source indicator (e.g. Bairoch,
+Penn World Table, World Bank) plus one `"latent_*"` row holding the
+model’s combined estimate. `load_gdp_data(dataset = "fariss")` and
+`load_population_data(dataset = "fariss")` keep only the `"latent_gdp"`
+/ `"latent_gdppc"` / `"latent_pop"` rows. Their absolute units are not
+independently verified in this package; consult Fariss et al. (2022)
+before using `fariss_gdp`, `fariss_gdppc`, or `fariss_pop` outside of
+relative/comparative analysis.
+
+The SIPRI workbook lists a small number of rows (e.g. “Africa”, “NATO”)
+that are regional or organizational aggregates rather than countries;
+these have no matching COW/Gleditsch-Ward code and are dropped.
+
+Barnum, Fariss, Markowitz, and Morales’s military expenditure
+replication file contains one row per country-year for each of 24
+underlying source indicators, each in its own original currency/unit,
+with no single combined value on a real monetary scale (unlike the
+Fariss GDP/population files, the paper does not publish the shared
+latent trait directly because “the average by itself does not have a
+real or direct monetary unit”). Instead,
+`load_military_expenditure_data(dataset = "barnum")` reports the model’s
+posterior estimate of two specific indicators: `barnum_sipri`
+(`"milex_con_2022_sipri"`) and `barnum_nmc` (`"milex_con_2017_nmc"`),
+which extend each one’s coverage back to 1816 using information from all
+24 sources. Both are in constant (inflation-adjusted) dollars, so
+`barnum_nmc` is not directly comparable to `nmc_milex` from
+`dataset = "nmc"`, which NMC documents in current-year dollars; their
+ratio varies smoothly over time (around 2.4 for the United States in
+1990, falling toward 1 by the mid-2010s) rather than reflecting
+disagreement between the sources. `barnum_milburden` (`milexgdp`) is a
+unit-free ratio of spending to GDP and so is published directly.
+
+## Licensing
+
+The package’s MIT license applies to the software, not to third-party
+data. Gapminder and UCDP identify their bundled data as CC BY 4.0; NAVCO
+2.1, NAVCO 3.0, MEC, and ARC 2.0 are CC0; UN WPP is CC BY 3.0 IGO; OMG
+is released under the Open Data Commons Attribution License (ODC-BY).
+Other source files, including NMC, SIPRI, and the Fariss et al. and
+Barnum et al. estimates, retain their creators’ terms — SIPRI in
+particular is free to use with attribution but requires separately
+negotiating a royalty for commercial use. See `inst/COPYRIGHTS` and
+verify the applicable terms before redistributing a package build
+containing those files.
+
+[^1]: The bundled file contains two records beginning in 1899.
+
+[^2]: The bundled file contains two records beginning in 1899.
+
+[^3]: Official coverage begins in 1990; one continuing event has a
+    recorded 1989 start.
+
+[^4]: Only the countries coded so far; the earliest campaign phase
+    starts in 1787.

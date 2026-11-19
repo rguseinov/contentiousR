@@ -56,6 +56,4 @@ if (requireNamespace("peacesciencer", quietly = TRUE)) {
   panel <- build_states_panel(1990, 1995, coding_system = "cow") |>
     add_from_peacesciencer(add_archigos)
 }
-#> {peacesciencer} includes additional remote data for separate download. Please type ?download_extdata() for more information.
-#> This message disappears on load when these data are downloaded and in the package's `extdata` directory.
 ```

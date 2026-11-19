@@ -9,51 +9,48 @@ specification.
 
 ## Construct the panel
 
-``` r
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`contentiousR`](https://rguseinov.github.io/contentiousR/)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`dplyr`](https://dplyr.tidyverse.org)`)`\
+`#> Warning: package 'dplyr' was built under R version 4.5.2`\
+`#> `\
+`#> Attaching package: 'dplyr'`\
+`#> The following objects are masked from 'package:stats':`\
+`#> `\
+`#>     filter, lag`\
+`#> The following objects are masked from 'package:base':`\
+`#> `\
+`#>     intersect, setdiff, setequal, union`\
+\
+`panel`` ``<-`` `[`build_states_panel`](https://rguseinov.github.io/contentiousR/reference/build_states_panel.md)`(``1900``, ``2010``, coding_system ``=`` ``"cow"``)`` ``|>`\
+`  `[`add_gdp`](https://rguseinov.github.io/contentiousR/reference/add_gdp.md)`(``dataset ``=`` ``"fariss"``)`` ``|>`\
+`  `[`add_population`](https://rguseinov.github.io/contentiousR/reference/add_population.md)`(``dataset ``=`` ``"wpp"``)`` ``|>`\
+`  `[`add_vdem`](https://rguseinov.github.io/contentiousR/reference/add_vdem.md)`(``vars ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"v2x_polyarchy"``, ``"v2x_libdem"``, ``"v2x_execorr"``)``)`` ``|>`\
+`  `[`add_leader_data`](https://rguseinov.github.io/contentiousR/reference/add_leader_data.md)`(``dataset ``=`` ``"archigos"``)`` ``|>`\
+`  `[`add_military_expenditure`](https://rguseinov.github.io/contentiousR/reference/add_military_expenditure.md)`(``dataset ``=`` ``"nmc"``)`` ``|>`\
+`  `[`add_conflict`](https://rguseinov.github.io/contentiousR/reference/add_conflict.md)`(``dataset ``=`` ``"beissinger"``, aggregate ``=`` ``TRUE``)`` ``|>`\
+`  `[`select`](https://dplyr.tidyverse.org/reference/select.html)`(`\
+`    ``cow``, ``year``, ``country``, ``fariss_gdppc``, ``wpp_pop``, ``nmc_milex``,`\
+`    ``v2x_polyarchy``, ``v2x_execorr``, ``leader_tenure``, ``beissinger_onset`\
+`  ``)`` ``|>`\
+`  `[`mutate`](https://dplyr.tidyverse.org/reference/mutate.html)`(`[`across`](https://dplyr.tidyverse.org/reference/across.html)`(`[`starts_with`](https://tidyselect.r-lib.org/reference/starts_with.html)`(``"beissinger_"``)``, ``~`` ``tidyr``::`[`replace_na`](https://tidyr.tidyverse.org/reference/replace_na.html)`(``.x``, ``0``)``)``)`` ``|>`` ``# fill non-onsets with zeros`\
+`  `[`add_spell_duration`](https://rguseinov.github.io/contentiousR/reference/add_spell_duration.md)`(``)`` ``|>`\
+`  `[`add_lag`](https://rguseinov.github.io/contentiousR/reference/add_lag.md)`(`\
+`    vars ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(`\
+`      ``"fariss_gdppc"``, ``"wpp_pop"``, ``"v2x_polyarchy"``,`\
+`      ``"v2x_execorr"``, ``"leader_tenure"``, ``"nmc_milex"`\
+`    ``)``,`\
+`    n ``=`` ``1`\
+`  ``)`\
+`` #> Multiple campaigns or episodes per country-year detected in 'beissinger'. Aggregating to country-year using max() for numeric columns. Use `aggregate = FALSE` or `conflict_data()` for record-level data. ``\
+\
+[`dim`](https://rdrr.io/r/base/dim.html)`(``panel``)`\
+`#> [1] 11257    17`
 
-library(contentiousR)
-library(dplyr)
-#> 
-#> Attaching package: 'dplyr'
-#> The following objects are masked from 'package:stats':
-#> 
-#>     filter, lag
-#> The following objects are masked from 'package:base':
-#> 
-#>     intersect, setdiff, setequal, union
-
-panel <- build_states_panel(1900, 2010, coding_system = "cow") |>
-  add_gdp(dataset = "fariss") |>
-  add_population(dataset = "wpp") |>
-  add_vdem(vars = c("v2x_polyarchy", "v2x_libdem", "v2x_execorr")) |>
-  add_leader_data(dataset = "archigos") |>
-  add_military_expenditure(dataset = "nmc") |>
-  add_conflict(dataset = "beissinger", aggregate = TRUE) |>
-  select(
-    cow, year, country, fariss_gdppc, wpp_pop, nmc_milex,
-    v2x_polyarchy, v2x_execorr, leader_tenure, beissinger_onset
-  ) |>
-  mutate(across(starts_with("beissinger_"), ~ tidyr::replace_na(.x, 0))) |> # fill non-onsets with zeros
-  add_spell_duration() |>
-  add_lag(
-    vars = c(
-      "fariss_gdppc", "wpp_pop", "v2x_polyarchy",
-      "v2x_execorr", "leader_tenure", "nmc_milex"
-    ),
-    n = 1
-  )
-#> Multiple campaigns or episodes per country-year detected in 'beissinger'. Aggregating to country-year using max() for numeric columns. Use `aggregate = FALSE` or `conflict_data()` for record-level data.
-
-dim(panel)
-#> [1] 11257    17
-```
-
-``` r
-
-head(panel) |>
-  mutate(across(where(is.numeric), ~ round(.x, 2))) |>
-  knitr::kable()
-```
+\
+[`head`](https://rdrr.io/r/utils/head.html)`(``panel``)`` ``|>`\
+`  `[`mutate`](https://dplyr.tidyverse.org/reference/mutate.html)`(`[`across`](https://dplyr.tidyverse.org/reference/across.html)`(`[`where`](https://tidyselect.r-lib.org/reference/where.html)`(``is.numeric``)``, ``~`` `[`round`](https://rdrr.io/r/base/Round.html)`(``.x``, ``2``)``)``)`` ``|>`\
+`  ``knitr``::`[`kable`](https://rdrr.io/pkg/knitr/man/kable.html)`(``)`
 
 | cow | year | country | fariss_gdppc | wpp_pop | nmc_milex | v2x_polyarchy | v2x_execorr | leader_tenure | beissinger_onset | beissinger_spell | fariss_gdppc_l | wpp_pop_l | v2x_polyarchy_l | v2x_execorr_l | leader_tenure_l | nmc_milex_l |
 |---:|---:|:---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
@@ -77,10 +74,8 @@ not a neutral default.
 
 ## Check coverage
 
-``` r
-
-plot_coverage(panel, "beissinger_onset", drop_empty = TRUE)
-```
+\
+[`plot_coverage`](https://rguseinov.github.io/contentiousR/reference/plot_coverage.md)`(``panel``, ``"beissinger_onset"``, drop_empty ``=`` ``TRUE``)`
 
 ![](case-study_files/figure-html/unnamed-chunk-4-1.png)
 
@@ -93,49 +88,48 @@ and Firth 2009), with a natural spline on `beissinger_spell` to flexibly
 control for time since the last episode and year fixed effects. One-year
 lagged controls are included in the estimation.
 
-``` r
-
-library(brglm2)
-
-model <- glm(
-  beissinger_onset ~ log(fariss_gdppc_l + 0.1) + wpp_pop_l +
-    v2x_polyarchy_l + I(v2x_polyarchy_l^2) + v2x_execorr_l +
-    leader_tenure_l + I(leader_tenure_l^2) + nmc_milex_l +
-    splines::bs(beissinger_spell, 3) + as.factor(year),
-  family = binomial("logit"),
-  method = "brglmFit", type = "MPL_Jeffreys",
-  data = panel
-)
-
-co <- summary(model)$coefficients
-co[!grepl("factor\\(year\\)", rownames(co)), ]
-#>                                        Estimate   Std. Error     z value
-#> (Intercept)                       -5.482900e+00 1.497199e+00 -3.66210390
-#> log(fariss_gdppc_l + 0.1)         -8.628873e-03 1.002608e-01 -0.08606431
-#> wpp_pop_l                          7.575049e-07 5.515177e-07  1.37349167
-#> v2x_polyarchy_l                    4.364033e+00 1.714333e+00  2.54561586
-#> I(v2x_polyarchy_l^2)              -7.591873e+00 2.130573e+00 -3.56330178
-#> v2x_execorr_l                      8.857624e-01 3.717666e-01  2.38257635
-#> leader_tenure_l                    4.086467e-02 3.080982e-02  1.32635229
-#> I(leader_tenure_l^2)              -1.291432e-03 9.784392e-04 -1.31989015
-#> nmc_milex_l                        1.178253e-09 4.467392e-09  0.26374516
-#> splines::bs(beissinger_spell, 3)1 -1.050117e+00 9.028635e-01 -1.16309592
-#> splines::bs(beissinger_spell, 3)2  2.162076e+00 1.149534e+00  1.88082880
-#> splines::bs(beissinger_spell, 3)3 -9.603299e-01 1.364815e+00 -0.70363383
-#>                                       Pr(>|z|)
-#> (Intercept)                       0.0002501524
-#> log(fariss_gdppc_l + 0.1)         0.9314152969
-#> wpp_pop_l                         0.1695995501
-#> v2x_polyarchy_l                   0.0109085156
-#> I(v2x_polyarchy_l^2)              0.0003662193
-#> v2x_execorr_l                     0.0171919666
-#> leader_tenure_l                   0.1847230325
-#> I(leader_tenure_l^2)              0.1868716962
-#> nmc_milex_l                       0.7919762910
-#> splines::bs(beissinger_spell, 3)1 0.2447905889
-#> splines::bs(beissinger_spell, 3)2 0.0599952109
-#> splines::bs(beissinger_spell, 3)3 0.4816608407
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`brglm2`](https://github.com/ikosmidis/brglm2)`)`\
+`#> Warning: package 'brglm2' was built under R version 4.5.2`\
+\
+`model`` ``<-`` `[`glm`](https://rdrr.io/r/stats/glm.html)`(`\
+`  ``beissinger_onset`` ``~`` `[`log`](https://rdrr.io/r/base/Log.html)`(``fariss_gdppc_l`` ``+`` ``0.1``)`` ``+`` ``wpp_pop_l`` ``+`\
+`    ``v2x_polyarchy_l`` ``+`` `[`I`](https://rdrr.io/r/base/AsIs.html)`(``v2x_polyarchy_l``^``2``)`` ``+`` ``v2x_execorr_l`` ``+`\
+`    ``leader_tenure_l`` ``+`` `[`I`](https://rdrr.io/r/base/AsIs.html)`(``leader_tenure_l``^``2``)`` ``+`` ``nmc_milex_l`` ``+`\
+`    ``splines``::`[`bs`](https://rdrr.io/r/splines/bs.html)`(``beissinger_spell``, ``3``)`` ``+`` `[`as.factor`](https://rdrr.io/r/base/factor.html)`(``year``)``,`\
+`  family ``=`` `[`binomial`](https://rdrr.io/r/stats/family.html)`(``"logit"``)``,`\
+`  method ``=`` ``"brglmFit"``, type ``=`` ``"MPL_Jeffreys"``,`\
+`  data ``=`` ``panel`\
+`)`\
+\
+`co`` ``<-`` `[`summary`](https://rdrr.io/r/base/summary.html)`(``model``)``$``coefficients`\
+`co``[``!`[`grepl`](https://rdrr.io/r/base/grep.html)`(``"factor\\(year\\)"``, `[`rownames`](https://rdrr.io/r/base/colnames.html)`(``co``)``)``, ``]`\
+`#>                                        Estimate   Std. Error     z value`\
+`#> (Intercept)                       -5.541799e+00 1.498218e+00 -3.69892691`\
+`#> log(fariss_gdppc_l + 0.1)         -4.060932e-03 1.003844e-01 -0.04045379`\
+`#> wpp_pop_l                          7.641351e-07 5.520638e-07  1.38414286`\
+`#> v2x_polyarchy_l                    4.426545e+00 1.712848e+00  2.58431858`\
+`#> I(v2x_polyarchy_l^2)              -7.618338e+00 2.127482e+00 -3.58091810`\
+`#> v2x_execorr_l                      9.530371e-01 3.739849e-01  2.54833000`\
+`#> leader_tenure_l                    4.071753e-02 3.080048e-02  1.32197699`\
+`#> I(leader_tenure_l^2)              -1.284174e-03 9.780690e-04 -1.31296835`\
+`#> nmc_milex_l                        1.222355e-09 4.452181e-09  0.27455192`\
+`#> splines::bs(beissinger_spell, 3)1 -1.056449e+00 9.026917e-01 -1.17033190`\
+`#> splines::bs(beissinger_spell, 3)2  2.167424e+00 1.148905e+00  1.88651350`\
+`#> splines::bs(beissinger_spell, 3)3 -9.242953e-01 1.363052e+00 -0.67810722`\
+`#>                                       Pr(>|z|)`\
+`#> (Intercept)                       0.0002165129`\
+`#> log(fariss_gdppc_l + 0.1)         0.9677313433`\
+`#> wpp_pop_l                         0.1663147150`\
+`#> v2x_polyarchy_l                   0.0097571622`\
+`#> I(v2x_polyarchy_l^2)              0.0003423890`\
+`#> v2x_execorr_l                     0.0108240028`\
+`#> leader_tenure_l                   0.1861758143`\
+`#> I(leader_tenure_l^2)              0.1891936135`\
+`#> nmc_milex_l                       0.7836605077`\
+`#> splines::bs(beissinger_spell, 3)1 0.2418674308`\
+`#> splines::bs(beissinger_spell, 3)2 0.0592257915`\
+`#> splines::bs(beissinger_spell, 3)3 0.4977037154`
 
 Year fixed effects are omitted from the printed table above for
 readability.

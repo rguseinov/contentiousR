@@ -41,14 +41,14 @@ data. *Journal of Conflict Resolution*, 66(3), 553-591.
 
   `"gapminder"`
 
-  :   Gapminder GDP per capita (v32). Coverage: 1945-2019 by default
-      (full source coverage is wider).
+  : Gapminder GDP per capita (v32). Coverage: 1945-2019 by default (full
+    source coverage is wider).
 
   `"fariss"`
 
-  :   Latent GDP and GDP per capita estimates (Fariss, Anders, Markowitz
-      & Barnum 2022), combined from their `fariss_gdp` and
-      `fariss_gdppc` replication files. Coverage: 1500-2019.
+  : Latent GDP and GDP per capita estimates (Fariss, Anders, Markowitz &
+    Barnum 2022), combined from their `fariss_gdp` and `fariss_gdppc`
+    replication files. Coverage: 1500-2019.
 
 - coding_system:
 

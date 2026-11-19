@@ -28,17 +28,15 @@ For each dataset, this shows what share of its events falls in each
 region, so datasets of very different total size remain comparable. Pass
 `metric = "count"` instead of the default `"share"` for raw counts.
 
-``` r
-
-library(contentiousR)
-
-plot_regional_coverage(
-  datasets      = c("navco1.3", "navco2.1", "beissinger", "csra", "mec"),
-  start_year    = 1950,
-  end_year      = 2013,
-  coding_system = "cow"
-)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`contentiousR`](https://rguseinov.github.io/contentiousR/)`)`\
+\
+[`plot_regional_coverage`](https://rguseinov.github.io/contentiousR/reference/plot_regional_coverage.md)`(`\
+`  datasets      ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"navco1.3"``, ``"navco2.1"``, ``"beissinger"``, ``"csra"``, ``"mec"``)``,`\
+`  start_year    ``=`` ``1950``,`\
+`  end_year      ``=`` ``2013``,`\
+`  coding_system ``=`` ``"cow"`\
+`)`
 
 ![](dataset-comparison_files/figure-html/unnamed-chunk-2-1.png)
 
@@ -52,15 +50,13 @@ The same idea over time, binned into (by default) 5-year periods. With
 `by_region = FALSE` (the default) it plots one global panel, as in the
 article’s Figure 5:
 
-``` r
-
-plot_temporal_coverage(
-  datasets      = c("navco1.3", "navco2.1", "beissinger", "csra", "mec"),
-  start_year    = 1950,
-  end_year      = 2013,
-  coding_system = "cow"
-)
-```
+\
+[`plot_temporal_coverage`](https://rguseinov.github.io/contentiousR/reference/plot_temporal_coverage.md)`(`\
+`  datasets      ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"navco1.3"``, ``"navco2.1"``, ``"beissinger"``, ``"csra"``, ``"mec"``)``,`\
+`  start_year    ``=`` ``1950``,`\
+`  end_year      ``=`` ``2013``,`\
+`  coding_system ``=`` ``"cow"`\
+`)`
 
 ![](dataset-comparison_files/figure-html/unnamed-chunk-3-1.png)
 
@@ -74,16 +70,14 @@ the other datasets).
 With `by_region = TRUE`, the same data is faceted by region, as in the
 article’s Figure 4:
 
-``` r
-
-plot_temporal_coverage(
-  datasets      = c("navco1.3", "navco2.1", "beissinger", "csra", "mec"),
-  start_year    = 1950,
-  end_year      = 2013,
-  coding_system = "cow",
-  by_region     = TRUE
-)
-```
+\
+[`plot_temporal_coverage`](https://rguseinov.github.io/contentiousR/reference/plot_temporal_coverage.md)`(`\
+`  datasets      ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"navco1.3"``, ``"navco2.1"``, ``"beissinger"``, ``"csra"``, ``"mec"``)``,`\
+`  start_year    ``=`` ``1950``,`\
+`  end_year      ``=`` ``2013``,`\
+`  coding_system ``=`` ``"cow"``,`\
+`  by_region     ``=`` ``TRUE`\
+`)`
 
 ![](dataset-comparison_files/figure-html/unnamed-chunk-4-1.png)
 
@@ -94,10 +88,8 @@ Both functions take any subset of
 campaign/episode datasets (`"navco1.3"`, `"navco2.1"`, `"beissinger"`,
 `"csra"`, `"mec"`), so a narrower comparison is also possible:
 
-``` r
-
-plot_regional_coverage(c("navco1.3", "navco2.1"), 1950, 2013, metric = "count")
-```
+\
+[`plot_regional_coverage`](https://rguseinov.github.io/contentiousR/reference/plot_regional_coverage.md)`(`[`c`](https://rdrr.io/r/base/c.html)`(``"navco1.3"``, ``"navco2.1"``)``, ``1950``, ``2013``, metric ``=`` ``"count"``)`
 
 ![](dataset-comparison_files/figure-html/unnamed-chunk-5-1.png)
 

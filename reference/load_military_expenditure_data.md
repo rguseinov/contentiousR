@@ -45,23 +45,23 @@ Dataset. *Journal of Conflict Resolution*, 69(2-3), 540-567.
 
   `"sipri"`
 
-  :   SIPRI Military Expenditure Database v1.2: spending in
-      constant (2024) USD millions (`sipri_milex`) and military burden
-      as a share of GDP (`sipri_milburden`, a fraction, not a
-      percentage). Coverage: 1949-2025.
+  : SIPRI Military Expenditure Database v1.2: spending in
+    constant (2024) USD millions (`sipri_milex`) and military burden as
+    a share of GDP (`sipri_milburden`, a fraction, not a percentage).
+    Coverage: 1949-2025.
 
   `"nmc"`
 
-  :   Correlates of War National Material Capabilities v7.0 (abridged):
-      military expenditure in thousands of current USD (`nmc_milex`).
-      Coverage: 1816-2022.
+  : Correlates of War National Material Capabilities v7.0 (abridged):
+    military expenditure in thousands of current USD (`nmc_milex`).
+    Coverage: 1816-2022.
 
   `"barnum"`
 
-  :   Global Military Spending Dataset (Barnum, Fariss, Markowitz &
-      Morales 2025): military burden (`barnum_milburden`, a fraction of
-      GDP) plus latent-model expenditure estimates on two unit bases
-      (`barnum_sipri`, `barnum_nmc`; see Details). Coverage: 1816-2019.
+  : Global Military Spending Dataset (Barnum, Fariss, Markowitz &
+    Morales 2025): military burden (`barnum_milburden`, a fraction of
+    GDP) plus latent-model expenditure estimates on two unit bases
+    (`barnum_sipri`, `barnum_nmc`; see Details). Coverage: 1816-2019.
 
 - coding_system:
 
