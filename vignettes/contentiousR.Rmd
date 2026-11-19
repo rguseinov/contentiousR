@@ -117,11 +117,14 @@ panel |>
 ```
 
 To get started, I will provide a detailed description on two functions: 
-`load_gdp_data()` / `add_gdp()` and `load_population_data()` / `add_population()`. 
+`load_gdp_data()` / `add_gdp()` and `load_population_data()` / `add_population()`.
+For all other functions, see the
+[Reference](https://rguseinov.github.io/contentiousR/reference/index.html)
+page, which documents every function in the package.
 
 ## `load_gdp_data()` / `add_gdp()`
 
-Two GDP sources are curently supported and maintained: `"gapminder"` and `"fariss"`.
+Two GDP sources are currently supported and maintained: `"gapminder"` and `"fariss"`.
 `"gapminder"` (default) returns
 `gdp_pcap`, `log_gdp_pcap`, and `gdp_growth`. `"fariss"` returns the latent
 GDP and GDP per capita estimates from Fariss, Anders, Markowitz, and Barnum
@@ -144,7 +147,7 @@ Three population sources are available via `dataset`.
 | Dataset | Source | Coverage | Returned columns |
 |---|---|---|---|
 | `"wpp"` (default) | [UN World Population Prospects 2024](https://population.un.org/wpp/) | 1949–2023 | `wpp_pop` |
-| `"nmc"` | [Correlates of War NMC v7.0](https://correlatesofwar.org/data-sets/national-material-capabilities/) | 1816–2022 | `nmc_tpop`, `nmc_upop` |
+| `"nmc"` | [Correlates of War NMC v7.0](https://correlatesofwar.org/data-sets/national-material-capabilities/) (Singer et al. 1972; Singer 1988) | 1816–2022 | `nmc_tpop`, `nmc_upop` |
 | `"fariss"` | Fariss et al. (2022) latent estimate | 1500–2019 | `fariss_pop` |
 
 ```{r eval = FALSE}
@@ -179,12 +182,10 @@ then apply the `peacesciencer` functions directly.
 
 ## References
 
-Barnum, M., Fariss, C. J., Markowitz, J. N., & Morales, G. (2025). Measuring arms: Introducing the global military spending dataset. Journal of Conflict Resolution, 69(2-3), 540-567. [https://doi.org/10.1177/00220027241232964](https://doi.org/10.1177/00220027241232964)
-
 Fariss, C. J., Anders, T., Markowitz, J. N., & Barnum, M. (2022). New estimates of over 500 years of historic GDP and population data. Journal of Conflict Resolution, 66(3), 553-591. [https://doi.org/10.1177/00220027211054432](https://doi.org/10.1177/00220027211054432)
 
 Miller, S. V. (2022). {peacesciencer}: An R package for quantitative peace science research. Conflict Management and Peace Science, 39(6), 755-779. [https://doi.org/10.1177/07388942221077926](https://doi.org/10.1177/07388942221077926)
 
-Singer, J. David. (1988). Reconstructing the Correlates of War Dataset on Material Capabilities of States, 1816-1985. International Interactions, 14: 115-32.
+Singer, J. D. (1988). Reconstructing the Correlates of War dataset on material capabilities of states, 1816-1985. International Interactions, 14(2), 115-132. [https://doi.org/10.1080/03050628808434695](https://doi.org/10.1080/03050628808434695)
 
-Singer, J. David, Stuart Bremer, and John Stuckey. (1972). “Capability Distribution, Uncertainty, and Major Power War, 1820-1965.” in Bruce Russett (ed) Peace, War, and Numbers, Beverly Hills: Sage, 19-48.
+Singer, J. D., Bremer, S., & Stuckey, J. (1972). Capability distribution, uncertainty, and major power war, 1820-1965. In B. Russett (Ed.), Peace, war, and numbers (pp. 19-48). Sage.
